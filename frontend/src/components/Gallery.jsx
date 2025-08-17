@@ -278,7 +278,7 @@ const Gallery = () => {
             <Card className="group cursor-pointer hover:shadow-lg transition-shadow duration-300">
               <div className="relative">
                 <img
-                  src="https://images.unsplash.com/photo-1494790108755-2616c78623a7?w=600&h=300&fit=crop"
+                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=300&fit=crop"
                   alt="Ulka Kebhavi Testimonial"
                   className="w-full h-48 object-cover rounded-t-lg"
                 />
