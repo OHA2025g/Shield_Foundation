@@ -95,6 +95,15 @@ const Contact = () => {
     e.preventDefault();
     
     // Check if required fields are filled
+    if (!volunteerForm.availability) {
+      toast({
+        title: "Error",
+        description: "Please select your availability.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     if (volunteerForm.interests.length === 0) {
       toast({
         title: "Error",
