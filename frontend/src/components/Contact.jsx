@@ -409,6 +409,7 @@ const Contact = () => {
                         <Select
                           value={volunteerForm.availability}
                           onValueChange={(value) => setVolunteerForm({...volunteerForm, availability: value})}
+                          required
                         >
                           <SelectTrigger>
                             <SelectValue placeholder="Select availability" />
