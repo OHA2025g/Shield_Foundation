@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Checkbox } from './ui/checkbox';
 import { useToast } from '../hooks/use-toast';
 import { Mail, Phone, MapPin, Clock, Heart, Users, HandHeart, UserPlus } from 'lucide-react';
-import { mockData, mockAPI } from '../mock';
+import { api } from '../api';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -57,7 +57,7 @@ const Contact = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await mockAPI.submitContactForm(contactForm);
+      const response = await api.submitContactForm(contactForm);
       toast({
         title: "Success",
         description: response.message,
@@ -73,7 +73,7 @@ const Contact = () => {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to send message. Please try again.",
+        description: error.response?.data?.detail || "Failed to send message. Please try again.",
         variant: "destructive",
       });
     }
@@ -84,7 +84,7 @@ const Contact = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await mockAPI.submitVolunteerForm(volunteerForm);
+      const response = await api.submitVolunteerForm(volunteerForm);
       toast({
         title: "Success",
         description: response.message,
@@ -101,7 +101,7 @@ const Contact = () => {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to submit volunteer application. Please try again.",
+        description: error.response?.data?.detail || "Failed to submit volunteer application. Please try again.",
         variant: "destructive",
       });
     }
@@ -141,10 +141,10 @@ const Contact = () => {
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Email Us</h3>
                 <p className="text-gray-600 mb-4">Send us a message anytime</p>
                 <a 
-                  href={`mailto:${mockData.contact.email}`}
+                  href="mailto:shieldfoundation@gmail.com"
                   className="text-[#416177] hover:text-[#335259] font-medium"
                 >
-                  {mockData.contact.email}
+                  shieldfoundation@gmail.com
                 </a>
               </CardContent>
             </Card>
@@ -155,10 +155,10 @@ const Contact = () => {
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Call Us</h3>
                 <p className="text-gray-600 mb-4">Speak with our team</p>
                 <a 
-                  href={`tel:${mockData.contact.phone}`}
+                  href="tel:+919833406288"
                   className="text-[#E3B01A] hover:text-[#d4a117] font-medium"
                 >
-                  {mockData.contact.phone}
+                  +91 98334 06288
                 </a>
               </CardContent>
             </Card>
@@ -168,7 +168,7 @@ const Contact = () => {
                 <MapPin className="h-12 w-12 text-[#416177] mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Visit Us</h3>
                 <p className="text-gray-600 mb-4">Come see our work firsthand</p>
-                <p className="text-gray-800 font-medium">{mockData.contact.address}</p>
+                <p className="text-gray-800 font-medium">Dharavi, Mumbai, Maharashtra</p>
               </CardContent>
             </Card>
           </div>

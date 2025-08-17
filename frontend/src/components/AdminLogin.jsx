@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { useToast } from '../hooks/use-toast';
 import { Shield, Lock, User } from 'lucide-react';
-import { mockAPI } from '../mock';
+import { api } from '../api';
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -18,10 +18,8 @@ const AdminLogin = () => {
     setLoading(true);
     
     try {
-      const response = await mockAPI.adminLogin(credentials);
+      const response = await api.admin.login(credentials);
       if (response.success) {
-        // Store admin session (in real app, this would be JWT tokens)
-        localStorage.setItem('adminUser', JSON.stringify(response.user));
         toast({
           title: "Login Successful",
           description: `Welcome back, ${response.user.name}!`,
@@ -31,7 +29,7 @@ const AdminLogin = () => {
     } catch (error) {
       toast({
         title: "Login Failed",
-        description: error.message || "Invalid credentials. Please try again.",
+        description: error.response?.data?.detail || "Invalid credentials. Please try again.",
         variant: "destructive",
       });
     }
@@ -40,9 +38,9 @@ const AdminLogin = () => {
   };
 
   // Check if already logged in
-  React.useEffect(() => {
-    const adminUser = localStorage.getItem('adminUser');
-    if (adminUser) {
+  useEffect(() => {
+    const adminToken = localStorage.getItem('adminToken');
+    if (adminToken) {
       navigate('/admin/dashboard');
     }
   }, [navigate]);

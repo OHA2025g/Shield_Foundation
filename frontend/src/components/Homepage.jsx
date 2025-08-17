@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
@@ -6,30 +6,49 @@ import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { useToast } from '../hooks/use-toast';
 import { Heart, Users, GraduationCap, Award, Phone, Mail, MapPin, ArrowRight, CheckCircle } from 'lucide-react';
-import { mockData, mockAPI } from '../mock';
+import { api } from '../api';
 import Header from './Header';
 import Footer from './Footer';
 
 const Homepage = () => {
   const { toast } = useToast();
-  const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
+  const [contactForm, setContactForm] = useState({ name: '', email: '', phone: '', subject: '', message: '', inquiryType: 'general' });
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [loading, setLoading] = useState(false);
+  const [impactStats, setImpactStats] = useState({
+    youthTrained: 1300,
+    youthPlaced: 1000,
+    seniorsSupported: 6000,
+    womenEmpowered: 200
+  });
+
+  // Load impact statistics on component mount
+  useEffect(() => {
+    const loadImpactStats = async () => {
+      try {
+        const stats = await api.getImpactStats();
+        setImpactStats(stats);
+      } catch (error) {
+        console.error('Failed to load impact stats:', error);
+      }
+    };
+    loadImpactStats();
+  }, []);
 
   const handleContactSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await mockAPI.submitContactForm(contactForm);
+      const response = await api.submitContactForm(contactForm);
       toast({
         title: "Success",
         description: response.message,
       });
-      setContactForm({ name: '', email: '', message: '' });
+      setContactForm({ name: '', email: '', phone: '', subject: '', message: '', inquiryType: 'general' });
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to send message. Please try again.",
+        description: error.response?.data?.detail || "Failed to send message. Please try again.",
         variant: "destructive",
       });
     }
@@ -38,8 +57,10 @@ const Homepage = () => {
 
   const handleNewsletterSubmit = async (e) => {
     e.preventDefault();
+    if (!newsletterEmail.trim()) return;
+    
     try {
-      const response = await mockAPI.subscribeNewsletter(newsletterEmail);
+      const response = await api.subscribeNewsletter(newsletterEmail);
       toast({
         title: "Success",
         description: response.message,
@@ -48,7 +69,7 @@ const Homepage = () => {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to subscribe. Please try again.",
+        description: error.response?.data?.detail || "Failed to subscribe. Please try again.",
         variant: "destructive",
       });
     }
@@ -94,25 +115,25 @@ const Homepage = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center">
               <div className="text-4xl md:text-5xl font-bold text-[#416177] mb-2">
-                {mockData.impactStats.youthTrained.toLocaleString()}+
+                {impactStats.youthTrained?.toLocaleString()}+
               </div>
               <div className="text-gray-600">Youth Trained</div>
             </div>
             <div className="text-center">
               <div className="text-4xl md:text-5xl font-bold text-[#E3B01A] mb-2">
-                {mockData.impactStats.youthPlaced.toLocaleString()}+
+                {impactStats.youthPlaced?.toLocaleString()}+
               </div>
               <div className="text-gray-600">Youth Placed</div>
             </div>
             <div className="text-center">
               <div className="text-4xl md:text-5xl font-bold text-[#416177] mb-2">
-                {mockData.impactStats.seniorsSupported.toLocaleString()}+
+                {impactStats.seniorsSupported?.toLocaleString()}+
               </div>
               <div className="text-gray-600">Seniors Supported</div>
             </div>
             <div className="text-center">
               <div className="text-4xl md:text-5xl font-bold text-[#E3B01A] mb-2">
-                {mockData.impactStats.womenEmpowered}+
+                {impactStats.womenEmpowered}+
               </div>
               <div className="text-gray-600">Women Empowered</div>
             </div>
@@ -149,11 +170,11 @@ const Homepage = () => {
                 <div className="space-y-2 mb-6">
                   <div className="flex items-center text-sm text-gray-600">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                    1300+ youth trained across all programs
+                    {impactStats.youthTrained?.toLocaleString()}+ youth trained across all programs
                   </div>
                   <div className="flex items-center text-sm text-gray-600">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                    1000+ placed with reputed employers
+                    {impactStats.youthPlaced?.toLocaleString()}+ placed with reputed employers
                   </div>
                   <div className="flex items-center text-sm text-gray-600">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
@@ -215,24 +236,24 @@ const Homepage = () => {
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Success Story Spotlight</h2>
           </div>
           
-          {mockData.successStories.map((story) => (
-            <Card key={story.id} className="max-w-4xl mx-auto">
-              <CardContent className="p-8">
-                <div className="flex flex-col md:flex-row items-center gap-8">
-                  <img 
-                    src={story.image} 
-                    alt={story.name}
-                    className="w-32 h-32 rounded-full object-cover"
-                  />
-                  <div className="text-center md:text-left">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{story.name}</h3>
-                    <p className="text-lg text-[#416177] mb-4">{story.program} Graduate</p>
-                    <p className="text-gray-600 text-lg leading-relaxed">{story.achievement}</p>
-                  </div>
+          <Card className="max-w-4xl mx-auto">
+            <CardContent className="p-8">
+              <div className="flex flex-col md:flex-row items-center gap-8">
+                <img 
+                  src="https://images.unsplash.com/photo-1494790108755-2616c78623a7?w=400&h=400&fit=crop&crop=face" 
+                  alt="Ulka Kebhavi"
+                  className="w-32 h-32 rounded-full object-cover"
+                />
+                <div className="text-center md:text-left">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Ulka Kebhavi</h3>
+                  <p className="text-lg text-[#416177] mb-4">ITES-BPO Graduate</p>
+                  <p className="text-gray-600 text-lg leading-relaxed">
+                    Completed ITES-BPO course under SMART Program, placed as a Telecaller at Finbross Marketing Pvt Ltd with a CTC of ₹15,500/month.
+                  </p>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
@@ -259,6 +280,15 @@ const Homepage = () => {
                     placeholder="Your Email"
                     value={contactForm.email}
                     onChange={(e) => setContactForm({...contactForm, email: e.target.value})}
+                    required
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/70"
+                  />
+                </div>
+                <div>
+                  <Input
+                    placeholder="Subject"
+                    value={contactForm.subject}
+                    onChange={(e) => setContactForm({...contactForm, subject: e.target.value})}
                     required
                     className="bg-white/10 border-white/20 text-white placeholder:text-white/70"
                   />
@@ -291,21 +321,21 @@ const Homepage = () => {
                   <Mail className="h-6 w-6 text-[#E3B01A] mr-4 mt-1" />
                   <div>
                     <p className="font-semibold">Email</p>
-                    <p className="text-white/80">{mockData.contact.email}</p>
+                    <p className="text-white/80">shieldfoundation@gmail.com</p>
                   </div>
                 </div>
                 <div className="flex items-start">
                   <Phone className="h-6 w-6 text-[#E3B01A] mr-4 mt-1" />
                   <div>
                     <p className="font-semibold">Phone</p>
-                    <p className="text-white/80">{mockData.contact.phone}</p>
+                    <p className="text-white/80">+91 98334 06288</p>
                   </div>
                 </div>
                 <div className="flex items-start">
                   <MapPin className="h-6 w-6 text-[#E3B01A] mr-4 mt-1" />
                   <div>
                     <p className="font-semibold">Address</p>
-                    <p className="text-white/80">{mockData.contact.address}</p>
+                    <p className="text-white/80">Dharavi, Mumbai, Maharashtra</p>
                   </div>
                 </div>
               </div>
