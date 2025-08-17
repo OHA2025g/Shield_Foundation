@@ -159,11 +159,14 @@ backend:
     file: "server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: true
         agent: "main"
         comment: "Implemented full CRUD operations for news articles with draft/published status, needs testing with frontend integration"
+      - working: true
+        agent: "testing"
+        comment: "Comprehensive testing completed - all CRUD operations working perfectly. Created, read, updated, and deleted news articles successfully. JWT authentication working correctly for admin endpoints."
 
   - task: "Impact Statistics API"
     implemented: true
