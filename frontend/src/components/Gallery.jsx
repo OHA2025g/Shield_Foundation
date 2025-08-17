@@ -96,7 +96,7 @@ const Gallery = () => {
       category: 'youth-training',
       title: 'Success Story - Ulka Kebhavi',
       description: 'Watch Ulka share her journey from ITES training to successful employment',
-      thumbnail: 'https://images.unsplash.com/photo-1494790108755-2616c78623a7?w=500&h=300&fit=crop',
+      thumbnail: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&h=300&fit=crop',
       date: '2024-07-05'
     },
     {
