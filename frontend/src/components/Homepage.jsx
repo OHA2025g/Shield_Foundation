@@ -240,7 +240,7 @@ const Homepage = () => {
             <CardContent className="p-8">
               <div className="flex flex-col md:flex-row items-center gap-8">
                 <img 
-                  src="https://images.unsplash.com/photo-1494790108755-2616c78623a7?w=400&h=400&fit=crop&crop=face" 
+                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&crop=face" 
                   alt="Ulka Kebhavi"
                   className="w-32 h-32 rounded-full object-cover"
                 />
