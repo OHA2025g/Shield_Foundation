@@ -197,6 +197,52 @@ const AdminPanel = () => {
     setShowNewsForm(false);
   };
 
+  const handleUpdateImpactStats = async () => {
+    setLoading(true);
+    try {
+      await api.admin.updateImpactStats({
+        youth_trained: impactStats.youthTrained,
+        youth_placed: impactStats.youthPlaced,
+        seniors_supported: impactStats.seniorsSupported,
+        women_empowered: impactStats.womenEmpowered
+      });
+      toast({
+        title: "Success",
+        description: "Impact statistics updated successfully!",
+      });
+      // Reload the dashboard data to reflect changes
+      loadDashboardData();
+    } catch (error) {
+      // Handle FastAPI validation errors properly
+      let errorMessage = "Failed to update impact statistics.";
+      
+      if (error.response?.data) {
+        if (typeof error.response.data === 'string') {
+          errorMessage = error.response.data;
+        } else if (error.response.data.detail) {
+          if (Array.isArray(error.response.data.detail)) {
+            const validationErrors = error.response.data.detail.map(err => {
+              const field = err.loc?.join(' ') || 'field';
+              return `${field}: ${err.msg}`;
+            }).join(', ');
+            errorMessage = `Validation error: ${validationErrors}`;
+          } else if (typeof error.response.data.detail === 'string') {
+            errorMessage = error.response.data.detail;
+          }
+        } else if (error.response.data.message) {
+          errorMessage = error.response.data.message;
+        }
+      }
+      
+      toast({
+        title: "Error",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    }
+    setLoading(false);
+  };
+
   if (!currentUser) {
     return <div>Loading...</div>;
   }
