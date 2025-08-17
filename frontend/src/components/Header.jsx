@@ -92,9 +92,12 @@ const Header = () => {
                 </Link>
               ))}
               <Button 
+                asChild
                 className="mt-4 bg-[#E3B01A] hover:bg-[#d4a117] text-white"
               >
-                Donate Now
+                <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
+                  Donate Now
+                </Link>
               </Button>
             </nav>
           </div>
