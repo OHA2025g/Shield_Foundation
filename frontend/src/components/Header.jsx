@@ -51,9 +51,12 @@ const Header = () => {
           {/* CTA Button */}
           <div className="hidden md:flex items-center space-x-4">
             <Button 
+              asChild
               className="bg-[#E3B01A] hover:bg-[#d4a117] text-white"
             >
-              Donate Now
+              <Link to="/contact">
+                Donate Now
+              </Link>
             </Button>
           </div>
 
