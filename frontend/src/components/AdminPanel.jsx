@@ -21,14 +21,20 @@ import {
   Save,
   X
 } from 'lucide-react';
-import { mockData, mockAPI } from '../mock';
+import { api } from '../api';
 
 const AdminPanel = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [currentUser, setCurrentUser] = useState(null);
   const [activeTab, setActiveTab] = useState('dashboard');
-  const [news, setNews] = useState(mockData.news);
+  const [news, setNews] = useState([]);
+  const [impactStats, setImpactStats] = useState({
+    youthTrained: 1300,
+    youthPlaced: 1000,
+    seniorsSupported: 6000,
+    womenEmpowered: 200
+  });
   const [showNewsForm, setShowNewsForm] = useState(false);
   const [editingNews, setEditingNews] = useState(null);
   const [newsForm, setNewsForm] = useState({
@@ -36,19 +42,60 @@ const AdminPanel = () => {
     content: '',
     status: 'draft'
   });
+  const [loading, setLoading] = useState(false);
 
-  // Check authentication
+  // Check authentication and load data
   useEffect(() => {
+    const adminToken = localStorage.getItem('adminToken');
     const adminUser = localStorage.getItem('adminUser');
-    if (!adminUser) {
+    
+    if (!adminToken || !adminUser) {
       navigate('/admin');
       return;
     }
+    
     setCurrentUser(JSON.parse(adminUser));
+    loadDashboardData();
   }, [navigate]);
 
+  const loadDashboardData = async () => {
+    try {
+      // Load impact statistics
+      const stats = await api.getImpactStats();
+      setImpactStats(stats);
+      
+      // Load news if on news tab
+      if (activeTab === 'news') {
+        const newsData = await api.admin.getAllNews();
+        setNews(newsData);
+      }
+    } catch (error) {
+      console.error('Failed to load dashboard data:', error);
+    }
+  };
+
+  // Load news when switching to news tab
+  useEffect(() => {
+    if (activeTab === 'news' && currentUser) {
+      loadNews();
+    }
+  }, [activeTab, currentUser]);
+
+  const loadNews = async () => {
+    try {
+      const newsData = await api.admin.getAllNews();
+      setNews(newsData);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to load news articles.",
+        variant: "destructive",
+      });
+    }
+  };
+
   const handleLogout = () => {
-    localStorage.removeItem('adminUser');
+    api.admin.logout();
     toast({
       title: "Logged Out",
       description: "You have been successfully logged out.",
@@ -57,63 +104,79 @@ const AdminPanel = () => {
   };
 
   const handleAddNews = async () => {
+    if (!newsForm.title.trim() || !newsForm.content.trim()) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
     try {
-      const response = await mockAPI.addNews(newsForm);
-      if (response.success) {
-        setNews([response.data, ...news]);
-        setNewsForm({ title: '', content: '', status: 'draft' });
-        setShowNewsForm(false);
-        toast({
-          title: "Success",
-          description: "News article added successfully!",
-        });
-      }
+      await api.admin.createNews(newsForm);
+      toast({
+        title: "Success",
+        description: "News article created successfully!",
+      });
+      setNewsForm({ title: '', content: '', status: 'draft' });
+      setShowNewsForm(false);
+      loadNews(); // Reload news list
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to add news article.",
+        description: error.response?.data?.detail || "Failed to create news article.",
         variant: "destructive",
       });
     }
+    setLoading(false);
   };
 
   const handleUpdateNews = async () => {
+    if (!newsForm.title.trim() || !newsForm.content.trim()) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
     try {
-      const response = await mockAPI.updateNews(editingNews.id, newsForm);
-      if (response.success) {
-        setNews(news.map(n => n.id === editingNews.id ? response.data : n));
-        setNewsForm({ title: '', content: '', status: 'draft' });
-        setEditingNews(null);
-        toast({
-          title: "Success",
-          description: "News article updated successfully!",
-        });
-      }
+      await api.admin.updateNews(editingNews.id, newsForm);
+      toast({
+        title: "Success",
+        description: "News article updated successfully!",
+      });
+      setNewsForm({ title: '', content: '', status: 'draft' });
+      setEditingNews(null);
+      loadNews(); // Reload news list
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to update news article.",
+        description: error.response?.data?.detail || "Failed to update news article.",
         variant: "destructive",
       });
     }
+    setLoading(false);
   };
 
   const handleDeleteNews = async (id) => {
     if (!window.confirm('Are you sure you want to delete this news article?')) return;
     
     try {
-      const response = await mockAPI.deleteNews(id);
-      if (response.success) {
-        setNews(news.filter(n => n.id !== id));
-        toast({
-          title: "Success",
-          description: "News article deleted successfully!",
-        });
-      }
+      await api.admin.deleteNews(id);
+      toast({
+        title: "Success",
+        description: "News article deleted successfully!",
+      });
+      loadNews(); // Reload news list
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to delete news article.",
+        description: error.response?.data?.detail || "Failed to delete news article.",
         variant: "destructive",
       });
     }
@@ -220,7 +283,7 @@ const AdminPanel = () => {
                         <Users className="h-8 w-8 text-[#416177]" />
                         <div className="ml-4">
                           <div className="text-2xl font-bold text-gray-900">
-                            {mockData.impactStats.youthTrained.toLocaleString()}
+                            {impactStats.youthTrained?.toLocaleString()}
                           </div>
                           <div className="text-sm text-gray-600">Youth Trained</div>
                         </div>
@@ -234,7 +297,7 @@ const AdminPanel = () => {
                         <TrendingUp className="h-8 w-8 text-[#E3B01A]" />
                         <div className="ml-4">
                           <div className="text-2xl font-bold text-gray-900">
-                            {mockData.impactStats.youthPlaced.toLocaleString()}
+                            {impactStats.youthPlaced?.toLocaleString()}
                           </div>
                           <div className="text-sm text-gray-600">Youth Placed</div>
                         </div>
@@ -248,7 +311,7 @@ const AdminPanel = () => {
                         <Users className="h-8 w-8 text-[#416177]" />
                         <div className="ml-4">
                           <div className="text-2xl font-bold text-gray-900">
-                            {mockData.impactStats.seniorsSupported.toLocaleString()}
+                            {impactStats.seniorsSupported?.toLocaleString()}
                           </div>
                           <div className="text-sm text-gray-600">Seniors Supported</div>
                         </div>
@@ -262,7 +325,7 @@ const AdminPanel = () => {
                         <Users className="h-8 w-8 text-[#E3B01A]" />
                         <div className="ml-4">
                           <div className="text-2xl font-bold text-gray-900">
-                            {mockData.impactStats.womenEmpowered}
+                            {impactStats.womenEmpowered}
                           </div>
                           <div className="text-sm text-gray-600">Women Empowered</div>
                         </div>
@@ -375,10 +438,11 @@ const AdminPanel = () => {
                           <Button
                             type="button"
                             onClick={editingNews ? handleUpdateNews : handleAddNews}
+                            disabled={loading}
                             className="bg-[#416177] hover:bg-[#335259] text-white"
                           >
                             <Save className="h-4 w-4 mr-2" />
-                            {editingNews ? 'Update' : 'Save'}
+                            {loading ? 'Saving...' : (editingNews ? 'Update' : 'Save')}
                           </Button>
                           <Button
                             type="button"
@@ -438,6 +502,15 @@ const AdminPanel = () => {
                       </CardContent>
                     </Card>
                   ))}
+                  
+                  {news.length === 0 && (
+                    <Card>
+                      <CardContent className="p-8 text-center">
+                        <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                        <p className="text-gray-500">No news articles yet. Create your first article!</p>
+                      </CardContent>
+                    </Card>
+                  )}
                 </div>
               </div>
             )}

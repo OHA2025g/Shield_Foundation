@@ -4,16 +4,20 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { useToast } from '../hooks/use-toast';
 import { Heart, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
-import { mockData, mockAPI } from '../mock';
+import { api } from '../api';
 
 const Footer = () => {
   const { toast } = useToast();
   const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleNewsletterSubmit = async (e) => {
     e.preventDefault();
+    if (!newsletterEmail.trim()) return;
+    
+    setLoading(true);
     try {
-      const response = await mockAPI.subscribeNewsletter(newsletterEmail);
+      const response = await api.subscribeNewsletter(newsletterEmail);
       toast({
         title: "Success",
         description: response.message,
@@ -22,10 +26,11 @@ const Footer = () => {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to subscribe. Please try again.",
+        description: error.response?.data?.detail || "Failed to subscribe. Please try again.",
         variant: "destructive",
       });
     }
+    setLoading(false);
   };
 
   return (
@@ -50,15 +55,15 @@ const Footer = () => {
             <div className="space-y-2 mb-6">
               <div className="flex items-center text-sm">
                 <Mail className="h-4 w-4 text-[#E3B01A] mr-2" />
-                <span className="text-gray-300">{mockData.contact.email}</span>
+                <span className="text-gray-300">shieldfoundation@gmail.com</span>
               </div>
               <div className="flex items-center text-sm">
                 <Phone className="h-4 w-4 text-[#E3B01A] mr-2" />
-                <span className="text-gray-300">{mockData.contact.phone}</span>
+                <span className="text-gray-300">+91 98334 06288</span>
               </div>
               <div className="flex items-center text-sm">
                 <MapPin className="h-4 w-4 text-[#E3B01A] mr-2" />
-                <span className="text-gray-300">{mockData.contact.address}</span>
+                <span className="text-gray-300">Dharavi, Mumbai, Maharashtra</span>
               </div>
             </div>
 
@@ -108,9 +113,10 @@ const Footer = () => {
               />
               <Button 
                 type="submit"
+                disabled={loading}
                 className="w-full bg-[#E3B01A] hover:bg-[#d4a117] text-white"
               >
-                Subscribe
+                {loading ? 'Subscribing...' : 'Subscribe'}
               </Button>
             </form>
           </div>
