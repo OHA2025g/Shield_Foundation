@@ -560,7 +560,33 @@ const Contact = () => {
                 <HandHeart className="h-12 w-12 text-[#E3B01A] mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Spread the Word</h3>
                 <p className="text-gray-600 mb-6">Share our mission with your network</p>
-                <Button variant="outline" className="border-[#E3B01A] text-[#E3B01A] hover:bg-[#E3B01A] hover:text-white">
+                <Button 
+                  variant="outline" 
+                  className="border-[#E3B01A] text-[#E3B01A] hover:bg-[#E3B01A] hover:text-white"
+                  onClick={() => {
+                    // Simple share functionality using Web Share API or fallback
+                    if (navigator.share) {
+                      navigator.share({
+                        title: 'Shield Foundation',
+                        text: 'Support Shield Foundation - Adding Life to Years through youth skilling and senior citizen care.',
+                        url: window.location.origin,
+                      }).catch(console.error);
+                    } else {
+                      // Fallback: copy URL to clipboard
+                      navigator.clipboard.writeText(window.location.origin).then(() => {
+                        toast({
+                          title: "URL Copied!",
+                          description: "Shield Foundation website URL has been copied to your clipboard. Share it with others!",
+                        });
+                      }).catch(() => {
+                        toast({
+                          title: "Share Shield Foundation",
+                          description: "Visit us at " + window.location.origin + " and help spread our mission!",
+                        });
+                      });
+                    }
+                  }}
+                >
                   Share
                 </Button>
               </CardContent>
