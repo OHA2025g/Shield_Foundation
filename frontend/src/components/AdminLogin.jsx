@@ -27,9 +27,30 @@ const AdminLogin = () => {
         navigate('/admin/dashboard');
       }
     } catch (error) {
+      // Handle FastAPI validation errors properly
+      let errorMessage = "Invalid credentials. Please try again.";
+      
+      if (error.response?.data) {
+        if (typeof error.response.data === 'string') {
+          errorMessage = error.response.data;
+        } else if (error.response.data.detail) {
+          if (Array.isArray(error.response.data.detail)) {
+            const validationErrors = error.response.data.detail.map(err => {
+              const field = err.loc?.join(' ') || 'field';
+              return `${field}: ${err.msg}`;
+            }).join(', ');
+            errorMessage = `Validation error: ${validationErrors}`;
+          } else if (typeof error.response.data.detail === 'string') {
+            errorMessage = error.response.data.detail;
+          }
+        } else if (error.response.data.message) {
+          errorMessage = error.response.data.message;
+        }
+      }
+      
       toast({
         title: "Login Failed",
-        description: error.response?.data?.detail || "Invalid credentials. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
     }
