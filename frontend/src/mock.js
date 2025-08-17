@@ -68,7 +68,7 @@ export const mockData = {
       name: "Ulka Kebhavi",
       program: "ITES-BPO",
       achievement: "Placed as a Telecaller at Finbross Marketing Pvt Ltd with a CTC of ₹15,500/month",
-      image: "https://images.unsplash.com/photo-1494790108755-2616c78623a7?w=400&h=400&fit=crop&crop=face"
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&crop=face"
     }
   ],
 
