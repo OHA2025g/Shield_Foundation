@@ -55,6 +55,17 @@ const Contact = () => {
 
   const handleContactSubmit = async (e) => {
     e.preventDefault();
+    
+    // Check if required fields are filled
+    if (!contactForm.inquiryType) {
+      toast({
+        title: "Error",
+        description: "Please select an inquiry type.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     setLoading(true);
     try {
       const response = await api.submitContactForm(contactForm);
