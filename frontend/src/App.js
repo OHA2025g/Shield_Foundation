@@ -10,6 +10,7 @@ import Gallery from "./components/Gallery";
 import Contact from "./components/Contact";
 import AdminPanel from "./components/AdminPanel";
 import AdminLogin from "./components/AdminLogin";
+import ToastTest from "./components/ToastTest";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminPanel />} />
+          <Route path="/toast-test" element={<ToastTest />} />
         </Routes>
       </BrowserRouter>
       <Toaster />
