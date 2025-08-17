@@ -249,28 +249,53 @@ const About = () => {
             <p className="text-xl text-gray-600">Key milestones in our growth and impact</p>
           </div>
           
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-[#416177] hidden md:block"></div>
+          <div className="relative max-w-6xl mx-auto">
+            {/* Center timeline line */}
+            <div className="absolute left-1/2 transform -translate-x-0.5 top-0 bottom-0 w-1 bg-[#416177] hidden md:block"></div>
             
-            <div className="space-y-8">
+            <div className="space-y-12">
               {milestones.map((milestone, index) => (
-                <div key={index} className="flex items-start md:pl-20">
+                <div key={index} className={`relative flex items-center ${index % 2 === 0 ? 'md:justify-start' : 'md:justify-end'}`}>
                   {/* Timeline dot */}
-                  <div className="hidden md:flex absolute left-6 w-4 h-4 bg-[#E3B01A] rounded-full"></div>
+                  <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-[#E3B01A] rounded-full border-4 border-white shadow-lg z-10 hidden md:block"></div>
                   
-                  <Card className="flex-1 hover:shadow-lg transition-shadow duration-300">
-                    <CardContent className="p-6">
-                      <div className="flex items-center mb-3">
-                        <Badge className="bg-[#416177] text-white mr-4">{milestone.year}</Badge>
-                        <h3 className="text-xl font-semibold text-gray-900">{milestone.title}</h3>
-                      </div>
-                      <p className="text-gray-600">{milestone.description}</p>
-                    </CardContent>
-                  </Card>
+                  <div className={`w-full md:w-5/12 ${index % 2 === 0 ? 'md:pr-8' : 'md:pl-8'}`}>
+                    <Card className={`hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${
+                      index % 2 === 0 
+                        ? 'md:ml-0' 
+                        : 'md:mr-0'
+                    }`}>
+                      <CardContent className="p-6 relative">
+                        {/* Arrow pointing to timeline */}
+                        <div className={`absolute top-8 hidden md:block ${
+                          index % 2 === 0 
+                            ? 'right-0 transform translate-x-full' 
+                            : 'left-0 transform -translate-x-full'
+                        }`}>
+                          <div className={`w-0 h-0 ${
+                            index % 2 === 0
+                              ? 'border-l-[20px] border-l-white border-t-[10px] border-t-transparent border-b-[10px] border-b-transparent'
+                              : 'border-r-[20px] border-r-white border-t-[10px] border-t-transparent border-b-[10px] border-b-transparent'
+                          }`}></div>
+                        </div>
+                        
+                        <div className="flex items-center mb-4">
+                          <Badge className="bg-[#416177] text-white text-sm px-3 py-1 mr-3">
+                            {milestone.year}
+                          </Badge>
+                          <h3 className="text-xl font-bold text-gray-900">{milestone.title}</h3>
+                        </div>
+                        <p className="text-gray-600 leading-relaxed">{milestone.description}</p>
+                      </CardContent>
+                    </Card>
+                  </div>
                 </div>
               ))}
             </div>
+            
+            {/* Start and End markers */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 -top-4 w-4 h-4 bg-[#416177] rounded-full hidden md:block"></div>
+            <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-4 w-4 h-4 bg-[#416177] rounded-full hidden md:block"></div>
           </div>
         </div>
       </section>
