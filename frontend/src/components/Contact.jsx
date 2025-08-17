@@ -279,6 +279,7 @@ const Contact = () => {
                         <Select
                           value={contactForm.inquiryType}
                           onValueChange={(value) => setContactForm({...contactForm, inquiryType: value})}
+                          required
                         >
                           <SelectTrigger>
                             <SelectValue placeholder="Select inquiry type" />
