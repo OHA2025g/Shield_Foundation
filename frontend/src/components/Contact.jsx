@@ -93,6 +93,17 @@ const Contact = () => {
 
   const handleVolunteerSubmit = async (e) => {
     e.preventDefault();
+    
+    // Check if required fields are filled
+    if (volunteerForm.interests.length === 0) {
+      toast({
+        title: "Error",
+        description: "Please select at least one area of interest.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     setLoading(true);
     try {
       const response = await api.submitVolunteerForm(volunteerForm);
