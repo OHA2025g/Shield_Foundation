@@ -511,20 +511,17 @@ const Contact = () => {
                 <Button 
                   className="bg-[#E3B01A] hover:bg-[#d4a117] text-white"
                   onClick={() => {
-                    // Scroll to contact form for donation inquiries
-                    const contactForm = document.querySelector('form');
-                    if (contactForm) {
-                      contactForm.scrollIntoView({ behavior: 'smooth' });
-                      // Set the inquiry type to donation
-                      const inquirySelect = document.querySelector('[role="combobox"]');
-                      if (inquirySelect) {
-                        inquirySelect.click();
-                        setTimeout(() => {
-                          const donationOption = document.querySelector('text="Donation Inquiry"');
-                          if (donationOption) donationOption.click();
-                        }, 100);
-                      }
+                    // For now, scroll to contact form and show donation message
+                    const contactFormSection = document.getElementById('contact-form-section');
+                    if (contactFormSection) {
+                      contactFormSection.scrollIntoView({ behavior: 'smooth' });
                     }
+                    
+                    // Show toast message about donation
+                    toast({
+                      title: "Thank you for your interest!",
+                      description: "Please use the contact form below to inquire about donations, or call us directly at +91 98334 06288.",
+                    });
                   }}
                 >
                   Donate Now
