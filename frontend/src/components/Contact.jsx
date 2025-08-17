@@ -534,7 +534,22 @@ const Contact = () => {
                 <Users className="h-12 w-12 text-[#416177] mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Corporate Partnership</h3>
                 <p className="text-gray-600 mb-6">Explore CSR opportunities with Shield Foundation</p>
-                <Button variant="outline" className="border-[#416177] text-[#416177] hover:bg-[#416177] hover:text-white">
+                <Button 
+                  variant="outline" 
+                  className="border-[#416177] text-[#416177] hover:bg-[#416177] hover:text-white"
+                  onClick={() => {
+                    // Scroll to contact form for partnership inquiries
+                    const contactFormSection = document.getElementById('contact-form-section');
+                    if (contactFormSection) {
+                      contactFormSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    
+                    toast({
+                      title: "Corporate Partnership",
+                      description: "Please use the contact form below to inquire about CSR opportunities and partnerships.",
+                    });
+                  }}
+                >
                   Learn More
                 </Button>
               </CardContent>
