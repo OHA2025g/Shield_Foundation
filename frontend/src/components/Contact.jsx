@@ -56,6 +56,9 @@ const Contact = () => {
   const handleContactSubmit = async (e) => {
     e.preventDefault();
     
+    // Debug: Log form data
+    console.log('Contact form data:', contactForm);
+    
     // Check if required fields are filled
     if (!contactForm.inquiryType) {
       toast({
@@ -82,6 +85,7 @@ const Contact = () => {
         inquiryType: ''
       });
     } catch (error) {
+      console.error('Contact form error:', error);
       toast({
         title: "Error",
         description: error.response?.data?.detail || "Failed to send message. Please try again.",
