@@ -46,9 +46,30 @@ const Homepage = () => {
       });
       setContactForm({ name: '', email: '', phone: '', subject: '', message: '', inquiryType: 'general' });
     } catch (error) {
+      // Handle FastAPI validation errors properly
+      let errorMessage = "Failed to send message. Please try again.";
+      
+      if (error.response?.data) {
+        if (typeof error.response.data === 'string') {
+          errorMessage = error.response.data;
+        } else if (error.response.data.detail) {
+          if (Array.isArray(error.response.data.detail)) {
+            const validationErrors = error.response.data.detail.map(err => {
+              const field = err.loc?.join(' ') || 'field';
+              return `${field}: ${err.msg}`;
+            }).join(', ');
+            errorMessage = `Validation error: ${validationErrors}`;
+          } else if (typeof error.response.data.detail === 'string') {
+            errorMessage = error.response.data.detail;
+          }
+        } else if (error.response.data.message) {
+          errorMessage = error.response.data.message;
+        }
+      }
+      
       toast({
         title: "Error",
-        description: error.response?.data?.detail || "Failed to send message. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
     }
