@@ -521,37 +521,196 @@ const AdminPanel = () => {
                   <h2 className="text-2xl font-bold text-gray-900 mb-6">Content Management</h2>
                 </div>
                 
+                {/* Impact Statistics Management */}
                 <Card>
                   <CardHeader>
-                    <CardTitle>Page Content</CardTitle>
+                    <CardTitle className="text-xl text-[#416177]">Impact Statistics</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-600 mb-4">
-                      Content management features will be available in the full version. 
-                      This includes editing homepage sections, program descriptions, and other static content.
-                    </p>
+                    <p className="text-gray-600 mb-6">Update the impact statistics displayed on the homepage and throughout the website.</p>
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="text-sm font-medium text-gray-700 mb-2 block">
+                          Youth Trained
+                        </label>
+                        <Input
+                          type="number"
+                          value={impactStats.youthTrained || ''}
+                          onChange={(e) => setImpactStats({...impactStats, youthTrained: parseInt(e.target.value) || 0})}
+                          placeholder="e.g., 1300"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-700 mb-2 block">
+                          Youth Placed
+                        </label>
+                        <Input
+                          type="number"
+                          value={impactStats.youthPlaced || ''}
+                          onChange={(e) => setImpactStats({...impactStats, youthPlaced: parseInt(e.target.value) || 0})}
+                          placeholder="e.g., 1000"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-700 mb-2 block">
+                          Seniors Supported
+                        </label>
+                        <Input
+                          type="number"
+                          value={impactStats.seniorsSupported || ''}
+                          onChange={(e) => setImpactStats({...impactStats, seniorsSupported: parseInt(e.target.value) || 0})}
+                          placeholder="e.g., 6000"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-700 mb-2 block">
+                          Women Empowered
+                        </label>
+                        <Input
+                          type="number"
+                          value={impactStats.womenEmpowered || ''}
+                          onChange={(e) => setImpactStats({...impactStats, womenEmpowered: parseInt(e.target.value) || 0})}
+                          placeholder="e.g., 200"
+                        />
+                      </div>
+                    </div>
+                    <div className="mt-6">
+                      <Button 
+                        onClick={handleUpdateImpactStats}
+                        disabled={loading}
+                        className="bg-[#416177] hover:bg-[#335259] text-white"
+                      >
+                        {loading ? 'Updating...' : 'Update Statistics'}
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Contact Information Management */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-xl text-[#E3B01A]">Contact Information</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 mb-6">Current contact information displayed across the website:</p>
+                    <div className="space-y-4 bg-gray-50 p-4 rounded-lg">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="font-medium text-gray-700">Email:</span>
+                          <span className="ml-2 text-gray-600">shieldfoundation@gmail.com</span>
+                        </div>
+                        <Button size="sm" variant="outline">
+                          <Edit className="h-4 w-4 mr-2" />
+                          Edit
+                        </Button>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="font-medium text-gray-700">Phone:</span>
+                          <span className="ml-2 text-gray-600">+91 98334 06288</span>
+                        </div>
+                        <Button size="sm" variant="outline">
+                          <Edit className="h-4 w-4 mr-2" />
+                          Edit
+                        </Button>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="font-medium text-gray-700">Address:</span>
+                          <span className="ml-2 text-gray-600">Dharavi, Mumbai, Maharashtra</span>
+                        </div>
+                        <Button size="sm" variant="outline">
+                          <Edit className="h-4 w-4 mr-2" />
+                          Edit
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Page Content Management */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-xl text-[#416177]">Page Content</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 mb-6">Manage content across different pages of the website.</p>
                     <div className="space-y-3">
-                      <div className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                        <span className="font-medium">Homepage Hero Section</span>
+                      <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                        <div>
+                          <span className="font-medium">Homepage Hero Section</span>
+                          <p className="text-sm text-gray-600">Edit main headline, description, and call-to-action buttons</p>
+                        </div>
                         <Button size="sm" variant="outline">
                           <Edit className="h-4 w-4 mr-2" />
                           Edit
                         </Button>
                       </div>
-                      <div className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                        <span className="font-medium">About Us Page</span>
+                      <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                        <div>
+                          <span className="font-medium">About Us Page</span>
+                          <p className="text-sm text-gray-600">Update foundation story, mission, vision, and team information</p>
+                        </div>
                         <Button size="sm" variant="outline">
                           <Edit className="h-4 w-4 mr-2" />
                           Edit
                         </Button>
                       </div>
-                      <div className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                        <span className="font-medium">Programs Information</span>
+                      <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                        <div>
+                          <span className="font-medium">Programs Information</span>
+                          <p className="text-sm text-gray-600">Modify program descriptions, courses, and service details</p>
+                        </div>
                         <Button size="sm" variant="outline">
                           <Edit className="h-4 w-4 mr-2" />
                           Edit
                         </Button>
                       </div>
+                      <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                        <div>
+                          <span className="font-medium">Success Stories</span>
+                          <p className="text-sm text-gray-600">Add, edit, or remove success stories and testimonials</p>
+                        </div>
+                        <Button size="sm" variant="outline">
+                          <Edit className="h-4 w-4 mr-2" />
+                          Edit
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Recent Submissions */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-xl text-[#E3B01A]">Recent Submissions</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 mb-6">View and manage recent form submissions from visitors.</p>
+                    <div className="grid md:grid-cols-3 gap-4">
+                      <div className="bg-blue-50 p-4 rounded-lg text-center">
+                        <div className="text-2xl font-bold text-[#416177] mb-2">12</div>
+                        <div className="text-sm text-gray-600">Contact Forms</div>
+                        <div className="text-xs text-gray-500 mt-1">This week</div>
+                      </div>
+                      <div className="bg-yellow-50 p-4 rounded-lg text-center">
+                        <div className="text-2xl font-bold text-[#E3B01A] mb-2">8</div>
+                        <div className="text-sm text-gray-600">Volunteer Applications</div>
+                        <div className="text-xs text-gray-500 mt-1">This week</div>
+                      </div>
+                      <div className="bg-green-50 p-4 rounded-lg text-center">
+                        <div className="text-2xl font-bold text-green-600 mb-2">25</div>
+                        <div className="text-sm text-gray-600">Newsletter Signups</div>
+                        <div className="text-xs text-gray-500 mt-1">This week</div>
+                      </div>
+                    </div>
+                    <div className="mt-6 flex space-x-3">
+                      <Button variant="outline" className="border-[#416177] text-[#416177] hover:bg-[#416177] hover:text-white">
+                        View All Contacts
+                      </Button>
+                      <Button variant="outline" className="border-[#E3B01A] text-[#E3B01A] hover:bg-[#E3B01A] hover:text-white">
+                        View All Volunteers
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>
