@@ -92,16 +92,13 @@ const Homepage = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
+                asChild
                 size="lg" 
                 className="bg-[#416177] hover:bg-[#335259] text-white px-8 py-3 text-lg"
-                onClick={() => {
-                  // Scroll to contact section for donations
-                  document.querySelector('section:has(h2:contains("Get in Touch"))')?.scrollIntoView({ 
-                    behavior: 'smooth' 
-                  });
-                }}
               >
-                Support Our Mission
+                <Link to="/contact">
+                  Support Our Mission
+                </Link>
               </Button>
               <Button 
                 asChild
