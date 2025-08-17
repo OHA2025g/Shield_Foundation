@@ -94,15 +94,24 @@ const Homepage = () => {
               <Button 
                 size="lg" 
                 className="bg-[#416177] hover:bg-[#335259] text-white px-8 py-3 text-lg"
+                onClick={() => {
+                  // Scroll to contact section for donations
+                  document.querySelector('section:has(h2:contains("Get in Touch"))')?.scrollIntoView({ 
+                    behavior: 'smooth' 
+                  });
+                }}
               >
                 Support Our Mission
               </Button>
               <Button 
+                asChild
                 variant="outline" 
                 size="lg" 
                 className="border-[#E3B01A] text-[#E3B01A] hover:bg-[#E3B01A] hover:text-white px-8 py-3 text-lg"
               >
-                Become a Volunteer
+                <Link to="/contact">
+                  Become a Volunteer
+                </Link>
               </Button>
             </div>
           </div>
