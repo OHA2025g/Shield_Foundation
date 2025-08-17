@@ -508,7 +508,25 @@ const Contact = () => {
                 <Heart className="h-12 w-12 text-[#E3B01A] mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Make a Donation</h3>
                 <p className="text-gray-600 mb-6">Support our programs with a financial contribution</p>
-                <Button className="bg-[#E3B01A] hover:bg-[#d4a117] text-white">
+                <Button 
+                  className="bg-[#E3B01A] hover:bg-[#d4a117] text-white"
+                  onClick={() => {
+                    // Scroll to contact form for donation inquiries
+                    const contactForm = document.querySelector('form');
+                    if (contactForm) {
+                      contactForm.scrollIntoView({ behavior: 'smooth' });
+                      // Set the inquiry type to donation
+                      const inquirySelect = document.querySelector('[role="combobox"]');
+                      if (inquirySelect) {
+                        inquirySelect.click();
+                        setTimeout(() => {
+                          const donationOption = document.querySelector('text="Donation Inquiry"');
+                          if (donationOption) donationOption.click();
+                        }, 100);
+                      }
+                    }
+                  }}
+                >
                   Donate Now
                 </Button>
               </CardContent>
