@@ -388,7 +388,7 @@ const AdminPanel = () => {
                   <CardContent>
                     <div className="space-y-4">
                       <div className="flex items-start space-x-3">
-                        <Calendar className="h-5 w-5 text-[#416177] mt-0.5" />
+                        <Calendar className="h-5 w-5 text-blue-600 mt-0.5" />
                         <div>
                           <p className="text-sm font-medium">New physiotherapy unit launched in Dharavi</p>
                           <p className="text-xs text-gray-500">2 days ago</p>
