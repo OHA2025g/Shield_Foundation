@@ -150,13 +150,13 @@ const Footer = () => {
               © 2024 Shield Foundation. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="text-gray-400 hover:text-[#E3B01A] text-sm transition-colors">
+              <a href="#" className="text-gray-400 hover:text-yellow-400 text-sm transition-colors">
                 Privacy Policy
               </a>
-              <a href="#" className="text-gray-400 hover:text-[#E3B01A] text-sm transition-colors">
+              <a href="#" className="text-gray-400 hover:text-yellow-400 text-sm transition-colors">
                 Terms of Service
               </a>
-              <Link to="/admin" className="text-gray-400 hover:text-[#E3B01A] text-sm transition-colors">
+              <Link to="/admin" className="text-gray-400 hover:text-yellow-400 text-sm transition-colors">
                 Admin
               </Link>
             </div>
