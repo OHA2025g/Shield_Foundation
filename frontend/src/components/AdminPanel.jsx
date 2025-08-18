@@ -1182,13 +1182,178 @@ const AdminPanel = () => {
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-600 mb-6">Manage content across different pages of the website.</p>
+                    
+                    {/* Page Content Edit Form */}
+                    {showPageContentForm && (
+                      <Card className="border-2 border-blue-200 mb-6">
+                        <CardHeader>
+                          <CardTitle className="flex items-center justify-between">
+                            <span>Edit {editingPageSection === 'homepage' ? 'Homepage Hero Section' : 
+                                   editingPageSection === 'about' ? 'About Us Page' :
+                                   editingPageSection === 'programs' ? 'Programs Information' :
+                                   editingPageSection === 'stories' ? 'Success Stories' : 'Page Content'}</span>
+                            <Button variant="ghost" size="sm" onClick={handleCancelPageContentEdit}>
+                              <X className="h-4 w-4" />
+                            </Button>
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                          {editingPageSection === 'homepage' && (
+                            <>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Main Title</label>
+                                <Input
+                                  value={pageContent.homepage.hero.title}
+                                  onChange={(e) => setPageContent({
+                                    ...pageContent,
+                                    homepage: {
+                                      ...pageContent.homepage,
+                                      hero: { ...pageContent.homepage.hero, title: e.target.value }
+                                    }
+                                  })}
+                                  placeholder="Enter main title"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Subtitle</label>
+                                <Textarea
+                                  value={pageContent.homepage.hero.subtitle}
+                                  onChange={(e) => setPageContent({
+                                    ...pageContent,
+                                    homepage: {
+                                      ...pageContent.homepage,
+                                      hero: { ...pageContent.homepage.hero, subtitle: e.target.value }
+                                    }
+                                  })}
+                                  placeholder="Enter subtitle description"
+                                  rows={3}
+                                />
+                              </div>
+                              <div className="grid md:grid-cols-2 gap-4">
+                                <div>
+                                  <label className="block text-sm font-medium text-gray-700 mb-1">Primary Button Text</label>
+                                  <Input
+                                    value={pageContent.homepage.hero.primaryButton}
+                                    onChange={(e) => setPageContent({
+                                      ...pageContent,
+                                      homepage: {
+                                        ...pageContent.homepage,
+                                        hero: { ...pageContent.homepage.hero, primaryButton: e.target.value }
+                                      }
+                                    })}
+                                    placeholder="e.g., Support Our Mission"
+                                  />
+                                </div>
+                                <div>
+                                  <label className="block text-sm font-medium text-gray-700 mb-1">Secondary Button Text</label>
+                                  <Input
+                                    value={pageContent.homepage.hero.secondaryButton}
+                                    onChange={(e) => setPageContent({
+                                      ...pageContent,
+                                      homepage: {
+                                        ...pageContent.homepage,
+                                        hero: { ...pageContent.homepage.hero, secondaryButton: e.target.value }
+                                      }
+                                    })}
+                                    placeholder="e.g., Become a Volunteer"
+                                  />
+                                </div>
+                              </div>
+                            </>
+                          )}
+
+                          {editingPageSection === 'about' && (
+                            <>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Foundation Story</label>
+                                <Textarea
+                                  value={pageContent.about.story}
+                                  onChange={(e) => setPageContent({
+                                    ...pageContent,
+                                    about: { ...pageContent.about, story: e.target.value }
+                                  })}
+                                  placeholder="Tell the foundation's story..."
+                                  rows={4}
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Mission Statement</label>
+                                <Textarea
+                                  value={pageContent.about.mission}
+                                  onChange={(e) => setPageContent({
+                                    ...pageContent,
+                                    about: { ...pageContent.about, mission: e.target.value }
+                                  })}
+                                  placeholder="Enter mission statement..."
+                                  rows={3}
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Vision Statement</label>
+                                <Textarea
+                                  value={pageContent.about.vision}
+                                  onChange={(e) => setPageContent({
+                                    ...pageContent,
+                                    about: { ...pageContent.about, vision: e.target.value }
+                                  })}
+                                  placeholder="Enter vision statement..."
+                                  rows={3}
+                                />
+                              </div>
+                            </>
+                          )}
+
+                          {editingPageSection === 'programs' && (
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 mb-1">Programs Description</label>
+                              <Textarea
+                                value={pageContent.programs.description}
+                                onChange={(e) => setPageContent({
+                                  ...pageContent,
+                                  programs: { ...pageContent.programs, description: e.target.value }
+                                })}
+                                placeholder="Describe your programs and services..."
+                                rows={5}
+                              />
+                            </div>
+                          )}
+
+                          {editingPageSection === 'stories' && (
+                            <div>
+                              <p className="text-gray-600 text-sm">Success stories management will be implemented here. This will allow adding, editing, and removing testimonials and success stories.</p>
+                              <div className="bg-yellow-50 p-4 rounded-lg">
+                                <span className="text-yellow-800 text-sm">📝 Success Stories editing interface coming soon</span>
+                              </div>
+                            </div>
+                          )}
+
+                          <div className="flex gap-3 pt-4">
+                            <Button 
+                              onClick={handleSavePageContent}
+                              className="bg-blue-600 hover:bg-blue-700 text-white"
+                            >
+                              <Save className="h-4 w-4 mr-2" />
+                              Save Changes
+                            </Button>
+                            <Button variant="outline" onClick={handleCancelPageContentEdit}>
+                              Cancel
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    )}
+
                     <div className="space-y-3">
                       <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
                         <div>
                           <span className="font-medium">Homepage Hero Section</span>
                           <p className="text-sm text-gray-600">Edit main headline, description, and call-to-action buttons</p>
                         </div>
-                        <Button size="sm" variant="outline">
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          onClick={() => handleEditPageContent('homepage')}
+                        >
                           <Edit className="h-4 w-4 mr-2" />
                           Edit
                         </Button>
@@ -1198,7 +1363,11 @@ const AdminPanel = () => {
                           <span className="font-medium">About Us Page</span>
                           <p className="text-sm text-gray-600">Update foundation story, mission, vision, and team information</p>
                         </div>
-                        <Button size="sm" variant="outline">
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          onClick={() => handleEditPageContent('about')}
+                        >
                           <Edit className="h-4 w-4 mr-2" />
                           Edit
                         </Button>
@@ -1208,7 +1377,11 @@ const AdminPanel = () => {
                           <span className="font-medium">Programs Information</span>
                           <p className="text-sm text-gray-600">Modify program descriptions, courses, and service details</p>
                         </div>
-                        <Button size="sm" variant="outline">
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          onClick={() => handleEditPageContent('programs')}
+                        >
                           <Edit className="h-4 w-4 mr-2" />
                           Edit
                         </Button>
@@ -1218,7 +1391,11 @@ const AdminPanel = () => {
                           <span className="font-medium">Success Stories</span>
                           <p className="text-sm text-gray-600">Add, edit, or remove success stories and testimonials</p>
                         </div>
-                        <Button size="sm" variant="outline">
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          onClick={() => handleEditPageContent('stories')}
+                        >
                           <Edit className="h-4 w-4 mr-2" />
                           Edit
                         </Button>
