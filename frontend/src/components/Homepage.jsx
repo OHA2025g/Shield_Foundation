@@ -306,7 +306,7 @@ const Homepage = () => {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 bg-[#416177] text-white">
+      <section className="py-20 bg-blue-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12">
             {/* Contact Form */}
