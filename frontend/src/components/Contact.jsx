@@ -582,7 +582,7 @@ const Contact = () => {
 
             <Card className="text-center hover:shadow-lg transition-shadow duration-300">
               <CardContent className="p-8">
-                <Users className="h-12 w-12 text-[#416177] mx-auto mb-4" />
+                <Users className="h-12 w-12 text-blue-600 mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Corporate Partnership</h3>
                 <p className="text-gray-600 mb-6">Explore CSR opportunities with Shield Foundation</p>
                 <Button 
