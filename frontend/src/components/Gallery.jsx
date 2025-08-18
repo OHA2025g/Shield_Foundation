@@ -246,19 +246,19 @@ const Gallery = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
-              <div className="text-3xl font-bold text-[#E3B01A] mb-2">500+</div>
+              <div className="text-3xl font-bold text-yellow-400 mb-2">500+</div>
               <div className="text-white/80">Photos</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-[#E3B01A] mb-2">50+</div>
+              <div className="text-3xl font-bold text-yellow-400 mb-2">50+</div>
               <div className="text-white/80">Videos</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-[#E3B01A] mb-2">25+</div>
+              <div className="text-3xl font-bold text-yellow-400 mb-2">25+</div>
               <div className="text-white/80">Events</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-[#E3B01A] mb-2">100+</div>
+              <div className="text-3xl font-bold text-yellow-400 mb-2">100+</div>
               <div className="text-white/80">Success Stories</div>
             </div>
           </div>
