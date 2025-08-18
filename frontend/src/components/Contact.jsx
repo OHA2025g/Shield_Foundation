@@ -608,7 +608,7 @@ const Contact = () => {
 
             <Card className="text-center hover:shadow-lg transition-shadow duration-300">
               <CardContent className="p-8">
-                <HandHeart className="h-12 w-12 text-[#E3B01A] mx-auto mb-4" />
+                <HandHeart className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Spread the Word</h3>
                 <p className="text-gray-600 mb-6">Share our mission with your network</p>
                 <Button 
