@@ -130,7 +130,7 @@ const About = () => {
                 alt="Shield Foundation Community Work"
                 className="rounded-lg shadow-lg"
               />
-              <div className="absolute -bottom-6 -left-6 bg-[#416177] text-white p-6 rounded-lg">
+              <div className="absolute -bottom-6 -left-6 bg-blue-600 text-white p-6 rounded-lg">
                 <div className="text-2xl font-bold">6+ Years</div>
                 <div className="text-sm">Serving Communities</div>
               </div>
