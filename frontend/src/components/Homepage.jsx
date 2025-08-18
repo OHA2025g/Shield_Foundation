@@ -146,7 +146,7 @@ const Homepage = () => {
                 asChild
                 variant="outline" 
                 size="lg" 
-                className="border-[#E3B01A] text-[#E3B01A] hover:bg-[#E3B01A] hover:text-white px-8 py-3 text-lg"
+                className="border-yellow-400 text-yellow-600 hover:bg-yellow-400 hover:text-black px-8 py-3 text-lg"
               >
                 <Link to="/contact">
                   Become a Volunteer
