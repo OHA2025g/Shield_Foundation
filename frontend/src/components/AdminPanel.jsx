@@ -485,7 +485,7 @@ const AdminPanel = () => {
                             type="button"
                             onClick={editingNews ? handleUpdateNews : handleAddNews}
                             disabled={loading}
-                            className="bg-[#416177] hover:bg-[#335259] text-white"
+                            className="bg-blue-600 hover:bg-blue-700 text-white"
                           >
                             <Save className="h-4 w-4 mr-2" />
                             {loading ? 'Saving...' : (editingNews ? 'Update' : 'Save')}
