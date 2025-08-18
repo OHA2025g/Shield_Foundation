@@ -166,8 +166,8 @@ const About = () => {
             {/* Vision */}
             <Card className="h-full">
               <CardHeader>
-                <Eye className="h-12 w-12 text-[#E3B01A] mb-4" />
-                <CardTitle className="text-2xl text-[#E3B01A]">Vision</CardTitle>
+                <Eye className="h-12 w-12 text-yellow-500 mb-4" />
+                <CardTitle className="text-2xl text-yellow-600">Vision</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600 leading-relaxed">
