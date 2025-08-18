@@ -340,7 +340,7 @@ const AdminPanel = () => {
                   <Card>
                     <CardContent className="p-6">
                       <div className="flex items-center">
-                        <TrendingUp className="h-8 w-8 text-[#E3B01A]" />
+                        <TrendingUp className="h-8 w-8 text-yellow-500" />
                         <div className="ml-4">
                           <div className="text-2xl font-bold text-gray-900">
                             {impactStats.youthPlaced?.toLocaleString()}
