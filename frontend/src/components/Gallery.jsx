@@ -207,7 +207,7 @@ const Gallery = () => {
                 
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-lg font-semibold text-gray-900 group-hover:text-[#416177] transition-colors duration-300">
+                    <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
                       {item.title}
                     </h3>
                     <span className="text-sm text-gray-500">
