@@ -317,7 +317,7 @@ const Gallery = () => {
                 <p className="text-gray-600">
                   How physiotherapy and community support transformed lives in Dharavi
                 </p>
-                <Badge className="mt-3 bg-[#416177] text-white hover:bg-[#335259]">
+                <Badge className="mt-3 bg-blue-600 text-white hover:bg-blue-700">
                   Senior Care
                 </Badge>
               </CardContent>
