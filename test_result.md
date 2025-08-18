@@ -149,6 +149,9 @@ backend:
       - working: true
         agent: "main"
         comment: "Implemented POST /api/newsletter/subscribe with duplicate email handling and reactivation logic"
+      - working: true
+        agent: "testing"
+        comment: "POST /api/newsletter endpoint re-tested after color scheme changes - working perfectly. Newsletter subscription successful with proper duplicate email handling and reactivation logic. No impact from frontend color changes."
 
   - task: "Admin Authentication"
     implemented: true
