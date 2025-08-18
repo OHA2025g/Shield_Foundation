@@ -90,16 +90,16 @@ const Footer = () => {
 
             {/* Social Media */}
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-[#E3B01A] transition-colors">
+              <a href="#" className="text-gray-400 hover:text-yellow-400 transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-[#E3B01A] transition-colors">
+              <a href="#" className="text-gray-400 hover:text-yellow-400 transition-colors">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-[#E3B01A] transition-colors">
+              <a href="#" className="text-gray-400 hover:text-yellow-400 transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-[#E3B01A] transition-colors">
+              <a href="#" className="text-gray-400 hover:text-yellow-400 transition-colors">
                 <Linkedin className="h-5 w-5" />
               </a>
             </div>
