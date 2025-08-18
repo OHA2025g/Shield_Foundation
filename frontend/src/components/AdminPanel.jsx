@@ -635,7 +635,7 @@ const AdminPanel = () => {
                 {/* Contact Information Management */}
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-xl text-[#E3B01A]">Contact Information</CardTitle>
+                    <CardTitle className="text-xl text-yellow-600">Contact Information</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-600 mb-6">Current contact information displayed across the website:</p>
