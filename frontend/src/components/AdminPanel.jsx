@@ -751,10 +751,10 @@ const AdminPanel = () => {
                       </div>
                     </div>
                     <div className="mt-6 flex space-x-3">
-                      <Button variant="outline" className="border-[#416177] text-[#416177] hover:bg-[#416177] hover:text-white">
+                      <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white">
                         View All Contacts
                       </Button>
-                      <Button variant="outline" className="border-[#E3B01A] text-[#E3B01A] hover:bg-[#E3B01A] hover:text-white">
+                      <Button variant="outline" className="border-yellow-400 text-yellow-600 hover:bg-yellow-400 hover:text-black">
                         View All Volunteers
                       </Button>
                     </div>
