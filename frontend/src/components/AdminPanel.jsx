@@ -677,7 +677,7 @@ const AdminPanel = () => {
                 {/* Page Content Management */}
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-xl text-[#416177]">Page Content</CardTitle>
+                    <CardTitle className="text-xl text-blue-600">Page Content</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-600 mb-6">Manage content across different pages of the website.</p>
