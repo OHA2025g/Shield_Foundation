@@ -19,7 +19,9 @@ import {
   Calendar,
   Eye,
   Save,
-  X
+  X,
+  BookOpen,
+  Tag
 } from 'lucide-react';
 import { api } from '../api';
 
