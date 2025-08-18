@@ -280,7 +280,7 @@ const About = () => {
                         </div>
                         
                         <div className="flex items-center mb-4">
-                          <Badge className="bg-[#416177] text-white text-sm px-3 py-1 mr-3">
+                          <Badge className="bg-blue-600 text-white text-sm px-3 py-1 mr-3">
                             {milestone.year}
                           </Badge>
                           <h3 className="text-xl font-bold text-gray-900">{milestone.title}</h3>
