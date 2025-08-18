@@ -14,6 +14,7 @@ import {
   Edit, 
   Trash2, 
   Users, 
+  User,
   FileText, 
   TrendingUp,
   Calendar,
