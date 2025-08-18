@@ -61,7 +61,7 @@ const Footer = () => {
           {/* Logo and Description */}
           <div className="col-span-1 md:col-span-2">
             <Link to="/" className="flex items-center mb-4">
-              <Heart className="h-8 w-8 text-[#E3B01A] mr-3" />
+              <Heart className="h-8 w-8 text-yellow-400 mr-3" />
               <div>
                 <h1 className="text-2xl font-bold text-white">Shield Foundation</h1>
                 <p className="text-sm text-gray-400">Adding Life to Years</p>
