@@ -71,9 +71,9 @@ const AdminLogin = () => {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex items-center justify-center mb-4">
-            <Shield className="h-12 w-12 text-[#416177] mr-3" />
+            <Shield className="h-12 w-12 text-blue-600 mr-3" />
             <div>
-              <h1 className="text-2xl font-bold text-[#416177]">Shield Foundation</h1>
+              <h1 className="text-2xl font-bold text-blue-600">Shield Foundation</h1>
               <p className="text-sm text-gray-600">Admin Panel</p>
             </div>
           </div>
