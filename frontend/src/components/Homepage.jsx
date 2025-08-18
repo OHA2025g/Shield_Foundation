@@ -266,7 +266,7 @@ const Homepage = () => {
                     500+ elder abuse cases addressed
                   </div>
                 </div>
-                <Button asChild className="w-full bg-[#E3B01A] hover:bg-[#d4a117] text-white">
+                <Button asChild className="w-full bg-yellow-400 hover:bg-yellow-500 text-black">
                   <Link to="/programs">
                     Learn More <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
