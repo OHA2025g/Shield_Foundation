@@ -308,7 +308,7 @@ const About = () => {
             <p className="text-xl text-gray-600">Working together to create lasting impact</p>
           </div>
           
-          <Card className="bg-[#416177] text-white">
+          <Card className="bg-blue-600 text-white">
             <CardContent className="p-8">
               <div className="text-center mb-8">
                 <h3 className="text-2xl font-bold mb-4">Trusted Collaborations</h3>
