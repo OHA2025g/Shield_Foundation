@@ -294,7 +294,7 @@ const Homepage = () => {
                 />
                 <div className="text-center md:text-left">
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">Ulka Kebhavi</h3>
-                  <p className="text-lg text-[#416177] mb-4">ITES-BPO Graduate</p>
+                  <p className="text-lg text-blue-600 mb-4">ITES-BPO Graduate</p>
                   <p className="text-gray-600 text-lg leading-relaxed">
                     Completed ITES-BPO course under SMART Program, placed as a Telecaller at Finbross Marketing Pvt Ltd with a CTC of ₹15,500/month.
                   </p>
