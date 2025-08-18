@@ -233,7 +233,7 @@ const Contact = () => {
 
             <Card className="text-center hover:shadow-lg transition-shadow duration-300">
               <CardContent className="p-8">
-                <Phone className="h-12 w-12 text-[#E3B01A] mx-auto mb-4" />
+                <Phone className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Call Us</h3>
                 <p className="text-gray-600 mb-4">Speak with our team</p>
                 <a 
