@@ -136,7 +136,7 @@ const Homepage = () => {
               <Button 
                 asChild
                 size="lg" 
-                className="bg-[#416177] hover:bg-[#335259] text-white px-8 py-3 text-lg"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg"
               >
                 <Link to="/contact">
                   Support Our Mission
