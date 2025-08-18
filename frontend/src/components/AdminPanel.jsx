@@ -711,6 +711,216 @@ const AdminPanel = () => {
               </div>
             )}
 
+            {activeTab === 'blog' && (
+              <div className="space-y-6">
+                <div className="flex justify-between items-center">
+                  <h2 className="text-2xl font-bold text-gray-900">Blog Management</h2>
+                  <Button
+                    onClick={() => setShowBlogForm(true)}
+                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add Blog Post
+                  </Button>
+                </div>
+
+                {/* Blog Form Modal */}
+                {showBlogForm && (
+                  <Card className="border-2 border-blue-200">
+                    <CardHeader>
+                      <CardTitle className="flex items-center justify-between">
+                        <span>{editingBlog ? 'Edit Blog Post' : 'Create New Blog Post'}</span>
+                        <Button variant="ghost" size="sm" onClick={cancelBlogEdit}>
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Title *</label>
+                          <Input
+                            value={blogForm.title}
+                            onChange={(e) => setBlogForm({...blogForm, title: e.target.value})}
+                            placeholder="Enter blog post title"
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                          <select
+                            value={blogForm.category}
+                            onChange={(e) => setBlogForm({...blogForm, category: e.target.value})}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          >
+                            <option value="">Select Category</option>
+                            <option value="Youth Development">Youth Development</option>
+                            <option value="Senior Care">Senior Care</option>
+                            <option value="Partnerships">Partnerships</option>
+                            <option value="Expansion">Expansion</option>
+                            <option value="Community Impact">Community Impact</option>
+                          </select>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Excerpt</label>
+                        <Textarea
+                          value={blogForm.excerpt}
+                          onChange={(e) => setBlogForm({...blogForm, excerpt: e.target.value})}
+                          placeholder="Brief description of the blog post"
+                          rows={2}
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Featured Image URL</label>
+                        <Input
+                          value={blogForm.image}
+                          onChange={(e) => setBlogForm({...blogForm, image: e.target.value})}
+                          placeholder="https://example.com/image.jpg"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Tags</label>
+                        <div className="flex flex-wrap gap-2 mb-2">
+                          {blogForm.tags.map((tag, index) => (
+                            <Badge key={index} variant="secondary" className="flex items-center gap-1">
+                              {tag}
+                              <button onClick={() => removeTag(tag)} className="ml-1">
+                                <X className="h-3 w-3" />
+                              </button>
+                            </Badge>
+                          ))}
+                        </div>
+                        <Input
+                          placeholder="Add tags (press Enter)"
+                          onKeyPress={(e) => {
+                            if (e.key === 'Enter') {
+                              e.preventDefault();
+                              addTag(e.target.value);
+                              e.target.value = '';
+                            }
+                          }}
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Content *</label>
+                        <Textarea
+                          value={blogForm.content}
+                          onChange={(e) => setBlogForm({...blogForm, content: e.target.value})}
+                          placeholder="Write your blog post content here..."
+                          rows={10}
+                          required
+                        />
+                      </div>
+
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                          <select
+                            value={blogForm.status}
+                            onChange={(e) => setBlogForm({...blogForm, status: e.target.value})}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          >
+                            <option value="draft">Draft</option>
+                            <option value="published">Published</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="flex gap-3 pt-4">
+                        <Button 
+                          type="button"
+                          onClick={editingBlog ? handleUpdateBlog : handleAddBlog}
+                          disabled={loading || !blogForm.title || !blogForm.content}
+                          className="bg-blue-600 hover:bg-blue-700 text-white"
+                        >
+                          <Save className="h-4 w-4 mr-2" />
+                          {loading ? 'Saving...' : (editingBlog ? 'Update Post' : 'Create Post')}
+                        </Button>
+                        <Button type="button" variant="outline" onClick={cancelBlogEdit}>
+                          Cancel
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+
+                {/* Blog Posts List */}
+                <div className="space-y-4">
+                  {blogPosts.map((post) => (
+                    <Card key={post.id}>
+                      <CardContent className="p-6">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-3 mb-2">
+                              <h3 className="text-lg font-semibold text-gray-900">{post.title}</h3>
+                              <Badge variant={post.status === 'published' ? 'default' : 'secondary'}>
+                                {post.status}
+                              </Badge>
+                              {post.category && (
+                                <Badge variant="outline">{post.category}</Badge>
+                              )}
+                            </div>
+                            <p className="text-gray-600 text-sm mb-2">{post.excerpt}</p>
+                            <div className="flex items-center gap-4 text-xs text-gray-500">
+                              <span className="flex items-center">
+                                <Calendar className="h-3 w-3 mr-1" />
+                                {post.publishDate}
+                              </span>
+                              <span className="flex items-center">
+                                <User className="h-3 w-3 mr-1" />
+                                {post.author}
+                              </span>
+                              {post.tags && post.tags.length > 0 && (
+                                <div className="flex items-center gap-1">
+                                  <Tag className="h-3 w-3" />
+                                  <span>{post.tags.slice(0, 3).join(', ')}</span>
+                                  {post.tags.length > 3 && <span>+{post.tags.length - 3} more</span>}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          <div className="flex gap-2 ml-4">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => startEditBlog(post)}
+                              className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                            >
+                              <Edit className="h-4 w-4 mr-1" />
+                              Edit
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleDeleteBlog(post.id)}
+                              className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                            >
+                              <Trash2 className="h-4 w-4 mr-1" />
+                              Delete
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                  
+                  {blogPosts.length === 0 && (
+                    <Card>
+                      <CardContent className="p-8 text-center">
+                        <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                        <p className="text-gray-500">No blog posts yet. Create your first blog post!</p>
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
+              </div>
+            )}
+
             {activeTab === 'content' && (
               <div className="space-y-6">
                 <div>
