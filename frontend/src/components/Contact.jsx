@@ -309,7 +309,7 @@ const Contact = () => {
               /* Contact Form */
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-2xl text-[#416177] flex items-center">
+                  <CardTitle className="text-2xl text-blue-600 flex items-center">
                     <Mail className="h-6 w-6 mr-2" />
                     Send us a Message
                   </CardTitle>
