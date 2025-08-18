@@ -17,16 +17,31 @@ const AdminLogin = () => {
     e.preventDefault();
     setLoading(true);
     
+    console.log('Starting login process with credentials:', credentials);
+    
     try {
       const response = await api.admin.login(credentials);
+      console.log('Login response received:', response);
+      
       if (response.success) {
+        console.log('Login successful, showing toast and navigating to dashboard');
         toast({
           title: "Login Successful",
           description: `Welcome back, ${response.user.name}!`,
         });
+        console.log('About to navigate to /admin/dashboard');
         navigate('/admin/dashboard');
+        console.log('Navigate function called');
+      } else {
+        console.log('Login failed - response.success is false');
+        toast({
+          title: "Login Failed",
+          description: "Invalid credentials",
+          variant: "destructive",
+        });
       }
     } catch (error) {
+      console.error('Login error caught:', error);
       // Handle FastAPI validation errors properly
       let errorMessage = "Invalid credentials. Please try again.";
       
