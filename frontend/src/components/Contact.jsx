@@ -247,7 +247,7 @@ const Contact = () => {
 
             <Card className="text-center hover:shadow-lg transition-shadow duration-300">
               <CardContent className="p-8">
-                <MapPin className="h-12 w-12 text-[#416177] mx-auto mb-4" />
+                <MapPin className="h-12 w-12 text-blue-600 mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Visit Us</h3>
                 <p className="text-gray-600 mb-4">Come see our work firsthand</p>
                 <p className="text-gray-800 font-medium">Dharavi, Mumbai, Maharashtra</p>
