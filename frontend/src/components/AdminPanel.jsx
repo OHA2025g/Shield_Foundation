@@ -570,7 +570,7 @@ const AdminPanel = () => {
                 {/* Impact Statistics Management */}
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-xl text-[#416177]">Impact Statistics</CardTitle>
+                    <CardTitle className="text-xl text-blue-600">Impact Statistics</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-600 mb-6">Update the impact statistics displayed on the homepage and throughout the website.</p>
