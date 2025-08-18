@@ -624,7 +624,7 @@ const AdminPanel = () => {
                       <Button 
                         onClick={handleUpdateImpactStats}
                         disabled={loading}
-                        className="bg-[#416177] hover:bg-[#335259] text-white"
+                        className="bg-blue-600 hover:bg-blue-700 text-white"
                       >
                         {loading ? 'Updating...' : 'Update Statistics'}
                       </Button>
