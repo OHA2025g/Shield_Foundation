@@ -241,7 +241,7 @@ const Homepage = () => {
             <Card className="h-full hover:shadow-lg transition-shadow duration-300">
               <CardHeader>
                 <div className="flex items-center mb-4">
-                  <Heart className="h-12 w-12 text-[#E3B01A] mr-4" />
+                  <Heart className="h-12 w-12 text-yellow-500 mr-4" />
                   <div>
                     <CardTitle className="text-2xl">Senior Citizens Services</CardTitle>
                     <CardDescription className="text-lg">Multi-Service Support Centers</CardDescription>
