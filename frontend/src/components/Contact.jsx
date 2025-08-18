@@ -288,7 +288,7 @@ const Contact = () => {
               <Button
                 variant={activeForm === 'contact' ? 'default' : 'ghost'}
                 onClick={() => setActiveForm('contact')}
-                className={`mr-2 ${activeForm === 'contact' ? 'bg-[#416177] text-white' : ''}`}
+                className={`mr-2 ${activeForm === 'contact' ? 'bg-blue-600 text-white' : ''}`}
               >
                 <Mail className="h-4 w-4 mr-2" />
                 General Contact
