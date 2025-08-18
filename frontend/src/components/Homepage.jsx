@@ -162,25 +162,25 @@ const Homepage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-[#416177] mb-2">
+              <div className="text-4xl md:text-5xl font-bold text-blue-600 mb-2">
                 {impactStats.youthTrained?.toLocaleString()}+
               </div>
               <div className="text-gray-600">Youth Trained</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-[#E3B01A] mb-2">
+              <div className="text-4xl md:text-5xl font-bold text-yellow-500 mb-2">
                 {impactStats.youthPlaced?.toLocaleString()}+
               </div>
               <div className="text-gray-600">Youth Placed</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-[#416177] mb-2">
+              <div className="text-4xl md:text-5xl font-bold text-blue-600 mb-2">
                 {impactStats.seniorsSupported?.toLocaleString()}+
               </div>
               <div className="text-gray-600">Seniors Supported</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-[#E3B01A] mb-2">
+              <div className="text-4xl md:text-5xl font-bold text-yellow-500 mb-2">
                 {impactStats.womenEmpowered}+
               </div>
               <div className="text-gray-600">Women Empowered</div>
