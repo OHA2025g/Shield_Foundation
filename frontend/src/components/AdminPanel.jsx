@@ -45,6 +45,20 @@ const AdminPanel = () => {
     status: 'draft'
   });
   const [loading, setLoading] = useState(false);
+  
+  // Blog management state
+  const [blogPosts, setBlogPosts] = useState([]);
+  const [showBlogForm, setShowBlogForm] = useState(false);
+  const [editingBlog, setEditingBlog] = useState(null);
+  const [blogForm, setBlogForm] = useState({
+    title: '',
+    excerpt: '',
+    content: '',
+    category: '',
+    tags: [],
+    image: '',
+    status: 'draft'
+  });
 
   // Check authentication and load data
   useEffect(() => {
