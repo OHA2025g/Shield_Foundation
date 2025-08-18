@@ -96,10 +96,8 @@ const AdminPanel = () => {
         setNews(newsData);
       }
       
-      // Load blog posts if on blog tab (using mock data for now)
-      if (activeTab === 'blog') {
-        loadBlogPosts();
-      }
+      // Always load blog posts for the blog management tab
+      loadBlogPosts();
     } catch (error) {
       console.error('Failed to load dashboard data:', error);
     }
