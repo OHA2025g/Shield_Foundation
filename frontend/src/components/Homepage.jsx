@@ -366,21 +366,21 @@ const Homepage = () => {
               <h2 className="text-3xl font-bold mb-8">Contact Information</h2>
               <div className="space-y-6">
                 <div className="flex items-start">
-                  <Mail className="h-6 w-6 text-[#E3B01A] mr-4 mt-1" />
+                  <Mail className="h-6 w-6 text-yellow-400 mr-4 mt-1" />
                   <div>
                     <p className="font-semibold">Email</p>
                     <p className="text-white/80">shieldfoundation@gmail.com</p>
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <Phone className="h-6 w-6 text-[#E3B01A] mr-4 mt-1" />
+                  <Phone className="h-6 w-6 text-yellow-400 mr-4 mt-1" />
                   <div>
                     <p className="font-semibold">Phone</p>
                     <p className="text-white/80">+91 98334 06288</p>
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <MapPin className="h-6 w-6 text-[#E3B01A] mr-4 mt-1" />
+                  <MapPin className="h-6 w-6 text-yellow-400 mr-4 mt-1" />
                   <div>
                     <p className="font-semibold">Address</p>
                     <p className="text-white/80">Dharavi, Mumbai, Maharashtra</p>
