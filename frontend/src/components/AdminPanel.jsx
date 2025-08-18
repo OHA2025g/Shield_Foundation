@@ -1072,13 +1072,73 @@ const AdminPanel = () => {
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-600 mb-6">Current contact information displayed across the website:</p>
+                    
+                    {/* Contact Info Edit Form */}
+                    {showContactForm && (
+                      <Card className="border-2 border-yellow-200 mb-6">
+                        <CardHeader>
+                          <CardTitle className="flex items-center justify-between">
+                            <span>Edit Contact Information</span>
+                            <Button variant="ghost" size="sm" onClick={handleCancelContactEdit}>
+                              <X className="h-4 w-4" />
+                            </Button>
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                            <Input
+                              type="email"
+                              value={tempContactInfo.email}
+                              onChange={(e) => setTempContactInfo({...tempContactInfo, email: e.target.value})}
+                              placeholder="Enter email address"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                            <Input
+                              type="tel"
+                              value={tempContactInfo.phone}
+                              onChange={(e) => setTempContactInfo({...tempContactInfo, phone: e.target.value})}
+                              placeholder="Enter phone number"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                            <Textarea
+                              value={tempContactInfo.address}
+                              onChange={(e) => setTempContactInfo({...tempContactInfo, address: e.target.value})}
+                              placeholder="Enter full address"
+                              rows={3}
+                            />
+                          </div>
+                          <div className="flex gap-3 pt-4">
+                            <Button 
+                              onClick={handleSaveContactInfo}
+                              className="bg-yellow-400 hover:bg-yellow-500 text-black"
+                            >
+                              <Save className="h-4 w-4 mr-2" />
+                              Save Changes
+                            </Button>
+                            <Button variant="outline" onClick={handleCancelContactEdit}>
+                              Cancel
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    )}
+
                     <div className="space-y-4 bg-gray-50 p-4 rounded-lg">
                       <div className="flex items-center justify-between">
                         <div>
                           <span className="font-medium text-gray-700">Email:</span>
-                          <span className="ml-2 text-gray-600">shieldfoundation@gmail.com</span>
+                          <span className="ml-2 text-gray-600">{contactInfo.email}</span>
                         </div>
-                        <Button size="sm" variant="outline">
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          onClick={() => handleEditContact('email')}
+                        >
                           <Edit className="h-4 w-4 mr-2" />
                           Edit
                         </Button>
@@ -1086,9 +1146,13 @@ const AdminPanel = () => {
                       <div className="flex items-center justify-between">
                         <div>
                           <span className="font-medium text-gray-700">Phone:</span>
-                          <span className="ml-2 text-gray-600">+91 98334 06288</span>
+                          <span className="ml-2 text-gray-600">{contactInfo.phone}</span>
                         </div>
-                        <Button size="sm" variant="outline">
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          onClick={() => handleEditContact('phone')}
+                        >
                           <Edit className="h-4 w-4 mr-2" />
                           Edit
                         </Button>
@@ -1096,9 +1160,13 @@ const AdminPanel = () => {
                       <div className="flex items-center justify-between">
                         <div>
                           <span className="font-medium text-gray-700">Address:</span>
-                          <span className="ml-2 text-gray-600">Dharavi, Mumbai, Maharashtra</span>
+                          <span className="ml-2 text-gray-600">{contactInfo.address}</span>
                         </div>
-                        <Button size="sm" variant="outline">
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          onClick={() => handleEditContact('address')}
+                        >
                           <Edit className="h-4 w-4 mr-2" />
                           Edit
                         </Button>
