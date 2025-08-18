@@ -32,8 +32,8 @@ const Impact = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <Card className="text-center">
               <CardContent className="p-6">
-                <GraduationCap className="h-12 w-12 text-[#416177] mx-auto mb-4" />
-                <div className="text-3xl font-bold text-[#416177] mb-2">
+                <GraduationCap className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+                <div className="text-3xl font-bold text-blue-600 mb-2">
                   {mockData.impactStats.youthTrained.toLocaleString()}+
                 </div>
                 <div className="text-gray-600">Youth Trained</div>
