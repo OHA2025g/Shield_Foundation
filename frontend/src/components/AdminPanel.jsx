@@ -72,8 +72,8 @@ const AdminPanel = () => {
   const [tempContactInfo, setTempContactInfo] = useState(contactInfo);
 
   // Page Content Management state
-  const [showPageContentForm, setShowPageContentForm] = useState(false);
-  const [editingPageSection, setEditingPageSection] = useState(null);
+  const [showPageContentForm, setShowPageContentForm] = useState(true); // Show form by default for testing
+  const [editingPageSection, setEditingPageSection] = useState('homepage'); // Set to homepage for testing
   const [pageContent, setPageContent] = useState({
     homepage: {
       hero: {
