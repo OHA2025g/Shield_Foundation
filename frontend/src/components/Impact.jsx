@@ -178,12 +178,11 @@ const Impact = () => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 mb-16">
-            {mockData.seniorImpact.map((item, index) => (
+            {mockData.impactHighlights.map((item, index) => (
               <Card key={index} className="text-center">
                 <CardContent className="p-6">
                   <div className="text-3xl font-bold text-yellow-500 mb-2">{item.metric}</div>
-                  <div className="text-gray-600 font-medium mb-2">{item.category}</div>
-                  <p className="text-sm text-gray-500">{item.description}</p>
+                  <p className="text-sm text-gray-600">{item.description}</p>
                 </CardContent>
               </Card>
             ))}
