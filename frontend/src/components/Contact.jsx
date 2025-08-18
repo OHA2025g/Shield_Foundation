@@ -238,7 +238,7 @@ const Contact = () => {
                 <p className="text-gray-600 mb-4">Speak with our team</p>
                 <a 
                   href="tel:+919833406288"
-                  className="text-[#E3B01A] hover:text-[#d4a117] font-medium"
+                  className="text-yellow-600 hover:text-yellow-700 font-medium"
                 >
                   +91 98334 06288
                 </a>
