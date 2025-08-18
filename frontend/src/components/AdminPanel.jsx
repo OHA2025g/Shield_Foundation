@@ -23,6 +23,7 @@ import {
   BookOpen,
   Tag
 } from 'lucide-react';
+import { mockData } from '../mock';
 import { api } from '../api';
 
 const AdminPanel = () => {
