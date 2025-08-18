@@ -264,6 +264,127 @@ const AdminPanel = () => {
     setLoading(false);
   };
 
+  // Blog Management Functions
+  const loadBlogPosts = () => {
+    // Using mock data for now - in production, this would be an API call
+    const { mockData } = require('../mock');
+    setBlogPosts(mockData.blogPosts || []);
+  };
+
+  useEffect(() => {
+    if (activeTab === 'blog' && currentUser) {
+      loadBlogPosts();
+    }
+  }, [activeTab, currentUser]);
+
+  const handleAddBlog = () => {
+    const newBlog = {
+      id: Date.now(), // Simple ID generation
+      ...blogForm,
+      author: currentUser.username,
+      authorRole: "Admin",
+      publishDate: new Date().toISOString().split('T')[0],
+      tags: blogForm.tags.filter(tag => tag.trim() !== '')
+    };
+    
+    setBlogPosts([newBlog, ...blogPosts]);
+    setBlogForm({
+      title: '',
+      excerpt: '',
+      content: '',
+      category: '',
+      tags: [],
+      image: '',
+      status: 'draft'
+    });
+    setShowBlogForm(false);
+    
+    toast({
+      title: "Success",
+      description: "Blog post created successfully!",
+    });
+  };
+
+  const handleUpdateBlog = () => {
+    const updatedPosts = blogPosts.map(post => 
+      post.id === editingBlog.id 
+        ? { ...post, ...blogForm, tags: blogForm.tags.filter(tag => tag.trim() !== '') }
+        : post
+    );
+    
+    setBlogPosts(updatedPosts);
+    setEditingBlog(null);
+    setBlogForm({
+      title: '',
+      excerpt: '',
+      content: '',
+      category: '',
+      tags: [],
+      image: '',
+      status: 'draft'
+    });
+    setShowBlogForm(false);
+    
+    toast({
+      title: "Success",
+      description: "Blog post updated successfully!",
+    });
+  };
+
+  const handleDeleteBlog = (blogId) => {
+    const updatedPosts = blogPosts.filter(post => post.id !== blogId);
+    setBlogPosts(updatedPosts);
+    
+    toast({
+      title: "Success",
+      description: "Blog post deleted successfully!",
+    });
+  };
+
+  const startEditBlog = (blogPost) => {
+    setEditingBlog(blogPost);
+    setBlogForm({
+      title: blogPost.title,
+      excerpt: blogPost.excerpt,
+      content: blogPost.content,
+      category: blogPost.category,
+      tags: blogPost.tags || [],
+      image: blogPost.image || '',
+      status: blogPost.status
+    });
+    setShowBlogForm(true);
+  };
+
+  const cancelBlogEdit = () => {
+    setEditingBlog(null);
+    setBlogForm({
+      title: '',
+      excerpt: '',
+      content: '',
+      category: '',
+      tags: [],
+      image: '',
+      status: 'draft'
+    });
+    setShowBlogForm(false);
+  };
+
+  const addTag = (tag) => {
+    if (tag.trim() && !blogForm.tags.includes(tag.trim())) {
+      setBlogForm({
+        ...blogForm,
+        tags: [...blogForm.tags, tag.trim()]
+      });
+    }
+  };
+
+  const removeTag = (tagToRemove) => {
+    setBlogForm({
+      ...blogForm,
+      tags: blogForm.tags.filter(tag => tag !== tagToRemove)
+    });
+  };
+
   if (!currentUser) {
     return <div>Loading...</div>;
   }
