@@ -201,7 +201,7 @@ const About = () => {
               return (
                 <Card key={index} className="text-center hover:shadow-lg transition-shadow duration-300">
                   <CardContent className="p-6">
-                    <IconComponent className="h-10 w-10 text-[#416177] mx-auto mb-4" />
+                    <IconComponent className="h-10 w-10 text-blue-600 mx-auto mb-4" />
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">{value.title}</h3>
                     <p className="text-sm text-gray-600">{value.description}</p>
                   </CardContent>
