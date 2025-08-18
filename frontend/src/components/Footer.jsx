@@ -75,15 +75,15 @@ const Footer = () => {
             {/* Contact Info */}
             <div className="space-y-2 mb-6">
               <div className="flex items-center text-sm">
-                <Mail className="h-4 w-4 text-[#E3B01A] mr-2" />
+                <Mail className="h-4 w-4 text-yellow-400 mr-2" />
                 <span className="text-gray-300">shieldfoundation@gmail.com</span>
               </div>
               <div className="flex items-center text-sm">
-                <Phone className="h-4 w-4 text-[#E3B01A] mr-2" />
+                <Phone className="h-4 w-4 text-yellow-400 mr-2" />
                 <span className="text-gray-300">+91 98334 06288</span>
               </div>
               <div className="flex items-center text-sm">
-                <MapPin className="h-4 w-4 text-[#E3B01A] mr-2" />
+                <MapPin className="h-4 w-4 text-yellow-400 mr-2" />
                 <span className="text-gray-300">Dharavi, Mumbai, Maharashtra</span>
               </div>
             </div>
