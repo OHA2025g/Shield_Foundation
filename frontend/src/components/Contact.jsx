@@ -416,7 +416,7 @@ const Contact = () => {
               /* Volunteer Form */
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-2xl text-[#E3B01A] flex items-center">
+                  <CardTitle className="text-2xl text-yellow-600 flex items-center">
                     <HandHeart className="h-6 w-6 mr-2" />
                     Volunteer Application
                   </CardTitle>
