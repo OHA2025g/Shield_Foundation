@@ -151,8 +151,8 @@ const About = () => {
             {/* Mission */}
             <Card className="h-full">
               <CardHeader>
-                <Target className="h-12 w-12 text-[#416177] mb-4" />
-                <CardTitle className="text-2xl text-[#416177]">Mission</CardTitle>
+                <Target className="h-12 w-12 text-blue-600 mb-4" />
+                <CardTitle className="text-2xl text-blue-600">Mission</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600 leading-relaxed">
