@@ -402,7 +402,7 @@ const AdminPanel = () => {
                         </div>
                       </div>
                       <div className="flex items-start space-x-3">
-                        <FileText className="h-5 w-5 text-[#416177] mt-0.5" />
+                        <FileText className="h-5 w-5 text-blue-600 mt-0.5" />
                         <div>
                           <p className="text-sm font-medium">Monthly impact report published</p>
                           <p className="text-xs text-gray-500">2 weeks ago</p>
