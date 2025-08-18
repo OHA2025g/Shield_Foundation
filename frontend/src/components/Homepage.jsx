@@ -229,7 +229,7 @@ const Homepage = () => {
                     Average salary: ₹8,700 - ₹13,946/month
                   </div>
                 </div>
-                <Button asChild className="w-full bg-[#416177] hover:bg-[#335259]">
+                <Button asChild className="w-full bg-blue-600 hover:bg-blue-700 text-white">
                   <Link to="/programs">
                     Learn More <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
