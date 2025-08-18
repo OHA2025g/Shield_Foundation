@@ -268,9 +268,7 @@ const AdminPanel = () => {
   // Blog Management Functions
   const loadBlogPosts = () => {
     // Using mock data for now - in production, this would be an API call
-    import('../mock').then(module => {
-      setBlogPosts(module.mockData.blogPosts || []);
-    });
+    setBlogPosts(mockData.blogPosts || []);
   };
 
   useEffect(() => {
