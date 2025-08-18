@@ -613,7 +613,7 @@ const Contact = () => {
                 <p className="text-gray-600 mb-6">Share our mission with your network</p>
                 <Button 
                   variant="outline" 
-                  className="border-[#E3B01A] text-[#E3B01A] hover:bg-[#E3B01A] hover:text-white"
+                  className="border-yellow-400 text-yellow-600 hover:bg-yellow-400 hover:text-black"
                   onClick={() => {
                     // Simple share functionality using Web Share API or fallback
                     if (navigator.share) {
