@@ -402,7 +402,7 @@ const Homepage = () => {
                   />
                   <Button 
                     type="submit"
-                    className="bg-[#E3B01A] hover:bg-[#d4a117] text-white whitespace-nowrap"
+                    className="bg-yellow-400 hover:bg-yellow-500 text-black whitespace-nowrap"
                   >
                     Subscribe
                   </Button>
