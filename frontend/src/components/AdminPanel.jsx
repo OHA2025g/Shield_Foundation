@@ -420,7 +420,7 @@ const AdminPanel = () => {
                   <h2 className="text-2xl font-bold text-gray-900">News & Updates</h2>
                   <Button
                     onClick={() => setShowNewsForm(true)}
-                    className="bg-[#416177] hover:bg-[#335259] text-white"
+                    className="bg-blue-600 hover:bg-blue-700 text-white"
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     Add News
