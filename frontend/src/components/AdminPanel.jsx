@@ -326,7 +326,7 @@ const AdminPanel = () => {
                   <Card>
                     <CardContent className="p-6">
                       <div className="flex items-center">
-                        <Users className="h-8 w-8 text-[#416177]" />
+                        <Users className="h-8 w-8 text-blue-600" />
                         <div className="ml-4">
                           <div className="text-2xl font-bold text-gray-900">
                             {impactStats.youthTrained?.toLocaleString()}
