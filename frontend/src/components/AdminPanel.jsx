@@ -735,7 +735,7 @@ const AdminPanel = () => {
                     <p className="text-gray-600 mb-6">View and manage recent form submissions from visitors.</p>
                     <div className="grid md:grid-cols-3 gap-4">
                       <div className="bg-blue-50 p-4 rounded-lg text-center">
-                        <div className="text-2xl font-bold text-[#416177] mb-2">12</div>
+                        <div className="text-2xl font-bold text-blue-600 mb-2">12</div>
                         <div className="text-sm text-gray-600">Contact Forms</div>
                         <div className="text-xs text-gray-500 mt-1">This week</div>
                       </div>
