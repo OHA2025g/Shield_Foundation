@@ -294,8 +294,8 @@ const About = () => {
             </div>
             
             {/* Start and End markers */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 -top-4 w-4 h-4 bg-[#416177] rounded-full hidden md:block"></div>
-            <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-4 w-4 h-4 bg-[#416177] rounded-full hidden md:block"></div>
+            <div className="absolute left-1/2 transform -translate-x-1/2 -top-4 w-4 h-4 bg-blue-600 rounded-full hidden md:block"></div>
+            <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-4 w-4 h-4 bg-blue-600 rounded-full hidden md:block"></div>
           </div>
         </div>
       </section>
