@@ -296,7 +296,7 @@ const Contact = () => {
               <Button
                 variant={activeForm === 'volunteer' ? 'default' : 'ghost'}
                 onClick={() => setActiveForm('volunteer')}
-                className={activeForm === 'volunteer' ? 'bg-[#E3B01A] text-white' : ''}
+                className={activeForm === 'volunteer' ? 'bg-yellow-400 text-black' : ''}
               >
                 <UserPlus className="h-4 w-4 mr-2" />
                 Volunteer Application
