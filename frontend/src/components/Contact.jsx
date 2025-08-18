@@ -224,7 +224,7 @@ const Contact = () => {
                 <p className="text-gray-600 mb-4">Send us a message anytime</p>
                 <a 
                   href="mailto:shieldfoundation@gmail.com"
-                  className="text-[#416177] hover:text-[#335259] font-medium"
+                  className="text-blue-600 hover:text-blue-700 font-medium"
                 >
                   shieldfoundation@gmail.com
                 </a>
