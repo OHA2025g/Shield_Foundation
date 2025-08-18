@@ -254,9 +254,9 @@ const AdminPanel = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center">
-              <Shield className="h-8 w-8 text-[#416177] mr-3" />
+              <Shield className="h-8 w-8 text-blue-600 mr-3" />
               <div>
-                <h1 className="text-xl font-bold text-[#416177]">Shield Foundation</h1>
+                <h1 className="text-xl font-bold text-blue-600">Shield Foundation</h1>
                 <p className="text-sm text-gray-600">Admin Panel</p>
               </div>
             </div>
