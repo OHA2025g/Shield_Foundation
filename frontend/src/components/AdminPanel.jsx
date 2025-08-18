@@ -729,7 +729,7 @@ const AdminPanel = () => {
                 {/* Recent Submissions */}
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-xl text-[#E3B01A]">Recent Submissions</CardTitle>
+                    <CardTitle className="text-xl text-yellow-600">Recent Submissions</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-gray-600 mb-6">View and manage recent form submissions from visitors.</p>
