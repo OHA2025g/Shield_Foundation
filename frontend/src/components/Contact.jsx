@@ -405,7 +405,7 @@ const Contact = () => {
                     <Button 
                       type="submit" 
                       disabled={loading}
-                      className="w-full bg-[#416177] hover:bg-[#335259] text-white py-3"
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3"
                     >
                       {loading ? 'Sending...' : 'Send Message'}
                     </Button>
