@@ -85,6 +85,11 @@ const AdminPanel = () => {
         const newsData = await api.admin.getAllNews();
         setNews(newsData);
       }
+      
+      // Load blog posts if on blog tab (using mock data for now)
+      if (activeTab === 'blog') {
+        loadBlogPosts();
+      }
     } catch (error) {
       console.error('Failed to load dashboard data:', error);
     }
