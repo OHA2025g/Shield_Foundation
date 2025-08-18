@@ -257,7 +257,7 @@ const About = () => {
               {milestones.map((milestone, index) => (
                 <div key={index} className={`relative flex items-center ${index % 2 === 0 ? 'md:justify-start' : 'md:justify-end'}`}>
                   {/* Timeline dot */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-[#E3B01A] rounded-full border-4 border-white shadow-lg z-10 hidden md:block"></div>
+                  <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-yellow-400 rounded-full border-4 border-white shadow-lg z-10 hidden md:block"></div>
                   
                   <div className={`w-full md:w-5/12 ${index % 2 === 0 ? 'md:pr-8' : 'md:pl-8'}`}>
                     <Card className={`hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${
