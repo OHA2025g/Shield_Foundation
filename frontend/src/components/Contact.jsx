@@ -556,7 +556,7 @@ const Contact = () => {
           <div className="grid md:grid-cols-3 gap-8">
             <Card className="text-center hover:shadow-lg transition-shadow duration-300">
               <CardContent className="p-8">
-                <Heart className="h-12 w-12 text-[#E3B01A] mx-auto mb-4" />
+                <Heart className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Make a Donation</h3>
                 <p className="text-gray-600 mb-6">Support our programs with a financial contribution</p>
                 <Button 
