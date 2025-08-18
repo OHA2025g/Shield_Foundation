@@ -219,7 +219,7 @@ const Contact = () => {
           <div className="grid md:grid-cols-3 gap-8 mb-16">
             <Card className="text-center hover:shadow-lg transition-shadow duration-300">
               <CardContent className="p-8">
-                <Mail className="h-12 w-12 text-[#416177] mx-auto mb-4" />
+                <Mail className="h-12 w-12 text-blue-600 mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Email Us</h3>
                 <p className="text-gray-600 mb-4">Send us a message anytime</p>
                 <a 
