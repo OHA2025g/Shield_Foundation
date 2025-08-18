@@ -52,8 +52,8 @@ const Impact = () => {
             
             <Card className="text-center">
               <CardContent className="p-6">
-                <Heart className="h-12 w-12 text-[#416177] mx-auto mb-4" />
-                <div className="text-3xl font-bold text-[#416177] mb-2">
+                <Heart className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+                <div className="text-3xl font-bold text-blue-600 mb-2">
                   {mockData.impactStats.seniorsSupported.toLocaleString()}+
                 </div>
                 <div className="text-gray-600">Seniors Supported</div>
