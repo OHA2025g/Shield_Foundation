@@ -273,13 +273,7 @@ const Impact = () => {
                     <div>
                       <h3 className="text-xl font-bold text-gray-900 mb-1">{story.name}</h3>
                       <p className="text-sm text-blue-600 font-medium mb-3">{story.program}</p>
-                      <p className="text-gray-600 text-sm leading-relaxed">{story.story}</p>
-                      <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-                        <p className="text-sm font-medium text-blue-700">
-                          <TrendingUp className="h-4 w-4 inline mr-1" />
-                          {story.outcome}
-                        </p>
-                      </div>
+                      <p className="text-gray-600 text-sm leading-relaxed">{story.achievement}</p>
                     </div>
                   </div>
                 </CardContent>
