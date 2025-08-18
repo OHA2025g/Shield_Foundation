@@ -6,6 +6,7 @@ import Homepage from "./components/Homepage";
 import About from "./components/About";
 import Programs from "./components/Programs";
 import Impact from "./components/Impact";
+import Blog from "./components/Blog";
 import Gallery from "./components/Gallery";
 import Contact from "./components/Contact";
 import AdminPanel from "./components/AdminPanel";
