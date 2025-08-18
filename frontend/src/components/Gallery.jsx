@@ -228,7 +228,7 @@ const Gallery = () => {
           {/* Load More Button */}
           <div className="text-center mt-12">
             <Button 
-              className="bg-[#416177] hover:bg-[#335259] text-white px-8 py-3"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3"
             >
               Load More
             </Button>
