@@ -31,7 +31,7 @@ const AdminPanel = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [currentUser, setCurrentUser] = useState(null);
-  const [activeTab, setActiveTab] = useState('blog'); // Start with blog tab for testing
+  const [activeTab, setActiveTab] = useState('dashboard');
   const [news, setNews] = useState([]);
   const [impactStats, setImpactStats] = useState({
     youthTrained: 1300,
