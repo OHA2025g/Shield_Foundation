@@ -308,7 +308,7 @@ const Gallery = () => {
                 />
                 <div className="absolute inset-0 bg-black/20 flex items-center justify-center group-hover:bg-black/30 transition-colors duration-300">
                   <div className="bg-white/90 rounded-full p-4 group-hover:bg-white transition-colors duration-300">
-                    <Play className="h-8 w-8 text-[#416177]" />
+                    <Play className="h-8 w-8 text-blue-600" />
                   </div>
                 </div>
               </div>
