@@ -443,6 +443,14 @@ const AdminPanel = () => {
                     News & Updates
                   </Button>
                   <Button
+                    variant={activeTab === 'blog' ? 'default' : 'ghost'}
+                    onClick={() => setActiveTab('blog')}
+                    className="w-full justify-start"
+                  >
+                    <BookOpen className="h-4 w-4 mr-2" />
+                    Blog Management
+                  </Button>
+                  <Button
                     variant={activeTab === 'content' ? 'default' : 'ghost'}
                     onClick={() => setActiveTab('content')}
                     className="w-full justify-start"
