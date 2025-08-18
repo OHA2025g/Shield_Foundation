@@ -198,7 +198,7 @@ const Gallery = () => {
                   <div className="absolute top-4 left-4">
                     <Badge 
                       variant="secondary"
-                      className="bg-[#E3B01A] text-white hover:bg-[#d4a117]"
+                      className="bg-yellow-400 text-black hover:bg-yellow-500"
                     >
                       {categories.find(cat => cat.id === item.category)?.name}
                     </Badge>
