@@ -159,8 +159,8 @@ const Gallery = () => {
                   onClick={() => setSelectedCategory(category.id)}
                   className={`flex items-center gap-2 ${
                     selectedCategory === category.id
-                      ? 'bg-[#416177] text-white hover:bg-[#335259]'
-                      : 'border-[#416177] text-[#416177] hover:bg-[#416177] hover:text-white'
+                      ? 'bg-blue-600 text-white hover:bg-blue-700'
+                      : 'border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white'
                   }`}
                 >
                   <IconComponent className="h-4 w-4" />
