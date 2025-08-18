@@ -415,6 +415,49 @@ const AdminPanel = () => {
     });
   };
 
+  // Contact Information Management Functions
+  const handleEditContact = (field) => {
+    setTempContactInfo(contactInfo);
+    setShowContactForm(field);
+  };
+
+  const handleSaveContactInfo = () => {
+    setContactInfo(tempContactInfo);
+    setShowContactForm(false);
+    
+    toast({
+      title: "Success",
+      description: "Contact information updated successfully!",
+    });
+  };
+
+  const handleCancelContactEdit = () => {
+    setTempContactInfo(contactInfo);
+    setShowContactForm(false);
+  };
+
+  // Page Content Management Functions
+  const handleEditPageContent = (section) => {
+    setEditingPageSection(section);
+    setShowPageContentForm(true);
+  };
+
+  const handleSavePageContent = () => {
+    // In a real app, this would save to the backend
+    setShowPageContentForm(false);
+    setEditingPageSection(null);
+    
+    toast({
+      title: "Success",
+      description: "Page content updated successfully!",
+    });
+  };
+
+  const handleCancelPageContentEdit = () => {
+    setShowPageContentForm(false);
+    setEditingPageSection(null);
+  };
+
   if (!currentUser) {
     return <div>Loading...</div>;
   }
