@@ -740,7 +740,7 @@ const AdminPanel = () => {
                         <div className="text-xs text-gray-500 mt-1">This week</div>
                       </div>
                       <div className="bg-yellow-50 p-4 rounded-lg text-center">
-                        <div className="text-2xl font-bold text-[#E3B01A] mb-2">8</div>
+                        <div className="text-2xl font-bold text-yellow-500 mb-2">8</div>
                         <div className="text-sm text-gray-600">Volunteer Applications</div>
                         <div className="text-xs text-gray-500 mt-1">This week</div>
                       </div>
