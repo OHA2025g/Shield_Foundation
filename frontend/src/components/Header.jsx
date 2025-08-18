@@ -24,9 +24,9 @@ const Header = () => {
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <Heart className="h-8 w-8 text-[#416177] mr-3" />
+            <Heart className="h-8 w-8 text-blue-600 mr-3" />
             <div>
-              <h1 className="text-2xl font-bold text-[#416177]">Shield Foundation</h1>
+              <h1 className="text-2xl font-bold text-blue-600">Shield Foundation</h1>
               <p className="text-sm text-gray-600">Adding Life to Years</p>
             </div>
           </Link>
