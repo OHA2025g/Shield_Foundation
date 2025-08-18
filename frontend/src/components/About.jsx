@@ -340,28 +340,28 @@ const About = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
-              <div className="text-4xl font-bold text-white mb-2">
+              <div className="text-4xl font-bold text-black mb-2">
                 {mockData.impactStats.youthTrained.toLocaleString()}+
               </div>
-              <div className="text-white/80">Youth Trained</div>
+              <div className="text-black/70">Youth Trained</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-white mb-2">
+              <div className="text-4xl font-bold text-black mb-2">
                 {mockData.impactStats.youthPlaced.toLocaleString()}+
               </div>
-              <div className="text-white/80">Youth Placed</div>
+              <div className="text-black/70">Youth Placed</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-white mb-2">
+              <div className="text-4xl font-bold text-black mb-2">
                 {mockData.impactStats.seniorsSupported.toLocaleString()}+
               </div>
-              <div className="text-white/80">Seniors Supported</div>
+              <div className="text-black/70">Seniors Supported</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-white mb-2">
+              <div className="text-4xl font-bold text-black mb-2">
                 {mockData.impactStats.womenEmpowered}+
               </div>
-              <div className="text-white/80">Women Empowered</div>
+              <div className="text-black/70">Women Empowered</div>
             </div>
           </div>
         </div>
