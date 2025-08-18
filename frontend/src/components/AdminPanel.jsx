@@ -62,6 +62,37 @@ const AdminPanel = () => {
     status: 'draft'
   });
 
+  // Contact Information Management state
+  const [showContactForm, setShowContactForm] = useState(false);
+  const [contactInfo, setContactInfo] = useState({
+    email: 'shieldfoundation@gmail.com',
+    phone: '+91 98334 06288',
+    address: 'Dharavi, Mumbai, Maharashtra'
+  });
+  const [tempContactInfo, setTempContactInfo] = useState(contactInfo);
+
+  // Page Content Management state
+  const [showPageContentForm, setShowPageContentForm] = useState(false);
+  const [editingPageSection, setEditingPageSection] = useState(null);
+  const [pageContent, setPageContent] = useState({
+    homepage: {
+      hero: {
+        title: 'Shield Foundation - Adding Life to Years',
+        subtitle: 'Empowering youth through skill development and caring for seniors with dignity',
+        primaryButton: 'Support Our Mission',
+        secondaryButton: 'Become a Volunteer'
+      }
+    },
+    about: {
+      story: 'Our foundation story and mission...',
+      mission: 'To empower underprivileged communities...',
+      vision: 'A world where every individual has access to opportunities...'
+    },
+    programs: {
+      description: 'Comprehensive training and support services...'
+    }
+  });
+
   // Check authentication and load data
   useEffect(() => {
     const adminToken = localStorage.getItem('adminToken');
