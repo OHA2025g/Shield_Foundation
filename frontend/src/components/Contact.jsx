@@ -587,7 +587,7 @@ const Contact = () => {
                 <p className="text-gray-600 mb-6">Explore CSR opportunities with Shield Foundation</p>
                 <Button 
                   variant="outline" 
-                  className="border-[#416177] text-[#416177] hover:bg-[#416177] hover:text-white"
+                  className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
                   onClick={() => {
                     // Scroll to contact form for partnership inquiries
                     const contactFormSection = document.getElementById('contact-form-section');
