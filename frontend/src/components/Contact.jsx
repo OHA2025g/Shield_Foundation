@@ -259,7 +259,7 @@ const Contact = () => {
           <Card className="bg-gray-50 mb-16">
             <CardContent className="p-8">
               <div className="flex items-center justify-center mb-6">
-                <Clock className="h-8 w-8 text-[#416177] mr-3" />
+                <Clock className="h-8 w-8 text-blue-600 mr-3" />
                 <h3 className="text-2xl font-semibold text-gray-900">Office Hours</h3>
               </div>
               <div className="grid md:grid-cols-2 gap-6 text-center">
