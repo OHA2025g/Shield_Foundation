@@ -395,7 +395,7 @@ const AdminPanel = () => {
                         </div>
                       </div>
                       <div className="flex items-start space-x-3">
-                        <Users className="h-5 w-5 text-[#E3B01A] mt-0.5" />
+                        <Users className="h-5 w-5 text-yellow-500 mt-0.5" />
                         <div>
                           <p className="text-sm font-medium">25 youth completed CRS training program</p>
                           <p className="text-xs text-gray-500">1 week ago</p>
