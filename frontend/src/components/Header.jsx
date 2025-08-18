@@ -52,7 +52,7 @@ const Header = () => {
           <div className="hidden md:flex items-center space-x-4">
             <Button 
               asChild
-              className="bg-[#E3B01A] hover:bg-[#d4a117] text-white"
+              className="bg-yellow-400 hover:bg-yellow-500 text-black"
             >
               <Link to="/contact">
                 Donate Now
