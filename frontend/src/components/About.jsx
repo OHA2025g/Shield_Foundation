@@ -230,7 +230,7 @@ const About = () => {
                     className="w-32 h-32 rounded-full mx-auto mb-6 object-cover"
                   />
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">{member.name}</h3>
-                  <Badge className="mb-4 bg-[#E3B01A] text-white hover:bg-[#d4a117]">
+                  <Badge className="mb-4 bg-yellow-400 text-black hover:bg-yellow-500">
                     {member.role}
                   </Badge>
                   <p className="text-gray-600 text-sm leading-relaxed">{member.description}</p>
