@@ -204,7 +204,7 @@ const Homepage = () => {
             <Card className="h-full hover:shadow-lg transition-shadow duration-300">
               <CardHeader>
                 <div className="flex items-center mb-4">
-                  <GraduationCap className="h-12 w-12 text-[#416177] mr-4" />
+                  <GraduationCap className="h-12 w-12 text-blue-600 mr-4" />
                   <div>
                     <CardTitle className="text-2xl">Youth Skilling & Livelihoods</CardTitle>
                     <CardDescription className="text-lg">Partnership with Tech Mahindra Foundation</CardDescription>
