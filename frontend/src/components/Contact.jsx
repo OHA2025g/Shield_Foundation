@@ -560,7 +560,7 @@ const Contact = () => {
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Make a Donation</h3>
                 <p className="text-gray-600 mb-6">Support our programs with a financial contribution</p>
                 <Button 
-                  className="bg-[#E3B01A] hover:bg-[#d4a117] text-white"
+                  className="bg-yellow-400 hover:bg-yellow-500 text-black"
                   onClick={() => {
                     // For now, scroll to contact form and show donation message
                     const contactFormSection = document.getElementById('contact-form-section');
