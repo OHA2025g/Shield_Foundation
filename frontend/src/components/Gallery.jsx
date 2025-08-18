@@ -293,7 +293,7 @@ const Gallery = () => {
                 <p className="text-gray-600">
                   From ITES-BPO training to a successful career at Finbross Marketing Pvt Ltd
                 </p>
-                <Badge className="mt-3 bg-[#E3B01A] text-white hover:bg-[#d4a117]">
+                <Badge className="mt-3 bg-yellow-400 text-black hover:bg-yellow-500">
                   Youth Success
                 </Badge>
               </CardContent>
