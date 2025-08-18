@@ -63,7 +63,7 @@ const AdminPanel = () => {
   });
 
   // Contact Information Management state
-  const [showContactForm, setShowContactForm] = useState(false);
+  const [showContactForm, setShowContactForm] = useState(true); // Show form by default for testing
   const [contactInfo, setContactInfo] = useState({
     email: 'shieldfoundation@gmail.com',
     phone: '+91 98334 06288',
