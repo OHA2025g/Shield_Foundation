@@ -5,6 +5,7 @@ import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 import { GraduationCap, Heart, Users, Award, CheckCircle, Building, Calendar } from 'lucide-react';
 import { mockData } from '../mock';
+import { api } from '../api';
 import Header from './Header';
 import Footer from './Footer';
 
