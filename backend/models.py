@@ -169,3 +169,31 @@ class SuccessStoryUpdate(BaseModel):
     program: Optional[str] = None
     order: Optional[int] = None
     is_active: Optional[bool] = None
+
+# Leadership Team Models
+class TeamMember(BaseModel):
+    id: str
+    name: str
+    role: str
+    image: str
+    description: str
+    order: int = 0
+    is_active: bool = True
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+
+class TeamMemberCreate(BaseModel):
+    name: str
+    role: str
+    image: str
+    description: str
+    order: int = 0
+    is_active: bool = True
+
+class TeamMemberUpdate(BaseModel):
+    name: Optional[str] = None
+    role: Optional[str] = None
+    image: Optional[str] = None
+    description: Optional[str] = None
+    order: Optional[int] = None
+    is_active: Optional[bool] = None
