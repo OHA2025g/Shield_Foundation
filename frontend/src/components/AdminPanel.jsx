@@ -1139,6 +1139,14 @@ const AdminPanel = () => {
                     Page Management
                   </Button>
                   <Button
+                    variant={activeTab === 'database' ? 'default' : 'ghost'}
+                    onClick={() => setActiveTab('database')}
+                    className="w-full justify-start"
+                  >
+                    <Database className="h-4 w-4 mr-2" />
+                    Database Management
+                  </Button>
+                  <Button
                     variant={activeTab === 'content' ? 'default' : 'ghost'}
                     onClick={() => setActiveTab('content')}
                     className="w-full justify-start"
