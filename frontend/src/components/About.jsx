@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Heart, Users, Award, Target, Eye, Star, CheckCircle } from 'lucide-react';
@@ -7,6 +7,13 @@ import Header from './Header';
 import Footer from './Footer';
 
 const About = () => {
+  // Site content state
+  const [siteContent, setSiteContent] = useState({});
+
+  // Load site content on component mount
+  useEffect(() => {
+    setSiteContent(mockData.siteContent || {});
+  }, []);
   const teamMembers = [
     {
       name: "Mrs. Swati Ingole",
