@@ -1203,6 +1203,195 @@ class BackendTester:
         except Exception as e:
             self.log_result("Public Gallery Items", False, "Request failed", str(e))
     
+    def test_gallery_management_verification(self):
+        """FOCUSED TEST: Verify Gallery Management API after data changes as requested in review"""
+        print("\n🎯 GALLERY MANAGEMENT API VERIFICATION (Review Request)")
+        print("=" * 60)
+        
+        # Test 1: GET /api/gallery-items - Should return 6 items (1 original + 5 new)
+        try:
+            response = self.session.get(f"{API_BASE}/gallery-items")
+            if response.status_code == 200:
+                data = response.json()
+                if "items" in data and isinstance(data["items"], list):
+                    items = data["items"]
+                    item_count = len(items)
+                    
+                    # Verify we have 6 items as expected
+                    if item_count == 6:
+                        self.log_result("Gallery Items Count Verification", True, f"✅ Found expected 6 gallery items (1 original + 5 new)")
+                    else:
+                        self.log_result("Gallery Items Count Verification", False, f"❌ Expected 6 items, found {item_count}")
+                    
+                    # Verify structure of each item
+                    required_fields = ["title", "description", "image", "category", "date", "type", "order", "is_active"]
+                    structure_valid = True
+                    category_counts = {}
+                    
+                    for item in items:
+                        # Check required fields
+                        missing_fields = [field for field in required_fields if field not in item]
+                        if missing_fields:
+                            structure_valid = False
+                            self.log_result("Gallery Item Structure", False, f"❌ Item '{item.get('title', 'Unknown')}' missing fields: {missing_fields}")
+                        
+                        # Count categories
+                        category = item.get("category", "unknown")
+                        category_counts[category] = category_counts.get(category, 0) + 1
+                    
+                    if structure_valid:
+                        self.log_result("Gallery Items Structure", True, "✅ All gallery items have proper structure with required fields")
+                    
+                    # Verify expected categories and counts
+                    expected_categories = {
+                        "youth": 2,
+                        "seniors": 1, 
+                        "community": 1,
+                        "events": 1
+                    }
+                    
+                    category_verification_passed = True
+                    for expected_cat, expected_count in expected_categories.items():
+                        actual_count = category_counts.get(expected_cat, 0)
+                        if actual_count != expected_count:
+                            category_verification_passed = False
+                            self.log_result("Gallery Category Verification", False, f"❌ Category '{expected_cat}': expected {expected_count}, found {actual_count}")
+                    
+                    if category_verification_passed:
+                        self.log_result("Gallery Categories", True, f"✅ Categories verified: youth(2), seniors(1), community(1), events(1)")
+                    
+                    # Log detailed item information
+                    print(f"\n📋 GALLERY ITEMS DETAILS:")
+                    for i, item in enumerate(items, 1):
+                        print(f"  {i}. {item.get('title', 'No Title')} - Category: {item.get('category', 'No Category')}")
+                    
+                else:
+                    self.log_result("Gallery Items Response Format", False, "❌ Invalid response format - missing 'items' array")
+            else:
+                self.log_result("Gallery Items API", False, f"❌ HTTP {response.status_code}: {response.text}")
+        except Exception as e:
+            self.log_result("Gallery Items API", False, f"❌ Request failed: {str(e)}")
+        
+        # Test 2: Verify admin endpoints still work (requires admin token)
+        if self.admin_token:
+            headers = {"Authorization": f"Bearer {self.admin_token}"}
+            
+            # Test GET /api/admin/gallery-items
+            try:
+                response = self.session.get(f"{API_BASE}/admin/gallery-items", headers=headers)
+                if response.status_code == 200:
+                    data = response.json()
+                    if "items" in data and isinstance(data["items"], list):
+                        admin_items = data["items"]
+                        self.log_result("Admin Gallery Items GET", True, f"✅ Admin endpoint returns {len(admin_items)} gallery items")
+                    else:
+                        self.log_result("Admin Gallery Items GET", False, "❌ Invalid admin response format")
+                else:
+                    self.log_result("Admin Gallery Items GET", False, f"❌ Admin GET failed: HTTP {response.status_code}")
+            except Exception as e:
+                self.log_result("Admin Gallery Items GET", False, f"❌ Admin GET request failed: {str(e)}")
+            
+            # Test POST /api/admin/gallery-items (create new item)
+            test_item = {
+                "title": "Test Gallery Item for Verification",
+                "description": "This is a test item created during API verification",
+                "image": "https://example.com/test-image.jpg",
+                "category": "test",
+                "date": "2024-01-15",
+                "type": "image",
+                "order": 99,
+                "is_active": True
+            }
+            
+            created_item_id = None
+            try:
+                response = self.session.post(f"{API_BASE}/admin/gallery-items", json=test_item, headers=headers)
+                if response.status_code == 200:
+                    data = response.json()
+                    if data.get("success") and "created successfully" in data.get("message", ""):
+                        self.log_result("Admin Gallery Items POST", True, "✅ Admin POST (create) working correctly")
+                        
+                        # Get the created item ID for update/delete tests
+                        admin_response = self.session.get(f"{API_BASE}/admin/gallery-items", headers=headers)
+                        if admin_response.status_code == 200:
+                            admin_data = admin_response.json()
+                            for item in admin_data.get("items", []):
+                                if item.get("title") == "Test Gallery Item for Verification":
+                                    created_item_id = item.get("id")
+                                    break
+                    else:
+                        self.log_result("Admin Gallery Items POST", False, f"❌ Invalid POST response: {data}")
+                else:
+                    self.log_result("Admin Gallery Items POST", False, f"❌ Admin POST failed: HTTP {response.status_code}")
+            except Exception as e:
+                self.log_result("Admin Gallery Items POST", False, f"❌ Admin POST request failed: {str(e)}")
+            
+            # Test PUT /api/admin/gallery-items/{id} (update item)
+            if created_item_id:
+                update_data = {
+                    "title": "Updated Test Gallery Item",
+                    "description": "This item was updated during verification testing"
+                }
+                try:
+                    response = self.session.put(f"{API_BASE}/admin/gallery-items/{created_item_id}", json=update_data, headers=headers)
+                    if response.status_code == 200:
+                        data = response.json()
+                        if data.get("success") and "updated successfully" in data.get("message", ""):
+                            self.log_result("Admin Gallery Items PUT", True, "✅ Admin PUT (update) working correctly")
+                        else:
+                            self.log_result("Admin Gallery Items PUT", False, f"❌ Invalid PUT response: {data}")
+                    else:
+                        self.log_result("Admin Gallery Items PUT", False, f"❌ Admin PUT failed: HTTP {response.status_code}")
+                except Exception as e:
+                    self.log_result("Admin Gallery Items PUT", False, f"❌ Admin PUT request failed: {str(e)}")
+            
+            # Test DELETE /api/admin/gallery-items/{id} (delete item)
+            if created_item_id:
+                try:
+                    response = self.session.delete(f"{API_BASE}/admin/gallery-items/{created_item_id}", headers=headers)
+                    if response.status_code == 200:
+                        data = response.json()
+                        if data.get("success") and "deleted successfully" in data.get("message", ""):
+                            self.log_result("Admin Gallery Items DELETE", True, "✅ Admin DELETE working correctly")
+                        else:
+                            self.log_result("Admin Gallery Items DELETE", False, f"❌ Invalid DELETE response: {data}")
+                    else:
+                        self.log_result("Admin Gallery Items DELETE", False, f"❌ Admin DELETE failed: HTTP {response.status_code}")
+                except Exception as e:
+                    self.log_result("Admin Gallery Items DELETE", False, f"❌ Admin DELETE request failed: {str(e)}")
+        
+        # Test 3: Verify authentication is required for admin endpoints
+        print(f"\n🔒 TESTING AUTHENTICATION REQUIREMENTS:")
+        
+        # Test admin endpoints without token
+        admin_endpoints = [
+            ("GET", f"{API_BASE}/admin/gallery-items"),
+            ("POST", f"{API_BASE}/admin/gallery-items"),
+            ("PUT", f"{API_BASE}/admin/gallery-items/test-id"),
+            ("DELETE", f"{API_BASE}/admin/gallery-items/test-id")
+        ]
+        
+        for method, endpoint in admin_endpoints:
+            try:
+                if method == "GET":
+                    response = self.session.get(endpoint)
+                elif method == "POST":
+                    response = self.session.post(endpoint, json={"title": "test"})
+                elif method == "PUT":
+                    response = self.session.put(endpoint, json={"title": "test"})
+                elif method == "DELETE":
+                    response = self.session.delete(endpoint)
+                
+                if response.status_code == 403:
+                    self.log_result(f"Auth Required {method}", True, f"✅ {method} endpoint properly requires authentication")
+                else:
+                    self.log_result(f"Auth Required {method}", False, f"❌ {method} endpoint should require auth, got HTTP {response.status_code}")
+            except Exception as e:
+                self.log_result(f"Auth Required {method}", False, f"❌ Auth test failed: {str(e)}")
+        
+        print(f"\n✅ GALLERY MANAGEMENT API VERIFICATION COMPLETE")
+        print("=" * 60)
+    
     def test_gallery_items_crud_operations(self):
         """Test gallery items CRUD operations (requires admin token)"""
         if not self.admin_token:
