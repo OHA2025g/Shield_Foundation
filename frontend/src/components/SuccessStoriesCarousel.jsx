@@ -91,9 +91,9 @@ const SuccessStoriesCarousel = () => {
               {stories.map((story, index) => (
                 <div key={story.id || index} className="w-full flex-shrink-0 px-2">
                   <Card className="border-0 shadow-lg h-[150px] max-w-5xl mx-auto">
-                    <div className="grid md:grid-cols-4 gap-0 h-full">
-                      {/* Image - much smaller proportion */}
-                      <div className="relative md:col-span-1">
+                    <div className="flex h-full">
+                      {/* Image - fixed width */}
+                      <div className="relative w-32 flex-shrink-0">
                         <img 
                           src={story.image} 
                           alt={story.name}
@@ -106,27 +106,29 @@ const SuccessStoriesCarousel = () => {
                         </div>
                       </div>
                       
-                      {/* Content - much larger proportion */}
-                      <CardContent className="md:col-span-3 p-3 flex flex-col justify-center h-full">
-                        <div className="mb-2">
-                          <h3 className="text-base font-bold text-gray-900 mb-1 line-clamp-1">{story.name}</h3>
-                          <div className="flex items-center text-gray-500 text-xs mb-1">
-                            <MapPin className="h-3 w-3 mr-1" />
-                            <span className="line-clamp-1">{story.location}</span>
+                      {/* Content - flex-1 with perfect centering */}
+                      <div className="flex-1 flex items-center">
+                        <CardContent className="w-full p-3">
+                          <div className="mb-2">
+                            <h3 className="text-base font-bold text-gray-900 mb-1 line-clamp-1">{story.name}</h3>
+                            <div className="flex items-center text-gray-500 text-xs mb-1">
+                              <MapPin className="h-3 w-3 mr-1" />
+                              <span className="line-clamp-1">{story.location}</span>
+                            </div>
                           </div>
-                        </div>
-                        
-                        <blockquote className="text-xs text-gray-600 italic mb-2 leading-relaxed line-clamp-2">
-                          "{story.story}"
-                        </blockquote>
-                        
-                        <div className="flex items-center">
-                          <div className="flex items-center text-blue-600 font-medium text-xs">
-                            <Award className="h-3 w-3 mr-1 flex-shrink-0" />
-                            <span className="line-clamp-1">{story.achievement}</span>
+                          
+                          <blockquote className="text-xs text-gray-600 italic mb-2 leading-relaxed line-clamp-2">
+                            "{story.story}"
+                          </blockquote>
+                          
+                          <div className="flex items-center">
+                            <div className="flex items-center text-blue-600 font-medium text-xs">
+                              <Award className="h-3 w-3 mr-1 flex-shrink-0" />
+                              <span className="line-clamp-1">{story.achievement}</span>
+                            </div>
                           </div>
-                        </div>
-                      </CardContent>
+                        </CardContent>
+                      </div>
                     </div>
                   </Card>
                 </div>
