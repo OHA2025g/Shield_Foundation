@@ -448,6 +448,9 @@ const AdminPanel = () => {
     if (activeTab === 'content' && currentUser) {
       loadSiteContent();
     }
+    if (activeTab === 'stories' && currentUser) {
+      loadSuccessStories();
+    }
   }, [activeTab, currentUser]);
 
   const handleAddBlog = () => {
