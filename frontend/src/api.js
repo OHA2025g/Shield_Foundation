@@ -233,3 +233,25 @@ export const getLeadershipTeam = async () => {
     throw error;
   }
 };
+
+// Page Sections API (public)
+export const getPageSections = async (page) => {
+  try {
+    const response = await apiClient.get(`/page-sections/${page}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to fetch page sections for ${page}:`, error);
+    throw error;
+  }
+};
+
+// Gallery Items API (public)
+export const getGalleryItems = async () => {
+  try {
+    const response = await apiClient.get('/gallery-items');
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch gallery items:', error);
+    throw error;
+  }
+};
