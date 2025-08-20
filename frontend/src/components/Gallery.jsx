@@ -147,10 +147,17 @@ const Gallery = () => {
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-50 to-yellow-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Gallery</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            {siteContent.gallery?.hero?.title || "Gallery"}
+          </h1>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-            Capturing moments of transformation, empowerment, and community impact
+            {siteContent.gallery?.hero?.subtitle || "Capturing Moments of Impact and Transformation"}
           </p>
+          {siteContent.gallery?.hero?.description && (
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto mt-4">
+              {siteContent.gallery?.hero?.description}
+            </p>
+          )}
         </div>
       </section>
 
