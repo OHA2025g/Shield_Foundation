@@ -14,10 +14,12 @@ const Gallery = () => {
   const [siteContent, setSiteContent] = useState({});
   // Gallery items state
   const [galleryItems, setGalleryItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // Load site content and gallery items on component mount
   useEffect(() => {
     const loadData = async () => {
+      setLoading(true);
       try {
         // Load site content
         const backendContent = await getPublicSiteContent();
