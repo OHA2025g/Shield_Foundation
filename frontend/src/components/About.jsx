@@ -103,10 +103,17 @@ const About = () => {
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-50 to-yellow-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">About Shield Foundation</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            {siteContent.about?.hero?.title || "About Shield Foundation"}
+          </h1>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-            A Mumbai-based non-profit organization dedicated to adding life to years through community empowerment
+            {siteContent.about?.hero?.subtitle || "Our Story of Impact and Transformation"}
           </p>
+          {siteContent.about?.hero?.description && (
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto mt-4">
+              {siteContent.about?.hero?.description}
+            </p>
+          )}
         </div>
       </section>
 
