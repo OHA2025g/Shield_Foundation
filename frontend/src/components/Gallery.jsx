@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { Play, Users, Award, Heart, Calendar } from 'lucide-react';
+import { mockData } from '../mock';
 import Header from './Header';
 import Footer from './Footer';
 
 const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  // Site content state
+  const [siteContent, setSiteContent] = useState({});
+
+  // Load site content on component mount
+  useEffect(() => {
+    setSiteContent(mockData.siteContent || {});
+  }, []);
 
   const categories = [
     { id: 'all', name: 'All', icon: Users },
