@@ -544,10 +544,16 @@ class BackendTester:
         self.test_admin_login_invalid()
         self.test_protected_route_without_token()
         
+        # Test site content endpoints without authentication (should fail)
+        self.test_site_content_auth_required()
+        
         # Admin authentication and protected endpoints
         if self.test_admin_login():
             self.test_admin_endpoints()
             self.test_news_crud_operations()
+            # Test new site content management endpoints
+            self.test_site_content_management()
+            self.test_contact_info_management()
         
         # Summary
         print("\n" + "=" * 60)
