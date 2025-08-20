@@ -74,6 +74,9 @@ const AdminPanel = () => {
   // Page Content Management state
   const [showPageContentForm, setShowPageContentForm] = useState(false);
   const [editingPageSection, setEditingPageSection] = useState(null);
+  const [editingSubSection, setEditingSubSection] = useState(null);
+  const [siteContent, setSiteContent] = useState({});
+  const [tempSiteContent, setTempSiteContent] = useState({});
   const [pageContent, setPageContent] = useState({
     homepage: {
       hero: {
