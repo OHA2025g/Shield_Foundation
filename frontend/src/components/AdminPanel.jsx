@@ -574,6 +574,9 @@ const AdminPanel = () => {
     if (activeTab === 'stories' && currentUser) {
       loadSuccessStories();
     }
+    if (activeTab === 'team' && currentUser) {
+      loadTeamMembers();
+    }
   }, [activeTab, currentUser]);
 
   const handleAddBlog = () => {
