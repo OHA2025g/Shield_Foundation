@@ -201,9 +201,11 @@ const Homepage = () => {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Core Programs</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              {siteContent?.homepage?.programs?.title || "Our Core Programs"}
+            </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Shield Foundation focuses on two major domains that create lasting impact in communities
+              {siteContent?.homepage?.programs?.subtitle || "Shield Foundation focuses on two major domains that create lasting impact in communities"}
             </p>
           </div>
           
@@ -214,14 +216,16 @@ const Homepage = () => {
                 <div className="flex items-center mb-4">
                   <GraduationCap className="h-12 w-12 text-blue-600 mr-4" />
                   <div>
-                    <CardTitle className="text-2xl">Youth Skilling & Livelihoods</CardTitle>
+                    <CardTitle className="text-2xl">
+                      {siteContent?.homepage?.programs?.youthProgram?.title || "Youth Skilling & Livelihoods"}
+                    </CardTitle>
                     <CardDescription className="text-lg">Partnership with Tech Mahindra Foundation</CardDescription>
                   </div>
                 </div>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600 mb-6">
-                  Specialized vocational training programs for underprivileged youth focusing on CRS, ITES-BPO, and Nursing Assistant courses.
+                  {siteContent?.homepage?.programs?.youthProgram?.description || "Specialized vocational training programs for underprivileged youth focusing on CRS, ITES-BPO, and Nursing Assistant courses."}
                 </p>
                 <div className="space-y-2 mb-6">
                   <div className="flex items-center text-sm text-gray-600">
@@ -239,7 +243,7 @@ const Homepage = () => {
                 </div>
                 <Button asChild className="w-full bg-blue-600 hover:bg-blue-700 text-white">
                   <Link to="/programs">
-                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                    {siteContent?.homepage?.programs?.youthProgram?.buttonText || "Learn More"} <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
               </CardContent>
@@ -251,14 +255,16 @@ const Homepage = () => {
                 <div className="flex items-center mb-4">
                   <Heart className="h-12 w-12 text-yellow-500 mr-4" />
                   <div>
-                    <CardTitle className="text-2xl">Senior Citizens Services</CardTitle>
+                    <CardTitle className="text-2xl">
+                      {siteContent?.homepage?.programs?.seniorProgram?.title || "Senior Citizens Services"}
+                    </CardTitle>
                     <CardDescription className="text-lg">Multi-Service Support Centers</CardDescription>
                   </div>
                 </div>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600 mb-6">
-                  Comprehensive healthcare, psychosocial, legal, and recreational services for elderly in Dharavi and beyond.
+                  {siteContent?.homepage?.programs?.seniorProgram?.description || "Comprehensive healthcare, psychosocial, legal, and recreational services for elderly in Dharavi and beyond."}
                 </p>
                 <div className="space-y-2 mb-6">
                   <div className="flex items-center text-sm text-gray-600">
@@ -276,7 +282,7 @@ const Homepage = () => {
                 </div>
                 <Button asChild className="w-full bg-yellow-400 hover:bg-yellow-500 text-black">
                   <Link to="/programs">
-                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                    {siteContent?.homepage?.programs?.seniorProgram?.buttonText || "Learn More"} <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
               </CardContent>
