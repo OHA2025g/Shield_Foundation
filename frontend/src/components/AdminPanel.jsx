@@ -1222,155 +1222,203 @@ const AdminPanel = () => {
                 {/* Page Content Management */}
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-xl text-blue-600">Page Content</CardTitle>
+                    <CardTitle className="text-xl text-blue-600">Site Content Management</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-600 mb-6">Manage content across different pages of the website.</p>
+                    <p className="text-gray-600 mb-6">Edit content for all pages and sections across the website.</p>
                     
-                    {/* Page Content Edit Form */}
+                    {/* Content Edit Form */}
                     {showPageContentForm && (
                       <Card className="border-2 border-blue-200 mb-6">
                         <CardHeader>
                           <CardTitle className="flex items-center justify-between">
-                            <span>Edit {editingPageSection === 'homepage' ? 'Homepage Hero Section' : 
-                                   editingPageSection === 'about' ? 'About Us Page' :
-                                   editingPageSection === 'programs' ? 'Programs Information' :
-                                   editingPageSection === 'stories' ? 'Success Stories' : 'Page Content'}</span>
+                            <span>Edit {editingPageSection} - {editingSubSection}</span>
                             <Button variant="ghost" size="sm" onClick={handleCancelPageContentEdit}>
                               <X className="h-4 w-4" />
                             </Button>
                           </CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
-                          {editingPageSection === 'homepage' && (
+                          {/* Dynamic form rendering based on section */}
+                          {editingPageSection === 'homepage' && editingSubSection === 'hero' && (
                             <>
                               <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Main Title</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
                                 <Input
-                                  value={pageContent.homepage.hero.title}
-                                  onChange={(e) => setPageContent({
-                                    ...pageContent,
-                                    homepage: {
-                                      ...pageContent.homepage,
-                                      hero: { ...pageContent.homepage.hero, title: e.target.value }
-                                    }
-                                  })}
-                                  placeholder="Enter main title"
+                                  value={getSiteContentValue('homepage.hero.title')}
+                                  onChange={(e) => updateSiteContent('homepage.hero.title', e.target.value)}
+                                  placeholder="Shield Foundation"
                                 />
                               </div>
                               <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Subtitle</label>
+                                <Input
+                                  value={getSiteContentValue('homepage.hero.subtitle')}
+                                  onChange={(e) => updateSiteContent('homepage.hero.subtitle', e.target.value)}
+                                  placeholder="Adding Life to Years"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
                                 <Textarea
-                                  value={pageContent.homepage.hero.subtitle}
-                                  onChange={(e) => setPageContent({
-                                    ...pageContent,
-                                    homepage: {
-                                      ...pageContent.homepage,
-                                      hero: { ...pageContent.homepage.hero, subtitle: e.target.value }
-                                    }
-                                  })}
-                                  placeholder="Enter subtitle description"
+                                  value={getSiteContentValue('homepage.hero.description')}
+                                  onChange={(e) => updateSiteContent('homepage.hero.description', e.target.value)}
+                                  placeholder="Main hero description"
                                   rows={3}
                                 />
                               </div>
                               <div className="grid md:grid-cols-2 gap-4">
                                 <div>
-                                  <label className="block text-sm font-medium text-gray-700 mb-1">Primary Button Text</label>
+                                  <label className="block text-sm font-medium text-gray-700 mb-1">Primary Button</label>
                                   <Input
-                                    value={pageContent.homepage.hero.primaryButton}
-                                    onChange={(e) => setPageContent({
-                                      ...pageContent,
-                                      homepage: {
-                                        ...pageContent.homepage,
-                                        hero: { ...pageContent.homepage.hero, primaryButton: e.target.value }
-                                      }
-                                    })}
-                                    placeholder="e.g., Support Our Mission"
+                                    value={getSiteContentValue('homepage.hero.primaryButton')}
+                                    onChange={(e) => updateSiteContent('homepage.hero.primaryButton', e.target.value)}
+                                    placeholder="Support Our Mission"
                                   />
                                 </div>
                                 <div>
-                                  <label className="block text-sm font-medium text-gray-700 mb-1">Secondary Button Text</label>
+                                  <label className="block text-sm font-medium text-gray-700 mb-1">Secondary Button</label>
                                   <Input
-                                    value={pageContent.homepage.hero.secondaryButton}
-                                    onChange={(e) => setPageContent({
-                                      ...pageContent,
-                                      homepage: {
-                                        ...pageContent.homepage,
-                                        hero: { ...pageContent.homepage.hero, secondaryButton: e.target.value }
-                                      }
-                                    })}
-                                    placeholder="e.g., Become a Volunteer"
+                                    value={getSiteContentValue('homepage.hero.secondaryButton')}
+                                    onChange={(e) => updateSiteContent('homepage.hero.secondaryButton', e.target.value)}
+                                    placeholder="Become a Volunteer"
                                   />
                                 </div>
                               </div>
                             </>
                           )}
 
-                          {editingPageSection === 'about' && (
+                          {editingPageSection === 'homepage' && editingSubSection === 'programs' && (
                             <>
                               <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Foundation Story</label>
-                                <Textarea
-                                  value={pageContent.about.story}
-                                  onChange={(e) => setPageContent({
-                                    ...pageContent,
-                                    about: { ...pageContent.about, story: e.target.value }
-                                  })}
-                                  placeholder="Tell the foundation's story..."
-                                  rows={4}
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Section Title</label>
+                                <Input
+                                  value={getSiteContentValue('homepage.programs.title')}
+                                  onChange={(e) => updateSiteContent('homepage.programs.title', e.target.value)}
+                                  placeholder="Our Programs"
                                 />
                               </div>
                               <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Mission Statement</label>
-                                <Textarea
-                                  value={pageContent.about.mission}
-                                  onChange={(e) => setPageContent({
-                                    ...pageContent,
-                                    about: { ...pageContent.about, mission: e.target.value }
-                                  })}
-                                  placeholder="Enter mission statement..."
-                                  rows={3}
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Section Subtitle</label>
+                                <Input
+                                  value={getSiteContentValue('homepage.programs.subtitle')}
+                                  onChange={(e) => updateSiteContent('homepage.programs.subtitle', e.target.value)}
+                                  placeholder="Transforming lives through comprehensive support"
+                                />
+                              </div>
+                              <div className="grid md:grid-cols-2 gap-6">
+                                <div className="space-y-3">
+                                  <h4 className="font-medium text-gray-900">Youth Program</h4>
+                                  <Input
+                                    value={getSiteContentValue('homepage.programs.youthProgram.title')}
+                                    onChange={(e) => updateSiteContent('homepage.programs.youthProgram.title', e.target.value)}
+                                    placeholder="Youth Skilling & Livelihoods"
+                                  />
+                                  <Textarea
+                                    value={getSiteContentValue('homepage.programs.youthProgram.description')}
+                                    onChange={(e) => updateSiteContent('homepage.programs.youthProgram.description', e.target.value)}
+                                    placeholder="Program description"
+                                    rows={2}
+                                  />
+                                  <Input
+                                    value={getSiteContentValue('homepage.programs.youthProgram.buttonText')}
+                                    onChange={(e) => updateSiteContent('homepage.programs.youthProgram.buttonText', e.target.value)}
+                                    placeholder="Learn More"
+                                  />
+                                </div>
+                                <div className="space-y-3">
+                                  <h4 className="font-medium text-gray-900">Senior Program</h4>
+                                  <Input
+                                    value={getSiteContentValue('homepage.programs.seniorProgram.title')}
+                                    onChange={(e) => updateSiteContent('homepage.programs.seniorProgram.title', e.target.value)}
+                                    placeholder="Senior Citizens Care"
+                                  />
+                                  <Textarea
+                                    value={getSiteContentValue('homepage.programs.seniorProgram.description')}
+                                    onChange={(e) => updateSiteContent('homepage.programs.seniorProgram.description', e.target.value)}
+                                    placeholder="Program description"
+                                    rows={2}
+                                  />
+                                  <Input
+                                    value={getSiteContentValue('homepage.programs.seniorProgram.buttonText')}
+                                    onChange={(e) => updateSiteContent('homepage.programs.seniorProgram.buttonText', e.target.value)}
+                                    placeholder="Get Involved"
+                                  />
+                                </div>
+                              </div>
+                            </>
+                          )}
+
+                          {editingPageSection === 'about' && editingSubSection === 'hero' && (
+                            <>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                                <Input
+                                  value={getSiteContentValue('about.hero.title')}
+                                  onChange={(e) => updateSiteContent('about.hero.title', e.target.value)}
+                                  placeholder="About Shield Foundation"
                                 />
                               </div>
                               <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Vision Statement</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Subtitle</label>
+                                <Input
+                                  value={getSiteContentValue('about.hero.subtitle')}
+                                  onChange={(e) => updateSiteContent('about.hero.subtitle', e.target.value)}
+                                  placeholder="Our Story of Impact and Transformation"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
                                 <Textarea
-                                  value={pageContent.about.vision}
-                                  onChange={(e) => setPageContent({
-                                    ...pageContent,
-                                    about: { ...pageContent.about, vision: e.target.value }
-                                  })}
-                                  placeholder="Enter vision statement..."
+                                  value={getSiteContentValue('about.hero.description')}
+                                  onChange={(e) => updateSiteContent('about.hero.description', e.target.value)}
+                                  placeholder="Hero section description"
                                   rows={3}
                                 />
                               </div>
                             </>
                           )}
 
-                          {editingPageSection === 'programs' && (
-                            <div>
-                              <label className="block text-sm font-medium text-gray-700 mb-1">Programs Description</label>
-                              <Textarea
-                                value={pageContent.programs.description}
-                                onChange={(e) => setPageContent({
-                                  ...pageContent,
-                                  programs: { ...pageContent.programs, description: e.target.value }
-                                })}
-                                placeholder="Describe your programs and services..."
-                                rows={5}
-                              />
-                            </div>
-                          )}
-
-                          {editingPageSection === 'stories' && (
-                            <div>
-                              <p className="text-gray-600 text-sm">Success stories management will be implemented here. This will allow adding, editing, and removing testimonials and success stories.</p>
-                              <div className="bg-yellow-50 p-4 rounded-lg">
-                                <span className="text-yellow-800 text-sm">📝 Success Stories editing interface coming soon</span>
+                          {editingPageSection === 'about' && editingSubSection === 'story' && (
+                            <>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Story Title</label>
+                                <Input
+                                  value={getSiteContentValue('about.story.title')}
+                                  onChange={(e) => updateSiteContent('about.story.title', e.target.value)}
+                                  placeholder="Our Story"
+                                />
                               </div>
-                            </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Story Content</label>
+                                <Textarea
+                                  value={getSiteContentValue('about.story.content')}
+                                  onChange={(e) => updateSiteContent('about.story.content', e.target.value)}
+                                  placeholder="Foundation story and background"
+                                  rows={5}
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Highlight Box Text</label>
+                                <Input
+                                  value={getSiteContentValue('about.story.highlightBox.text')}
+                                  onChange={(e) => updateSiteContent('about.story.highlightBox.text', e.target.value)}
+                                  placeholder="6+ Years Serving Communities"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Highlight Subtext</label>
+                                <Input
+                                  value={getSiteContentValue('about.story.highlightBox.subtext')}
+                                  onChange={(e) => updateSiteContent('about.story.highlightBox.subtext', e.target.value)}
+                                  placeholder="Transforming lives daily"
+                                />
+                              </div>
+                            </>
                           )}
 
+                          {/* Add more section editors as needed */}
+                          
                           <div className="flex gap-3 pt-4">
                             <Button 
                               onClick={handleSavePageContent}
@@ -1387,62 +1435,113 @@ const AdminPanel = () => {
                       </Card>
                     )}
 
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                        <div>
-                          <span className="font-medium">Homepage Hero Section</span>
-                          <p className="text-sm text-gray-600">Edit main headline, description, and call-to-action buttons</p>
+                    {/* Page and Section List */}
+                    <div className="space-y-6">
+                      {/* Homepage Sections */}
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">Homepage</h3>
+                        <div className="grid md:grid-cols-2 gap-3">
+                          <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div>
+                              <span className="font-medium">Hero Section</span>
+                              <p className="text-sm text-gray-600">Main title, subtitle, description, and buttons</p>
+                            </div>
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              onClick={() => handleEditPageContent('homepage', 'hero')}
+                            >
+                              <Edit className="h-4 w-4 mr-2" />
+                              Edit
+                            </Button>
+                          </div>
+                          <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div>
+                              <span className="font-medium">Programs Section</span>
+                              <p className="text-sm text-gray-600">Program cards, titles, and descriptions</p>
+                            </div>
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              onClick={() => handleEditPageContent('homepage', 'programs')}
+                            >
+                              <Edit className="h-4 w-4 mr-2" />
+                              Edit
+                            </Button>
+                          </div>
                         </div>
-                        <Button 
-                          size="sm" 
-                          variant="outline"
-                          onClick={() => handleEditPageContent('homepage')}
-                        >
-                          <Edit className="h-4 w-4 mr-2" />
-                          Edit
-                        </Button>
                       </div>
-                      <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                        <div>
-                          <span className="font-medium">About Us Page</span>
-                          <p className="text-sm text-gray-600">Update foundation story, mission, vision, and team information</p>
+
+                      {/* About Page Sections */}
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">About Page</h3>
+                        <div className="grid md:grid-cols-2 gap-3">
+                          <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div>
+                              <span className="font-medium">Hero Section</span>
+                              <p className="text-sm text-gray-600">About page title and introduction</p>
+                            </div>
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              onClick={() => handleEditPageContent('about', 'hero')}
+                            >
+                              <Edit className="h-4 w-4 mr-2" />
+                              Edit
+                            </Button>
+                          </div>
+                          <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div>
+                              <span className="font-medium">Foundation Story</span>
+                              <p className="text-sm text-gray-600">Our story section and highlight box</p>
+                            </div>
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              onClick={() => handleEditPageContent('about', 'story')}
+                            >
+                              <Edit className="h-4 w-4 mr-2" />
+                              Edit
+                            </Button>
+                          </div>
+                          <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div>
+                              <span className="font-medium">Mission Statement</span>
+                              <p className="text-sm text-gray-600">Mission content and description</p>
+                            </div>
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              onClick={() => handleEditPageContent('about', 'mission')}
+                            >
+                              <Edit className="h-4 w-4 mr-2" />
+                              Edit
+                            </Button>
+                          </div>
+                          <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div>
+                              <span className="font-medium">Vision Statement</span>
+                              <p className="text-sm text-gray-600">Vision content and description</p>
+                            </div>
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              onClick={() => handleEditPageContent('about', 'vision')}
+                            >
+                              <Edit className="h-4 w-4 mr-2" />
+                              Edit
+                            </Button>
+                          </div>
                         </div>
-                        <Button 
-                          size="sm" 
-                          variant="outline"
-                          onClick={() => handleEditPageContent('about')}
-                        >
-                          <Edit className="h-4 w-4 mr-2" />
-                          Edit
-                        </Button>
                       </div>
-                      <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                        <div>
-                          <span className="font-medium">Programs Information</span>
-                          <p className="text-sm text-gray-600">Modify program descriptions, courses, and service details</p>
-                        </div>
-                        <Button 
-                          size="sm" 
-                          variant="outline"
-                          onClick={() => handleEditPageContent('programs')}
-                        >
-                          <Edit className="h-4 w-4 mr-2" />
-                          Edit
-                        </Button>
-                      </div>
-                      <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                        <div>
-                          <span className="font-medium">Success Stories</span>
-                          <p className="text-sm text-gray-600">Add, edit, or remove success stories and testimonials</p>
-                        </div>
-                        <Button 
-                          size="sm" 
-                          variant="outline"
-                          onClick={() => handleEditPageContent('stories')}
-                        >
-                          <Edit className="h-4 w-4 mr-2" />
-                          Edit
-                        </Button>
+
+                      {/* More sections can be added here */}
+                      <div className="bg-yellow-50 p-4 rounded-lg">
+                        <p className="text-yellow-800 text-sm">
+                          📝 <strong>Content Management System</strong> - All page sections are now configurable. 
+                          Additional sections for Programs, Impact, Gallery, and Contact pages can be easily added 
+                          using the same pattern shown above.
+                        </p>
                       </div>
                     </div>
                   </CardContent>
