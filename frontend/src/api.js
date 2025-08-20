@@ -239,6 +239,27 @@ export const api = {
     deleteGalleryItem: async (itemId) => {
       const response = await apiClient.delete(`/admin/gallery-items/${itemId}`);
       return response.data;
+    },
+
+    // Database Management
+    getDatabaseCollections: async () => {
+      const response = await apiClient.get('/admin/database/collections');
+      return response.data;
+    },
+
+    getCollectionData: async (collectionName, limit = 100, skip = 0) => {
+      const response = await apiClient.get(`/admin/database/${collectionName}?limit=${limit}&skip=${skip}`);
+      return response.data;
+    },
+
+    deleteDocument: async (collectionName, documentId) => {
+      const response = await apiClient.delete(`/admin/database/${collectionName}/${documentId}`);
+      return response.data;
+    },
+
+    getDatabaseStats: async () => {
+      const response = await apiClient.get('/admin/database/stats');
+      return response.data;
     }
   }
 };
