@@ -436,6 +436,97 @@ async def get_public_site_content():
         logger.error(f"Failed to fetch public site content: {e}")
         raise HTTPException(status_code=500, detail="Failed to fetch site content")
 
+# Success Stories Endpoints
+@api_router.get("/success-stories")
+async def get_success_stories():
+    """Get all active success stories (no authentication required)"""
+    try:
+        stories = await db.success_stories.find(
+            {"is_active": True}, 
+            sort=[("order", 1), ("created_at", -1)]
+        ).to_list(length=None)
+        
+        # Convert ObjectId to string for JSON serialization
+        for story in stories:
+            story["_id"] = str(story["_id"])
+            
+        return {"stories": stories}
+    except Exception as e:
+        logger.error(f"Failed to fetch success stories: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch success stories")
+
+@api_router.get("/admin/success-stories")
+async def get_admin_success_stories(current_user: dict = Depends(admin_required)):
+    """Get all success stories for admin management"""
+    try:
+        stories = await db.success_stories.find({}, sort=[("order", 1), ("created_at", -1)]).to_list(length=None)
+        
+        # Convert ObjectId to string for JSON serialization
+        for story in stories:
+            story["_id"] = str(story["_id"])
+            
+        return {"stories": stories}
+    except Exception as e:
+        logger.error(f"Failed to fetch admin success stories: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch success stories")
+
+@api_router.post("/admin/success-stories", response_model=MessageResponse)
+async def create_success_story(story_data: SuccessStoryCreate, current_user: dict = Depends(admin_required)):
+    """Create a new success story"""
+    try:
+        story_dict = story_data.dict()
+        story_dict["id"] = str(uuid.uuid4())
+        story_dict["created_at"] = datetime.utcnow()
+        story_dict["updated_at"] = datetime.utcnow()
+        
+        result = await db.success_stories.insert_one(story_dict)
+        
+        logger.info(f"Success story created by {current_user['username']}: {story_dict['name']}")
+        return MessageResponse(message="Success story created successfully!")
+    except Exception as e:
+        logger.error(f"Failed to create success story: {e}")
+        raise HTTPException(status_code=500, detail="Failed to create success story")
+
+@api_router.put("/admin/success-stories/{story_id}", response_model=MessageResponse)
+async def update_success_story(story_id: str, story_data: SuccessStoryUpdate, current_user: dict = Depends(admin_required)):
+    """Update a success story"""
+    try:
+        update_data = {k: v for k, v in story_data.dict().items() if v is not None}
+        update_data["updated_at"] = datetime.utcnow()
+        
+        result = await db.success_stories.update_one(
+            {"id": story_id},
+            {"$set": update_data}
+        )
+        
+        if result.matched_count == 0:
+            raise HTTPException(status_code=404, detail="Success story not found")
+        
+        logger.info(f"Success story updated by {current_user['username']}: {story_id}")
+        return MessageResponse(message="Success story updated successfully!")
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to update success story: {e}")
+        raise HTTPException(status_code=500, detail="Failed to update success story")
+
+@api_router.delete("/admin/success-stories/{story_id}", response_model=MessageResponse)
+async def delete_success_story(story_id: str, current_user: dict = Depends(admin_required)):
+    """Delete a success story"""
+    try:
+        result = await db.success_stories.delete_one({"id": story_id})
+        
+        if result.deleted_count == 0:
+            raise HTTPException(status_code=404, detail="Success story not found")
+        
+        logger.info(f"Success story deleted by {current_user['username']}: {story_id}")
+        return MessageResponse(message="Success story deleted successfully!")
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to delete success story: {e}")
+        raise HTTPException(status_code=500, detail="Failed to delete success story")
+
 # Include the router in the main app
 app.include_router(api_router)
 
