@@ -1704,6 +1704,9 @@ class BackendTester:
         # Test gallery items endpoints without authentication (should fail)
         self.test_gallery_items_auth_required()
         
+        # Test database management endpoints without authentication (should fail)
+        self.test_database_management_auth_required()
+        
         # Admin authentication and protected endpoints
         if self.test_admin_login():
             # FOCUSED GALLERY MANAGEMENT VERIFICATION (Review Request)
