@@ -683,6 +683,10 @@ const AdminPanel = () => {
     setShowGalleryForm(false);
   };
 
+  const cancelGalleryEdit = () => {
+    resetGalleryForm();
+  };
+
   // Site Content Management Functions
   const loadSiteContent = async () => {
     try {
