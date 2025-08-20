@@ -884,6 +884,14 @@ const AdminPanel = () => {
                     Leadership Team
                   </Button>
                   <Button
+                    variant={activeTab === 'pages' ? 'default' : 'ghost'}
+                    onClick={() => setActiveTab('pages')}
+                    className="w-full justify-start"
+                  >
+                    <FileText className="h-4 w-4 mr-2" />
+                    Page Management
+                  </Button>
+                  <Button
                     variant={activeTab === 'content' ? 'default' : 'ghost'}
                     onClick={() => setActiveTab('content')}
                     className="w-full justify-start"
