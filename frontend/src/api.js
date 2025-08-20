@@ -197,6 +197,48 @@ export const api = {
     deleteTeamMember: async (memberId) => {
       const response = await apiClient.delete(`/admin/leadership-team/${memberId}`);
       return response.data;
+    },
+
+    // Page Sections Management
+    getPageSections: async (page) => {
+      const response = await apiClient.get(`/admin/page-sections/${page}`);
+      return response.data;
+    },
+
+    addPageSection: async (sectionData) => {
+      const response = await apiClient.post('/admin/page-sections', sectionData);
+      return response.data;
+    },
+
+    updatePageSection: async (sectionId, sectionData) => {
+      const response = await apiClient.put(`/admin/page-sections/${sectionId}`, sectionData);
+      return response.data;
+    },
+
+    deletePageSection: async (sectionId) => {
+      const response = await apiClient.delete(`/admin/page-sections/${sectionId}`);
+      return response.data;
+    },
+
+    // Gallery Items Management
+    getAllGalleryItems: async () => {
+      const response = await apiClient.get('/admin/gallery-items');
+      return response.data;
+    },
+
+    addGalleryItem: async (itemData) => {
+      const response = await apiClient.post('/admin/gallery-items', itemData);
+      return response.data;
+    },
+
+    updateGalleryItem: async (itemId, itemData) => {
+      const response = await apiClient.put(`/admin/gallery-items/${itemId}`, itemData);
+      return response.data;
+    },
+
+    deleteGalleryItem: async (itemId) => {
+      const response = await apiClient.delete(`/admin/gallery-items/${itemId}`);
+      return response.data;
     }
   }
 };
