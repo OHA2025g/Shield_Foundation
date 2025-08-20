@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Progress } from './ui/progress';
 import { Heart, Users, GraduationCap, Award, TrendingUp, MapPin } from 'lucide-react';
 import { mockData } from '../mock';
-import { api } from '../api';
+import { getPublicSiteContent } from '../api';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -15,8 +15,8 @@ const Impact = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        // Try to load from backend first
-        const backendContent = await api.admin.getSiteContent();
+        // Try to load from public API first
+        const backendContent = await getPublicSiteContent();
         if (backendContent.content && Object.keys(backendContent.content).length > 0) {
           setSiteContent(backendContent.content);
         } else {
@@ -52,51 +52,45 @@ const Impact = () => {
         </div>
       </section>
 
-      {/* Overall Impact Statistics */}
-      <section className="py-20">
+      {/* Impact Statistics */}
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Overall Impact</h2>
-            <p className="text-xl text-gray-600">Key metrics that define our success</p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">By the Numbers</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Our commitment to measurable results drives everything we do
+            </p>
           </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <Card className="text-center">
-              <CardContent className="p-6">
+
+          <div className="grid md:grid-cols-4 gap-8">
+            <Card className="text-center border-0 shadow-lg">
+              <CardContent className="pt-8">
                 <GraduationCap className="h-12 w-12 text-blue-600 mx-auto mb-4" />
-                <div className="text-3xl font-bold text-blue-600 mb-2">
-                  {mockData.impactStats.youthTrained.toLocaleString()}+
-                </div>
+                <div className="text-4xl font-bold text-blue-600 mb-2">1,470+</div>
                 <div className="text-gray-600">Youth Trained</div>
               </CardContent>
             </Card>
-            
-            <Card className="text-center">
-              <CardContent className="p-6">
-                <Award className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
-                <div className="text-3xl font-bold text-yellow-500 mb-2">
-                  {mockData.impactStats.youthPlaced.toLocaleString()}+
-                </div>
+
+            <Card className="text-center border-0 shadow-lg">
+              <CardContent className="pt-8">
+                <Users className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
+                <div className="text-4xl font-bold text-yellow-600 mb-2">1,090+</div>
                 <div className="text-gray-600">Youth Placed</div>
               </CardContent>
             </Card>
-            
-            <Card className="text-center">
-              <CardContent className="p-6">
+
+            <Card className="text-center border-0 shadow-lg">
+              <CardContent className="pt-8">
                 <Heart className="h-12 w-12 text-blue-600 mx-auto mb-4" />
-                <div className="text-3xl font-bold text-blue-600 mb-2">
-                  {mockData.impactStats.seniorsSupported.toLocaleString()}+
-                </div>
+                <div className="text-4xl font-bold text-blue-600 mb-2">7,000+</div>
                 <div className="text-gray-600">Seniors Supported</div>
               </CardContent>
             </Card>
-            
-            <Card className="text-center">
-              <CardContent className="p-6">
-                <Users className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
-                <div className="text-3xl font-bold text-yellow-500 mb-2">
-                  {mockData.impactStats.womenEmpowered}+
-                </div>
+
+            <Card className="text-center border-0 shadow-lg">
+              <CardContent className="pt-8">
+                <Award className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
+                <div className="text-4xl font-bold text-yellow-600 mb-2">300+</div>
                 <div className="text-gray-600">Women Empowered</div>
               </CardContent>
             </Card>
@@ -104,207 +98,74 @@ const Impact = () => {
         </div>
       </section>
 
-      {/* Youth Impact Dashboard */}
+      {/* Impact Highlights */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <GraduationCap className="h-16 w-16 text-blue-600 mx-auto mb-6" />
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Youth Skilling Impact</h2>
-            <p className="text-xl text-gray-600">Transforming lives through skill development</p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">Impact Highlights</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Key achievements that demonstrate our commitment to community transformation
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 mb-12">
-            {/* Training Statistics */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-2xl text-blue-600">Training Statistics</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div>
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-gray-600">CRS Program</span>
-                    <span className="text-sm text-gray-600">65%</span>
+          <div className="grid md:grid-cols-3 gap-8">
+            {mockData.impactHighlights.map((highlight, index) => (
+              <Card key={index} className="border-0 shadow-lg">
+                <CardHeader>
+                  <div className="flex items-center space-x-3">
+                    {highlight.icon === 'Users' && <Users className="h-8 w-8 text-blue-600" />}
+                    {highlight.icon === 'Heart' && <Heart className="h-8 w-8 text-yellow-500" />}
+                    {highlight.icon === 'TrendingUp' && <TrendingUp className="h-8 w-8 text-blue-600" />}
+                    <CardTitle className="text-xl text-gray-900">{highlight.title}</CardTitle>
                   </div>
-                  <Progress value={65} className="h-3" />
-                </div>
-                <div>
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-gray-600">ITES-BPO Program</span>
-                    <span className="text-sm text-gray-600">25%</span>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600 mb-4">{highlight.description}</p>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-blue-600 font-semibold">{highlight.metric}</span>
+                    <span className="text-gray-500">{highlight.period}</span>
                   </div>
-                  <Progress value={25} className="h-3" />
-                </div>
-                <div>
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-gray-600">Nursing Assistant</span>
-                    <span className="text-sm text-gray-600">10%</span>
-                  </div>
-                  <Progress value={10} className="h-3" />
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Placement Success */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-2xl text-yellow-600">Placement Success</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-yellow-500 mb-2">77%</div>
-                  <div className="text-gray-600">Overall Placement Rate</div>
-                </div>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="font-medium">CRS Average Salary</span>
-                    <span className="text-blue-600 font-bold">₹13,946/month</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="font-medium">ITES Average Salary</span>
-                    <span className="text-blue-600 font-bold">₹12,132/month</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="font-medium">Nursing Average Salary</span>
-                    <span className="text-blue-600 font-bold">₹8,700/month</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Employer Network */}
-          <Card className="bg-blue-600 text-white">
-            <CardHeader>
-              <CardTitle className="text-2xl text-center">Employer Network</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid md:grid-cols-2 gap-8 text-center">
-                <div>
-                  <div className="text-3xl font-bold text-yellow-400 mb-2">45+</div>
-                  <div className="text-white/90">Partner Employers</div>
-                  <p className="text-sm text-white/80 mt-2">
-                    Leading companies across various sectors
-                  </p>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-yellow-400 mb-2">40+</div>
-                  <div className="text-white/90">Training Batches</div>
-                  <p className="text-sm text-white/80 mt-2">
-                    Consistently delivered quality training
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* Senior Citizens Impact */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <Heart className="h-16 w-16 text-yellow-500 mx-auto mb-6" />
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Senior Citizens Impact</h2>
-            <p className="text-xl text-gray-600">Comprehensive care and support services</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            {mockData.impactHighlights.map((item, index) => (
-              <Card key={index} className="text-center">
-                <CardContent className="p-6">
-                  <div className="text-3xl font-bold text-yellow-500 mb-2">{item.metric}</div>
-                  <p className="text-sm text-gray-600">{item.description}</p>
+                  <Progress value={highlight.progress} className="mt-3" />
                 </CardContent>
               </Card>
             ))}
           </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-xl text-blue-600">Medical Services</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Daily Exercise Participants</span>
-                  <span className="font-bold text-blue-600">2000+</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Medical Consultations</span>
-                  <span className="font-bold text-blue-600">1500+</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Cataract Surgeries</span>
-                  <span className="font-bold text-blue-600">750+</span>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-xl text-yellow-600">Support Services</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Elder Abuse Cases</span>
-                  <span className="font-bold text-yellow-600">500+</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Legal Counseling</span>
-                  <span className="font-bold text-yellow-600">100+</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Pension Assistance</span>
-                  <span className="font-bold text-yellow-600">400+</span>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-xl text-blue-600">Community Engagement</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Regular Visitors</span>
-                  <span className="font-bold text-blue-600">2000</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Cultural Programs</span>
-                  <span className="font-bold text-blue-600">500+</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Family Mediations</span>
-                  <span className="font-bold text-blue-600">200+</span>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
         </div>
       </section>
 
-      {/* Success Stories Highlight */}
-      <section className="py-20 bg-yellow-400">
+      {/* Success Stories */}
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-black mb-4">Success Stories</h2>
-            <p className="text-xl text-black/80">Real stories of transformation and empowerment</p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">Success Stories</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Real stories from the lives we've touched and transformed
+            </p>
           </div>
-          
+
           <div className="grid md:grid-cols-2 gap-8">
             {mockData.successStories.map((story, index) => (
-              <Card key={index} className="h-full">
-                <CardContent className="p-8">
-                  <div className="flex items-start space-x-4">
-                    <img 
-                      src={story.image}
-                      alt={story.name}
-                      className="w-16 h-16 rounded-full object-cover"
-                    />
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-1">{story.name}</h3>
-                      <p className="text-sm text-blue-600 font-medium mb-3">{story.program}</p>
-                      <p className="text-gray-600 text-sm leading-relaxed">{story.achievement}</p>
+              <Card key={index} className="border-0 shadow-lg overflow-hidden">
+                <div className="relative">
+                  <img 
+                    src={story.image} 
+                    alt={story.name}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                      {story.program}
+                    </span>
+                  </div>
+                </div>
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{story.name}</h3>
+                  <p className="text-gray-600 mb-4">{story.story}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-blue-600 font-semibold">{story.achievement}</span>
+                    <div className="flex items-center text-gray-500 text-sm">
+                      <MapPin className="h-4 w-4 mr-1" />
+                      {story.location}
                     </div>
                   </div>
                 </CardContent>
@@ -315,53 +176,75 @@ const Impact = () => {
       </section>
 
       {/* Geographic Impact */}
-      <section className="py-20">
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Geographic Reach</h2>
-            <p className="text-xl text-gray-600">Expanding our impact across communities</p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Reach</h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Serving communities across Mumbai and surrounding areas
+            </p>
           </div>
-          
-          <div className="grid md:grid-cols-2 gap-8">
-            <Card className="border-2 border-blue-600">
-              <CardHeader>
-                <CardTitle className="text-2xl text-blue-600 flex items-center">
-                  <MapPin className="h-6 w-6 mr-2" />
-                  Mumbai (Dharavi)
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="text-center p-4 bg-blue-50 rounded-lg">
-                    <div className="text-2xl font-bold text-blue-600 mb-1">2000</div>
-                    <div className="text-sm text-gray-600">Active Senior Citizens</div>
-                  </div>
-                  <p className="text-gray-600 text-sm">
-                    Our flagship location with comprehensive youth training and senior care services.
-                  </p>
-                </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <Card className="text-center border-0 shadow-lg">
+              <CardContent className="pt-8">
+                <MapPin className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Central Mumbai</h3>
+                <p className="text-gray-600 mb-4">
+                  Primary operations center serving Dharavi, Mahim, and surrounding communities
+                </p>
+                <div className="text-2xl font-bold text-blue-600">5,000+</div>
+                <div className="text-sm text-gray-500">Beneficiaries</div>
               </CardContent>
             </Card>
 
-            <Card className="border-2 border-yellow-400">
-              <CardHeader>
-                <CardTitle className="text-2xl text-yellow-600 flex items-center">
-                  <MapPin className="h-6 w-6 mr-2" />
-                  Expansion Plans
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="text-center p-4 bg-yellow-50 rounded-lg">
-                    <div className="text-2xl font-bold text-yellow-600 mb-1">3</div>
-                    <div className="text-sm text-gray-600">New Locations Planned</div>
-                  </div>
-                  <p className="text-gray-600 text-sm">
-                    Mankhurd and Nagpur expansion to serve more communities with our proven model.
-                  </p>
-                </div>
+            <Card className="text-center border-0 shadow-lg">
+              <CardContent className="pt-8">
+                <MapPin className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Western Suburbs</h3>
+                <p className="text-gray-600 mb-4">
+                  Extended outreach programs in Andheri, Borivali, and adjacent areas
+                </p>
+                <div className="text-2xl font-bold text-yellow-600">2,500+</div>
+                <div className="text-sm text-gray-500">Beneficiaries</div>
               </CardContent>
             </Card>
+
+            <Card className="text-center border-0 shadow-lg">
+              <CardContent className="pt-8">
+                <MapPin className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Eastern Districts</h3>
+                <p className="text-gray-600 mb-4">
+                  Community partnerships extending our impact to underserved eastern regions
+                </p>
+                <div className="text-2xl font-bold text-blue-600">1,000+</div>
+                <div className="text-sm text-gray-500">Beneficiaries</div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="mt-12 text-center">
+            <div className="bg-white p-8 rounded-lg shadow-lg max-w-4xl mx-auto">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Total Community Impact</h3>
+              <div className="grid md:grid-cols-4 gap-6">
+                <div>
+                  <div className="text-3xl font-bold text-blue-600">8,500+</div>
+                  <div className="text-gray-600">Total Beneficiaries</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-yellow-600">15+</div>
+                  <div className="text-gray-600">Communities Served</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-blue-600">6+</div>
+                  <div className="text-gray-600">Years of Service</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-yellow-600">100%</div>
+                  <div className="text-gray-600">Community-Focused</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
