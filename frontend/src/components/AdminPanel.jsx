@@ -71,6 +71,21 @@ const AdminPanel = () => {
   });
   const [tempContactInfo, setTempContactInfo] = useState(contactInfo);
 
+  // Success Stories Management state
+  const [successStories, setSuccessStories] = useState([]);
+  const [showSuccessStoryForm, setShowSuccessStoryForm] = useState(false);
+  const [editingSuccessStory, setEditingSuccessStory] = useState(null);
+  const [successStoryForm, setSuccessStoryForm] = useState({
+    name: '',
+    story: '',
+    image: '',
+    achievement: '',
+    location: '',
+    program: '',
+    order: 0,
+    is_active: true
+  });
+
   // Page Content Management state
   const [showPageContentForm, setShowPageContentForm] = useState(false);
   const [editingPageSection, setEditingPageSection] = useState(null);
