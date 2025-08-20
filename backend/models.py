@@ -126,3 +126,12 @@ class LoginResponse(BaseModel):
     success: bool = True
     user: AdminUser
     token: str
+
+# Site Content Models
+class SiteContentUpdate(BaseModel):
+    content: dict  # Flexible structure for site content
+
+class ContactInfoUpdate(BaseModel):
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    address: Optional[str] = None
