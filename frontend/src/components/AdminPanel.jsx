@@ -87,6 +87,19 @@ const AdminPanel = () => {
     is_active: true
   });
 
+  // Leadership Team Management state
+  const [teamMembers, setTeamMembers] = useState([]);
+  const [showTeamMemberForm, setShowTeamMemberForm] = useState(false);
+  const [editingTeamMember, setEditingTeamMember] = useState(null);
+  const [teamMemberForm, setTeamMemberForm] = useState({
+    name: '',
+    role: '',
+    image: '',
+    description: '',
+    order: 0,
+    is_active: true
+  });
+
   // Page Content Management state
   const [showPageContentForm, setShowPageContentForm] = useState(false);
   const [editingPageSection, setEditingPageSection] = useState(null);
