@@ -137,6 +137,24 @@ export const api = {
     updateImpactStats: async (statsData) => {
       const response = await apiClient.put('/admin/impact-stats', statsData);
       return response.data;
+    },
+
+    // Get site content
+    getSiteContent: async () => {
+      const response = await apiClient.get('/admin/site-content');
+      return response.data;
+    },
+
+    // Update site content
+    updateSiteContent: async (contentData) => {
+      const response = await apiClient.put('/admin/site-content', { content: contentData });
+      return response.data;
+    },
+
+    // Update contact information
+    updateContactInfo: async (contactData) => {
+      const response = await apiClient.put('/admin/contact-info', contactData);
+      return response.data;
     }
   }
 };
