@@ -10,6 +10,7 @@ import { api, getPublicSiteContent } from '../api';
 import { mockData } from '../mock';
 import Header from './Header';
 import Footer from './Footer';
+import SuccessStoriesCarousel from './SuccessStoriesCarousel';
 
 const Homepage = () => {
   const { toast } = useToast();
