@@ -809,6 +809,10 @@ const AdminPanel = () => {
     if (activeTab === 'gallery' && currentUser) {
       loadGalleryItems();
     }
+    if (activeTab === 'database' && currentUser) {
+      loadDatabaseCollections();
+      loadDatabaseStats();
+    }
     if (activeTab === 'pages' && currentUser) {
       loadGalleryItems();
     }
