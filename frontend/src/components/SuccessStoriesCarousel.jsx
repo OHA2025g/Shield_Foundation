@@ -89,41 +89,41 @@ const SuccessStoriesCarousel = () => {
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
               {stories.map((story, index) => (
-                <div key={story.id || index} className="w-full flex-shrink-0">
-                  <Card className="mx-4 border-0 shadow-xl h-[250px]">
-                    <div className="grid md:grid-cols-2 gap-0 h-full">
-                      {/* Image */}
-                      <div className="relative h-full">
+                <div key={story.id || index} className="w-full flex-shrink-0 px-2">
+                  <Card className="border-0 shadow-lg h-[200px] max-w-4xl mx-auto">
+                    <div className="grid md:grid-cols-5 gap-0 h-full">
+                      {/* Image - smaller proportion */}
+                      <div className="relative md:col-span-2">
                         <img 
                           src={story.image} 
                           alt={story.name}
                           className="w-full h-full object-cover rounded-l-lg"
                         />
-                        <div className="absolute top-4 left-4">
-                          <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        <div className="absolute top-2 left-2">
+                          <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-xs font-semibold">
                             {story.program}
                           </span>
                         </div>
                       </div>
                       
-                      {/* Content */}
-                      <CardContent className="p-4 flex flex-col justify-center h-full">
-                        <div className="mb-3">
-                          <h3 className="text-xl font-bold text-gray-900 mb-2">{story.name}</h3>
-                          <div className="flex items-center text-gray-500 text-sm mb-2">
-                            <MapPin className="h-4 w-4 mr-1" />
+                      {/* Content - larger proportion */}
+                      <CardContent className="md:col-span-3 p-4 flex flex-col justify-center h-full">
+                        <div className="mb-2">
+                          <h3 className="text-lg font-bold text-gray-900 mb-1">{story.name}</h3>
+                          <div className="flex items-center text-gray-500 text-xs mb-2">
+                            <MapPin className="h-3 w-3 mr-1" />
                             {story.location}
                           </div>
                         </div>
                         
-                        <blockquote className="text-base text-gray-600 italic mb-3 leading-relaxed line-clamp-3">
+                        <blockquote className="text-sm text-gray-600 italic mb-2 leading-relaxed line-clamp-3">
                           "{story.story}"
                         </blockquote>
                         
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center text-blue-600 font-semibold text-sm">
-                            <Award className="h-4 w-4 mr-2" />
-                            <span className="line-clamp-2">{story.achievement}</span>
+                          <div className="flex items-center text-blue-600 font-medium text-xs">
+                            <Award className="h-3 w-3 mr-1" />
+                            <span className="line-clamp-1">{story.achievement}</span>
                           </div>
                         </div>
                       </CardContent>
