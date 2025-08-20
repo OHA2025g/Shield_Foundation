@@ -164,6 +164,9 @@ backend:
       - working: true
         agent: "main"
         comment: "Implemented JWT-based auth with bcrypt password hashing, tested admin login - returns JWT token successfully"
+      - working: true
+        agent: "testing"
+        comment: "FOCUSED ADMIN LOGIN TESTING COMPLETE ✅ - Comprehensive testing of POST /api/admin/login with credentials admin/admin123. VERIFIED: Admin user exists in database, Response structure matches LoginResponse model exactly with all required fields (message, success, user, token), JWT token creation working correctly with proper payload (sub: admin, role: super_admin), JWT token validation successful for protected routes, User object structure correct with all required fields. All 5 focused tests passed with 100% success rate. No mismatch between frontend expectations and backend response - both expect and provide 'success' field correctly."
 
   - task: "News Management API"
     implemented: true
