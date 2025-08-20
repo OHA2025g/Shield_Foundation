@@ -81,26 +81,6 @@ const About = () => {
     
     loadData();
   }, []);
-  const teamMembers = [
-    {
-      name: "Mrs. Swati Ingole",
-      role: "Founder & Director",
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&crop=face",
-      description: "Visionary leader with over 15 years of experience in social development and community empowerment."
-    },
-    {
-      name: "Dr. Rajesh Kumar",
-      role: "Senior Medical Advisor",
-      image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=400&h=400&fit=crop&crop=face",
-      description: "Leading geriatrician specializing in senior citizen healthcare and physiotherapy services."
-    },
-    {
-      name: "Ms. Priya Sharma",
-      role: "Training Program Manager",
-      image: "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=400&h=400&fit=crop&crop=face",
-      description: "Expert in vocational training with focus on youth skill development and employment placement."
-    }
-  ];
 
   const values = [
     {
