@@ -163,13 +163,15 @@ const About = () => {
             <Card className="h-full">
               <CardHeader>
                 <Target className="h-12 w-12 text-blue-600 mb-4" />
-                <CardTitle className="text-2xl text-blue-600">Mission</CardTitle>
+                <CardTitle className="text-2xl text-blue-600">
+                  {siteContent.about?.mission?.title || "Mission"}
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600 leading-relaxed">
-                  To add life to years – equipping and empowering communities so that every individual, 
+                  {siteContent.about?.mission?.content || `To add life to years – equipping and empowering communities so that every individual, 
                   especially the elderly and vulnerable, can live with dignity till the end of life 
-                  irrespective of socio-economic status.
+                  irrespective of socio-economic status.`}
                 </p>
               </CardContent>
             </Card>
@@ -178,13 +180,15 @@ const About = () => {
             <Card className="h-full">
               <CardHeader>
                 <Eye className="h-12 w-12 text-yellow-500 mb-4" />
-                <CardTitle className="text-2xl text-yellow-600">Vision</CardTitle>
+                <CardTitle className="text-2xl text-yellow-600">
+                  {siteContent.about?.vision?.title || "Vision"}
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600 leading-relaxed">
-                  A society where every individual has access to opportunities for skill development, 
+                  {siteContent.about?.vision?.content || `A society where every individual has access to opportunities for skill development, 
                   meaningful employment, and comprehensive care that ensures dignity and well-being 
-                  throughout their life journey.
+                  throughout their life journey.`}
                 </p>
               </CardContent>
             </Card>
