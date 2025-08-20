@@ -343,6 +343,86 @@ async def update_impact_stats(stats_data: ImpactStatsUpdate, current_user: dict 
         logger.error(f"Failed to update impact stats: {e}")
         raise HTTPException(status_code=500, detail="Failed to update impact statistics")
 
+@api_router.get("/admin/site-content")
+async def get_site_content(current_user: dict = Depends(admin_required)):
+    """Get current site content"""
+    try:
+        content = await db.site_content.find_one({}, sort=[("updated_at", -1)])
+        if not content:
+            # Return default content structure if none exists
+            return {"content": {}}
+        return {"content": content.get("content", {})}
+    except Exception as e:
+        logger.error(f"Failed to fetch site content: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch site content")
+
+@api_router.put("/admin/site-content", response_model=MessageResponse)
+async def update_site_content(content_data: SiteContentUpdate, current_user: dict = Depends(admin_required)):
+    """Update site content"""
+    try:
+        update_data = {
+            "content": content_data.content,
+            "updated_at": datetime.utcnow(),
+            "updated_by": current_user["username"]
+        }
+        
+        # Upsert - update if exists, create if doesn't
+        await db.site_content.update_one(
+            {},
+            {"$set": update_data},
+            upsert=True
+        )
+        
+        logger.info(f"Site content updated by {current_user['username']}")
+        return MessageResponse(message="Site content updated successfully!")
+    except Exception as e:
+        logger.error(f"Failed to update site content: {e}")
+        raise HTTPException(status_code=500, detail="Failed to update site content")
+
+@api_router.put("/admin/contact-info", response_model=MessageResponse)
+async def update_contact_info(contact_data: ContactInfoUpdate, current_user: dict = Depends(admin_required)):
+    """Update contact information"""
+    try:
+        # Get current site content
+        current_content = await db.site_content.find_one({}, sort=[("updated_at", -1)])
+        if not current_content:
+            current_content = {"content": {}}
+        
+        # Update contact info in the content structure
+        content = current_content.get("content", {})
+        if "contact" not in content:
+            content["contact"] = {}
+        if "contactInfo" not in content["contact"]:
+            content["contact"]["contactInfo"] = {}
+        
+        # Update only provided fields
+        contact_info = content["contact"]["contactInfo"]
+        if contact_data.email is not None:
+            contact_info["email"] = contact_data.email
+        if contact_data.phone is not None:
+            contact_info["phone"] = contact_data.phone
+        if contact_data.address is not None:
+            contact_info["address"] = contact_data.address
+        
+        # Save updated content
+        update_data = {
+            "content": content,
+            "updated_at": datetime.utcnow(),
+            "updated_by": current_user["username"]
+        }
+        
+        await db.site_content.update_one(
+            {},
+            {"$set": update_data},
+            upsert=True
+        )
+        
+        logger.info(f"Contact info updated by {current_user['username']}")
+        return MessageResponse(message="Contact information updated successfully!")
+    except Exception as e:
+        logger.error(f"Failed to update contact info: {e}")
+        raise HTTPException(status_code=500, detail="Failed to update contact information")
+
 # Include the router in the main app
 app.include_router(api_router)
 
