@@ -803,6 +803,169 @@ async def delete_gallery_item(item_id: str, current_user: dict = Depends(admin_r
         logger.error(f"Failed to delete gallery item: {e}")
         raise HTTPException(status_code=500, detail="Failed to delete gallery item")
 
+# DATABASE MANAGEMENT ENDPOINTS
+@api_router.get("/admin/database/collections")
+async def get_database_collections(current_user: dict = Depends(admin_required)):
+    """Get all database collections and their document counts"""
+    try:
+        collections = await db.list_collection_names()
+        
+        # Define collection display names and descriptions
+        collection_info = {
+            "admin_users": {"name": "Admin Users", "description": "System administrators and users"},
+            "contacts": {"name": "Contact Messages", "description": "Contact form submissions from website visitors"},
+            "volunteers": {"name": "Volunteer Applications", "description": "Volunteer application submissions"},
+            "newsletters": {"name": "Newsletter Subscribers", "description": "Email newsletter subscribers"},
+            "news": {"name": "News & Blog Posts", "description": "News articles and blog posts"},
+            "impact_stats": {"name": "Impact Statistics", "description": "Foundation impact metrics and statistics"},
+            "site_content": {"name": "Site Content", "description": "CMS content for website pages"},
+            "success_stories": {"name": "Success Stories", "description": "Success story carousel items"},
+            "leadership_team": {"name": "Leadership Team", "description": "Team member profiles"},
+            "page_sections": {"name": "Page Sections", "description": "Configurable page sections"},
+            "gallery_items": {"name": "Gallery Items", "description": "Gallery photos and media items"}
+        }
+        
+        result = []
+        for collection_name in collections:
+            count = await db[collection_name].count_documents({})
+            info = collection_info.get(collection_name, {
+                "name": collection_name.replace("_", " ").title(),
+                "description": f"Collection: {collection_name}"
+            })
+            
+            result.append({
+                "collection": collection_name,
+                "name": info["name"],
+                "description": info["description"],
+                "count": count
+            })
+        
+        # Sort by collection name for consistency
+        result.sort(key=lambda x: x["collection"])
+        
+        logger.info(f"Database collections retrieved by {current_user['username']}")
+        return {"collections": result}
+    except Exception as e:
+        logger.error(f"Failed to get database collections: {e}")
+        raise HTTPException(status_code=500, detail="Failed to retrieve database collections")
+
+@api_router.get("/admin/database/{collection_name}")
+async def get_collection_data(collection_name: str, limit: int = 100, skip: int = 0, current_user: dict = Depends(admin_required)):
+    """Get data from a specific collection"""
+    try:
+        # Validate collection exists
+        collections = await db.list_collection_names()
+        if collection_name not in collections:
+            raise HTTPException(status_code=404, detail="Collection not found")
+        
+        # Get collection data with pagination
+        cursor = db[collection_name].find({}).skip(skip).limit(limit)
+        
+        # Sort by created_at if available, otherwise by _id
+        try:
+            cursor = cursor.sort("created_at", -1)
+        except:
+            cursor = cursor.sort("_id", -1)
+        
+        documents = await cursor.to_list(length=limit)
+        
+        # Convert ObjectIds to strings for JSON serialization
+        for doc in documents:
+            if "_id" in doc:
+                doc["_id"] = str(doc["_id"])
+        
+        # Get total count for pagination
+        total_count = await db[collection_name].count_documents({})
+        
+        logger.info(f"Collection {collection_name} data retrieved by {current_user['username']}")
+        return {
+            "collection": collection_name,
+            "documents": documents,
+            "total_count": total_count,
+            "limit": limit,
+            "skip": skip,
+            "has_more": (skip + limit) < total_count
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to get collection data for {collection_name}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to retrieve collection data")
+
+@api_router.delete("/admin/database/{collection_name}/{document_id}")
+async def delete_document(collection_name: str, document_id: str, current_user: dict = Depends(admin_required)):
+    """Delete a document from a collection"""
+    try:
+        # Validate collection exists
+        collections = await db.list_collection_names()
+        if collection_name not in collections:
+            raise HTTPException(status_code=404, detail="Collection not found")
+        
+        # Prevent deletion of admin users (safety measure)
+        if collection_name == "admin_users":
+            raise HTTPException(status_code=403, detail="Cannot delete admin users through this interface")
+        
+        # Try to delete by 'id' field first (our custom UUID), then by '_id' (MongoDB ObjectId)
+        result = await db[collection_name].delete_one({"id": document_id})
+        
+        if result.deleted_count == 0:
+            # Try with _id if id field doesn't work
+            from bson import ObjectId
+            try:
+                result = await db[collection_name].delete_one({"_id": ObjectId(document_id)})
+            except:
+                result = await db[collection_name].delete_one({"_id": document_id})
+        
+        if result.deleted_count == 0:
+            raise HTTPException(status_code=404, detail="Document not found")
+        
+        logger.info(f"Document {document_id} deleted from {collection_name} by {current_user['username']}")
+        return MessageResponse(message="Document deleted successfully!")
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to delete document {document_id} from {collection_name}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to delete document")
+
+@api_router.get("/admin/database/stats")
+async def get_database_stats(current_user: dict = Depends(admin_required)):
+    """Get overall database statistics"""
+    try:
+        collections = await db.list_collection_names()
+        
+        total_documents = 0
+        collection_stats = []
+        
+        for collection_name in collections:
+            count = await db[collection_name].count_documents({})
+            total_documents += count
+            
+            # Get the size estimate (MongoDB specific)
+            try:
+                stats = await db.command("collStats", collection_name)
+                size = stats.get("size", 0)
+            except:
+                size = 0
+            
+            collection_stats.append({
+                "collection": collection_name,
+                "count": count,
+                "size": size
+            })
+        
+        # Sort by document count descending
+        collection_stats.sort(key=lambda x: x["count"], reverse=True)
+        
+        logger.info(f"Database stats retrieved by {current_user['username']}")
+        return {
+            "total_collections": len(collections),
+            "total_documents": total_documents,
+            "collection_stats": collection_stats
+        }
+    except Exception as e:
+        logger.error(f"Failed to get database stats: {e}")
+        raise HTTPException(status_code=500, detail="Failed to retrieve database statistics")
+
 # Include the router in the main app
 app.include_router(api_router)
 
