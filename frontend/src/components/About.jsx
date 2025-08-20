@@ -3,28 +3,79 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Heart, Users, Award, Target, Eye, Star, CheckCircle } from 'lucide-react';
 import { mockData } from '../mock';
-import { getPublicSiteContent } from '../api';
+import { getPublicSiteContent, getLeadershipTeam } from '../api';
 import Header from './Header';
 import Footer from './Footer';
 
 const About = () => {
   // Site content state
   const [siteContent, setSiteContent] = useState({});
+  // Leadership team state
+  const [teamMembers, setTeamMembers] = useState([]);
 
-  // Load site content on component mount
+  // Load site content and leadership team on component mount
   useEffect(() => {
     const loadData = async () => {
       try {
-        // Try to load from public API first
+        // Load site content
         const backendContent = await getPublicSiteContent();
         if (backendContent.content && Object.keys(backendContent.content).length > 0) {
           setSiteContent(backendContent.content);
         } else {
           setSiteContent(mockData.siteContent || {});
         }
+
+        // Load leadership team
+        const teamData = await getLeadershipTeam();
+        if (teamData.members && teamData.members.length > 0) {
+          setTeamMembers(teamData.members);
+        } else {
+          // Fallback to default team members if no data in backend
+          setTeamMembers([
+            {
+              name: "Mrs. Swati Ingole",
+              role: "Founder & Director",
+              image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&crop=face",
+              description: "Visionary leader with over 15 years of experience in social development and community empowerment."
+            },
+            {
+              name: "Dr. Rajesh Kumar",
+              role: "Senior Medical Advisor",
+              image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=400&h=400&fit=crop&crop=face",
+              description: "Leading geriatrician specializing in senior citizen healthcare and physiotherapy services."
+            },
+            {
+              name: "Ms. Priya Sharma",
+              role: "Training Program Manager",
+              image: "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=400&h=400&fit=crop&crop=face",
+              description: "Expert in vocational training with focus on youth skill development and employment placement."
+            }
+          ]);
+        }
       } catch (error) {
-        console.log('Using mock data for site content');
+        console.log('Using fallback data for site content and leadership team');
         setSiteContent(mockData.siteContent || {});
+        // Set fallback team members
+        setTeamMembers([
+          {
+            name: "Mrs. Swati Ingole",
+            role: "Founder & Director",
+            image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&crop=face",
+            description: "Visionary leader with over 15 years of experience in social development and community empowerment."
+          },
+          {
+            name: "Dr. Rajesh Kumar",
+            role: "Senior Medical Advisor",
+            image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=400&h=400&fit=crop&crop=face",
+            description: "Leading geriatrician specializing in senior citizen healthcare and physiotherapy services."
+          },
+          {
+            name: "Ms. Priya Sharma",
+            role: "Training Program Manager",
+            image: "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=400&h=400&fit=crop&crop=face",
+            description: "Expert in vocational training with focus on youth skill development and employment placement."
+          }
+        ]);
       }
     };
     
