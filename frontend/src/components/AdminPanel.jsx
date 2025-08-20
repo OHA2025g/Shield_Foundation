@@ -876,6 +876,14 @@ const AdminPanel = () => {
                     Success Stories
                   </Button>
                   <Button
+                    variant={activeTab === 'team' ? 'default' : 'ghost'}
+                    onClick={() => setActiveTab('team')}
+                    className="w-full justify-start"
+                  >
+                    <Users className="h-4 w-4 mr-2" />
+                    Leadership Team
+                  </Button>
+                  <Button
                     variant={activeTab === 'content' ? 'default' : 'ghost'}
                     onClick={() => setActiveTab('content')}
                     className="w-full justify-start"
