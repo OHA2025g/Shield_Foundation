@@ -49,6 +49,17 @@ TEST_NEWS = {
     "status": "draft"
 }
 
+TEST_SUCCESS_STORY = {
+    "name": "Maria Rodriguez",
+    "story": "Maria joined our youth training program at age 17 after dropping out of high school. Through our comprehensive support system, she not only earned her GED but also completed our digital marketing certification. Today, she works as a social media coordinator for a local nonprofit and has become a mentor for other young women in our program.",
+    "image": "https://example.com/images/maria-rodriguez.jpg",
+    "achievement": "From high school dropout to digital marketing professional",
+    "location": "Los Angeles, CA",
+    "program": "Youth Digital Skills Training",
+    "order": 1,
+    "is_active": True
+}
+
 class BackendTester:
     def __init__(self):
         self.session = requests.Session()
