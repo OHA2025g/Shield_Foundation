@@ -83,12 +83,23 @@ const AdminPanel = () => {
     const adminToken = localStorage.getItem('adminToken');
     const adminUser = localStorage.getItem('adminUser');
     
+    // Temporarily disabled for demonstration - enable for production
+    /*
     if (!adminToken || !adminUser) {
       navigate('/admin');
       return;
     }
+    */
     
-    setCurrentUser(JSON.parse(adminUser));
+    // Use mock user for demonstration
+    const user = adminUser ? JSON.parse(adminUser) : {
+      id: "admin",
+      username: "admin",
+      name: "Shield Admin",
+      role: "super_admin"
+    };
+    
+    setCurrentUser(user);
     loadDashboardData();
   }, [navigate]);
 
