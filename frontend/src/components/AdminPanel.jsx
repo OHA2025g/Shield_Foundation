@@ -1556,6 +1556,181 @@ const AdminPanel = () => {
               </div>
             )}
 
+            {activeTab === 'team' && (
+              <div className="space-y-6">
+                <div className="flex justify-between items-center">
+                  <h2 className="text-2xl font-bold text-gray-900">Leadership Team Management</h2>
+                  <Button
+                    onClick={() => setShowTeamMemberForm(true)}
+                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add Team Member
+                  </Button>
+                </div>
+
+                {/* Team Member Form Modal */}
+                {showTeamMemberForm && (
+                  <Card className="border-2 border-blue-200">
+                    <CardHeader>
+                      <CardTitle className="flex items-center justify-between">
+                        <span>{editingTeamMember ? 'Edit Team Member' : 'Add New Team Member'}</span>
+                        <Button variant="ghost" size="sm" onClick={cancelTeamMemberEdit}>
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
+                          <Input
+                            value={teamMemberForm.name}
+                            onChange={(e) => setTeamMemberForm({...teamMemberForm, name: e.target.value})}
+                            placeholder="Enter team member's name"
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Role/Position *</label>
+                          <Input
+                            value={teamMemberForm.role}
+                            onChange={(e) => setTeamMemberForm({...teamMemberForm, role: e.target.value})}
+                            placeholder="e.g., Founder & Director"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Profile Image URL *</label>
+                        <Input
+                          value={teamMemberForm.image}
+                          onChange={(e) => setTeamMemberForm({...teamMemberForm, image: e.target.value})}
+                          placeholder="https://example.com/profile-image.jpg"
+                          required
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Description *</label>
+                        <Textarea
+                          value={teamMemberForm.description}
+                          onChange={(e) => setTeamMemberForm({...teamMemberForm, description: e.target.value})}
+                          placeholder="Brief description of the team member's background and expertise..."
+                          rows={3}
+                          required
+                        />
+                      </div>
+
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Display Order</label>
+                          <Input
+                            type="number"
+                            value={teamMemberForm.order}
+                            onChange={(e) => setTeamMemberForm({...teamMemberForm, order: parseInt(e.target.value) || 0})}
+                            placeholder="0"
+                            className="w-full"
+                          />
+                          <p className="text-xs text-gray-500 mt-1">Lower numbers appear first on the page</p>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <input
+                            type="checkbox"
+                            id="team_is_active"
+                            checked={teamMemberForm.is_active}
+                            onChange={(e) => setTeamMemberForm({...teamMemberForm, is_active: e.target.checked})}
+                            className="rounded border-gray-300"
+                          />
+                          <label htmlFor="team_is_active" className="text-sm font-medium text-gray-700">
+                            Active (show on website)
+                          </label>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-end space-x-4 pt-4">
+                        <Button variant="outline" onClick={cancelTeamMemberEdit}>
+                          Cancel
+                        </Button>
+                        <Button 
+                          onClick={handleSaveTeamMember}
+                          disabled={loading}
+                          className="bg-blue-600 hover:bg-blue-700"
+                        >
+                          {loading ? 'Saving...' : (editingTeamMember ? 'Update Member' : 'Add Member')}
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+
+                {/* Team Members List */}
+                <div className="space-y-4">
+                  {teamMembers.map((member) => (
+                    <Card key={member.id}>
+                      <CardContent className="p-6">
+                        <div className="flex items-start justify-between">
+                          <div className="flex items-start space-x-4 flex-1">
+                            <img
+                              src={member.image}
+                              alt={member.name}
+                              className="w-16 h-16 rounded-full object-cover"
+                              onError={(e) => {
+                                e.target.src = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face";
+                              }}
+                            />
+                            <div className="flex-1">
+                              <div className="flex items-center space-x-3 mb-2">
+                                <h3 className="text-lg font-semibold text-gray-900">{member.name}</h3>
+                                <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                  member.is_active !== false 
+                                    ? 'bg-green-100 text-green-800' 
+                                    : 'bg-gray-100 text-gray-600'
+                                }`}>
+                                  {member.is_active !== false ? 'Active' : 'Inactive'}
+                                </span>
+                              </div>
+                              <p className="text-blue-600 font-medium mb-2">{member.role}</p>
+                              <p className="text-gray-600 line-clamp-2">{member.description}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center space-x-2 ml-4">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleEditTeamMember(member)}
+                            >
+                              <Edit className="h-4 w-4 mr-1" />
+                              Edit
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleDeleteTeamMember(member.id)}
+                              className="text-red-600 hover:text-red-700 hover:border-red-300"
+                            >
+                              <Trash2 className="h-4 w-4 mr-1" />
+                              Delete
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                  
+                  {teamMembers.length === 0 && (
+                    <Card>
+                      <CardContent className="p-8 text-center">
+                        <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                        <p className="text-gray-500">No team members yet. Add your first team member!</p>
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
+              </div>
+            )}
+
             {activeTab === 'content' && (
               <div className="space-y-6">
                 <div>
