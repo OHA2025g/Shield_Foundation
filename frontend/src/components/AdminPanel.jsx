@@ -23,7 +23,8 @@ import {
   X,
   BookOpen,
   Tag,
-  Award
+  Award,
+  GraduationCap
 } from 'lucide-react';
 import { mockData } from '../mock';
 import { api } from '../api';
