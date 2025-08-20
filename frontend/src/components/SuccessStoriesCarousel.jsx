@@ -139,8 +139,8 @@ const SuccessStoriesCarousel = () => {
             <>
               <Button
                 variant="outline"
-                size="icon"
-                className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 bg-white hover:bg-gray-50 shadow-lg"
+                size="sm"
+                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white hover:bg-gray-50 shadow-md z-10 h-8 w-8 p-0"
                 onClick={goToPrevious}
               >
                 <ChevronLeft className="h-4 w-4" />
@@ -148,8 +148,8 @@ const SuccessStoriesCarousel = () => {
               
               <Button
                 variant="outline"
-                size="icon"
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 bg-white hover:bg-gray-50 shadow-lg"
+                size="sm"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white hover:bg-gray-50 shadow-md z-10 h-8 w-8 p-0"
                 onClick={goToNext}
               >
                 <ChevronRight className="h-4 w-4" />
@@ -159,11 +159,11 @@ const SuccessStoriesCarousel = () => {
 
           {/* Dots indicator */}
           {stories.length > 1 && (
-            <div className="flex justify-center mt-8 space-x-2">
+            <div className="flex justify-center mt-4 space-x-2">
               {stories.map((_, index) => (
                 <button
                   key={index}
-                  className={`w-3 h-3 rounded-full transition-colors duration-200 ${
+                  className={`w-2 h-2 rounded-full transition-colors duration-200 ${
                     index === currentIndex 
                       ? 'bg-blue-600' 
                       : 'bg-gray-300 hover:bg-gray-400'
