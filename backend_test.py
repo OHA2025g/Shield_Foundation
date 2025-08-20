@@ -941,6 +941,40 @@ class BackendTester:
                 self.log_result("Team Member Delete Not Found", False, f"Expected 404, got HTTP {response.status_code}", response.text)
         except Exception as e:
             self.log_result("Team Member Delete Not Found", False, "Request failed", str(e))
+    
+    def test_site_content_auth_required(self):
+        """Test that site content endpoints require authentication"""
+        # Test GET without token
+        try:
+            response = self.session.get(f"{API_BASE}/admin/site-content")
+            if response.status_code == 403:
+                self.log_result("Site Content Auth Required (GET)", True, "Authentication required for GET site content")
+            else:
+                self.log_result("Site Content Auth Required (GET)", False, f"Expected 403, got HTTP {response.status_code}", response.text)
+        except Exception as e:
+            self.log_result("Site Content Auth Required (GET)", False, "Request failed", str(e))
+        
+        # Test PUT without token
+        test_content = {"content": {"test": "data"}}
+        try:
+            response = self.session.put(f"{API_BASE}/admin/site-content", json=test_content)
+            if response.status_code == 403:
+                self.log_result("Site Content Auth Required (PUT)", True, "Authentication required for PUT site content")
+            else:
+                self.log_result("Site Content Auth Required (PUT)", False, f"Expected 403, got HTTP {response.status_code}", response.text)
+        except Exception as e:
+            self.log_result("Site Content Auth Required (PUT)", False, "Request failed", str(e))
+        
+        # Test contact info PUT without token
+        test_contact = {"email": "test@example.com"}
+        try:
+            response = self.session.put(f"{API_BASE}/admin/contact-info", json=test_contact)
+            if response.status_code == 403:
+                self.log_result("Contact Info Auth Required", True, "Authentication required for PUT contact info")
+            else:
+                self.log_result("Contact Info Auth Required", False, f"Expected 403, got HTTP {response.status_code}", response.text)
+        except Exception as e:
+            self.log_result("Contact Info Auth Required", False, "Request failed", str(e))
         """Test that site content endpoints require authentication"""
         # Test GET without token
         try:
