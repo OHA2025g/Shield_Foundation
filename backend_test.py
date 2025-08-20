@@ -1706,6 +1706,8 @@ class BackendTester:
         
         # Admin authentication and protected endpoints
         if self.test_admin_login():
+            # FOCUSED GALLERY MANAGEMENT VERIFICATION (Review Request)
+            self.test_gallery_management_verification()
             self.test_admin_endpoints()
             self.test_news_crud_operations()
             # Test new site content management endpoints
