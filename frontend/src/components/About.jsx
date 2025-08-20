@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Heart, Users, Award, Target, Eye, Star, CheckCircle } from 'lucide-react';
 import { mockData } from '../mock';
+import { api } from '../api';
 import Header from './Header';
 import Footer from './Footer';
 
