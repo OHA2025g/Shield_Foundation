@@ -22,7 +22,8 @@ import {
   Save,
   X,
   BookOpen,
-  Tag
+  Tag,
+  Award
 } from 'lucide-react';
 import { mockData } from '../mock';
 import { api } from '../api';
