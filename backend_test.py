@@ -1596,6 +1596,247 @@ class BackendTester:
         except Exception as e:
             self.log_result("Gallery Item Delete Not Found", False, "Request failed", str(e))
     
+    def test_database_collections(self):
+        """Test database collections endpoint"""
+        if not self.admin_token:
+            self.log_result("Database Collections", False, "No admin token available")
+            return
+        
+        headers = {"Authorization": f"Bearer {self.admin_token}"}
+        
+        try:
+            response = self.session.get(f"{API_BASE}/admin/database/collections", headers=headers)
+            if response.status_code == 200:
+                data = response.json()
+                if "collections" in data and isinstance(data["collections"], list):
+                    collections = data["collections"]
+                    
+                    # Verify expected collections exist
+                    expected_collections = [
+                        "admin_users", "contacts", "volunteers", "newsletters", 
+                        "news", "impact_stats", "site_content", "success_stories", 
+                        "leadership_team", "page_sections", "gallery_items"
+                    ]
+                    
+                    found_collections = [col["collection"] for col in collections]
+                    missing_collections = [col for col in expected_collections if col not in found_collections]
+                    
+                    if not missing_collections:
+                        self.log_result("Database Collections", True, f"Retrieved {len(collections)} collections with proper metadata")
+                        
+                        # Verify each collection has required fields
+                        for collection in collections:
+                            required_fields = ["collection", "name", "description", "count"]
+                            if all(field in collection for field in required_fields):
+                                continue
+                            else:
+                                self.log_result("Database Collections Structure", False, f"Collection {collection.get('collection', 'unknown')} missing required fields")
+                                return
+                        
+                        self.log_result("Database Collections Structure", True, "All collections have proper structure (collection, name, description, count)")
+                    else:
+                        self.log_result("Database Collections", False, f"Missing expected collections: {missing_collections}")
+                else:
+                    self.log_result("Database Collections", False, "Invalid response format", data)
+            else:
+                self.log_result("Database Collections", False, f"HTTP {response.status_code}", response.text)
+        except Exception as e:
+            self.log_result("Database Collections", False, "Request failed", str(e))
+    
+    def test_database_collection_data(self):
+        """Test database collection data endpoint with pagination"""
+        if not self.admin_token:
+            self.log_result("Database Collection Data", False, "No admin token available")
+            return
+        
+        headers = {"Authorization": f"Bearer {self.admin_token}"}
+        
+        # Test with contacts collection (should have data from our previous tests)
+        try:
+            response = self.session.get(f"{API_BASE}/admin/database/contacts?limit=10&skip=0", headers=headers)
+            if response.status_code == 200:
+                data = response.json()
+                required_fields = ["collection", "documents", "total_count", "limit", "skip", "has_more"]
+                
+                if all(field in data for field in required_fields):
+                    if data["collection"] == "contacts" and isinstance(data["documents"], list):
+                        self.log_result("Database Collection Data", True, f"Retrieved {len(data['documents'])} documents from contacts collection with pagination")
+                        
+                        # Verify pagination fields
+                        if data["limit"] == 10 and data["skip"] == 0:
+                            self.log_result("Database Collection Pagination", True, "Pagination parameters working correctly")
+                        else:
+                            self.log_result("Database Collection Pagination", False, "Pagination parameters not reflected correctly")
+                    else:
+                        self.log_result("Database Collection Data", False, "Invalid collection data format", data)
+                else:
+                    self.log_result("Database Collection Data", False, "Missing required response fields", data)
+            else:
+                self.log_result("Database Collection Data", False, f"HTTP {response.status_code}", response.text)
+        except Exception as e:
+            self.log_result("Database Collection Data", False, "Request failed", str(e))
+        
+        # Test with invalid collection name
+        try:
+            response = self.session.get(f"{API_BASE}/admin/database/invalid_collection", headers=headers)
+            if response.status_code == 404:
+                self.log_result("Database Collection Not Found", True, "404 returned for non-existent collection")
+            else:
+                self.log_result("Database Collection Not Found", False, f"Expected 404, got HTTP {response.status_code}", response.text)
+        except Exception as e:
+            self.log_result("Database Collection Not Found", False, "Request failed", str(e))
+    
+    def test_database_document_deletion(self):
+        """Test database document deletion endpoint"""
+        if not self.admin_token:
+            self.log_result("Database Document Deletion", False, "No admin token available")
+            return
+        
+        headers = {"Authorization": f"Bearer {self.admin_token}"}
+        
+        # First, create a test document to delete (using newsletter subscription)
+        test_email = "delete.test@example.com"
+        test_newsletter = {"email": test_email}
+        
+        try:
+            # Create test document
+            response = self.session.post(f"{API_BASE}/newsletter/subscribe", json=test_newsletter)
+            if response.status_code != 200:
+                self.log_result("Database Document Deletion Setup", False, "Failed to create test document")
+                return
+            
+            # Get the document ID from newsletters collection
+            response = self.session.get(f"{API_BASE}/admin/database/newsletters", headers=headers)
+            if response.status_code == 200:
+                data = response.json()
+                test_doc_id = None
+                
+                for doc in data.get("documents", []):
+                    if doc.get("email") == test_email:
+                        test_doc_id = doc.get("id") or doc.get("_id")
+                        break
+                
+                if test_doc_id:
+                    # Test deletion
+                    response = self.session.delete(f"{API_BASE}/admin/database/newsletters/{test_doc_id}", headers=headers)
+                    if response.status_code == 200:
+                        data = response.json()
+                        if "deleted successfully" in data.get("message", ""):
+                            self.log_result("Database Document Deletion", True, "Document deleted successfully")
+                        else:
+                            self.log_result("Database Document Deletion", False, "Invalid response format", data)
+                    else:
+                        self.log_result("Database Document Deletion", False, f"HTTP {response.status_code}", response.text)
+                else:
+                    self.log_result("Database Document Deletion", False, "Could not find test document to delete")
+            else:
+                self.log_result("Database Document Deletion", False, "Failed to retrieve documents for deletion test")
+        except Exception as e:
+            self.log_result("Database Document Deletion", False, "Request failed", str(e))
+        
+        # Test deletion of non-existent document
+        try:
+            response = self.session.delete(f"{API_BASE}/admin/database/newsletters/non-existent-id", headers=headers)
+            if response.status_code == 404:
+                self.log_result("Database Document Delete Not Found", True, "404 returned for non-existent document deletion")
+            else:
+                self.log_result("Database Document Delete Not Found", False, f"Expected 404, got HTTP {response.status_code}", response.text)
+        except Exception as e:
+            self.log_result("Database Document Delete Not Found", False, "Request failed", str(e))
+        
+        # Test deletion from admin_users collection (should be forbidden)
+        try:
+            response = self.session.delete(f"{API_BASE}/admin/database/admin_users/test-id", headers=headers)
+            if response.status_code == 403:
+                self.log_result("Database Admin Users Delete Protection", True, "Admin users deletion properly forbidden")
+            else:
+                self.log_result("Database Admin Users Delete Protection", False, f"Expected 403, got HTTP {response.status_code}", response.text)
+        except Exception as e:
+            self.log_result("Database Admin Users Delete Protection", False, "Request failed", str(e))
+    
+    def test_database_stats(self):
+        """Test database statistics endpoint"""
+        if not self.admin_token:
+            self.log_result("Database Stats", False, "No admin token available")
+            return
+        
+        headers = {"Authorization": f"Bearer {self.admin_token}"}
+        
+        try:
+            response = self.session.get(f"{API_BASE}/admin/database/stats", headers=headers)
+            if response.status_code == 200:
+                data = response.json()
+                required_fields = ["total_collections", "total_documents", "collection_stats"]
+                
+                if all(field in data for field in required_fields):
+                    if (isinstance(data["total_collections"], int) and 
+                        isinstance(data["total_documents"], int) and 
+                        isinstance(data["collection_stats"], list)):
+                        
+                        self.log_result("Database Stats", True, f"Retrieved database stats: {data['total_collections']} collections, {data['total_documents']} total documents")
+                        
+                        # Verify collection_stats structure
+                        if data["collection_stats"]:
+                            first_stat = data["collection_stats"][0]
+                            stat_fields = ["collection", "count", "size"]
+                            if all(field in first_stat for field in stat_fields):
+                                self.log_result("Database Stats Structure", True, "Collection statistics have proper structure")
+                            else:
+                                self.log_result("Database Stats Structure", False, "Collection statistics missing required fields")
+                        else:
+                            self.log_result("Database Stats Structure", True, "No collection statistics (empty database)")
+                    else:
+                        self.log_result("Database Stats", False, "Invalid data types in response", data)
+                else:
+                    self.log_result("Database Stats", False, "Missing required response fields", data)
+            else:
+                self.log_result("Database Stats", False, f"HTTP {response.status_code}", response.text)
+        except Exception as e:
+            self.log_result("Database Stats", False, "Request failed", str(e))
+    
+    def test_database_management_auth_required(self):
+        """Test that database management endpoints require authentication"""
+        # Test collections endpoint without token
+        try:
+            response = self.session.get(f"{API_BASE}/admin/database/collections")
+            if response.status_code == 403:
+                self.log_result("Database Collections Auth Required", True, "Authentication required for database collections")
+            else:
+                self.log_result("Database Collections Auth Required", False, f"Expected 403, got HTTP {response.status_code}", response.text)
+        except Exception as e:
+            self.log_result("Database Collections Auth Required", False, "Request failed", str(e))
+        
+        # Test collection data endpoint without token
+        try:
+            response = self.session.get(f"{API_BASE}/admin/database/contacts")
+            if response.status_code == 403:
+                self.log_result("Database Collection Data Auth Required", True, "Authentication required for collection data")
+            else:
+                self.log_result("Database Collection Data Auth Required", False, f"Expected 403, got HTTP {response.status_code}", response.text)
+        except Exception as e:
+            self.log_result("Database Collection Data Auth Required", False, "Request failed", str(e))
+        
+        # Test document deletion without token
+        try:
+            response = self.session.delete(f"{API_BASE}/admin/database/contacts/test-id")
+            if response.status_code == 403:
+                self.log_result("Database Document Delete Auth Required", True, "Authentication required for document deletion")
+            else:
+                self.log_result("Database Document Delete Auth Required", False, f"Expected 403, got HTTP {response.status_code}", response.text)
+        except Exception as e:
+            self.log_result("Database Document Delete Auth Required", False, "Request failed", str(e))
+        
+        # Test stats endpoint without token
+        try:
+            response = self.session.get(f"{API_BASE}/admin/database/stats")
+            if response.status_code == 403:
+                self.log_result("Database Stats Auth Required", True, "Authentication required for database stats")
+            else:
+                self.log_result("Database Stats Auth Required", False, f"Expected 403, got HTTP {response.status_code}", response.text)
+        except Exception as e:
+            self.log_result("Database Stats Auth Required", False, "Request failed", str(e))
+    
+    
     def test_site_content_auth_required(self):
         """Test that site content endpoints require authentication"""
         # Test GET without token
