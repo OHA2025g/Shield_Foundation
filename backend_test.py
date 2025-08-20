@@ -1493,6 +1493,8 @@ class BackendTester:
         self.test_public_news()
         self.test_success_stories_public()
         self.test_leadership_team_public()
+        self.test_page_sections_public()
+        self.test_gallery_items_public()
         
         # Authentication tests
         self.test_admin_login_invalid()
