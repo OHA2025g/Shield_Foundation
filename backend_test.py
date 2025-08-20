@@ -1732,6 +1732,11 @@ class BackendTester:
             self.test_gallery_items_crud_operations()
             self.test_gallery_items_validation()
             self.test_gallery_items_not_found()
+            # Test database management endpoints
+            self.test_database_collections()
+            self.test_database_collection_data()
+            self.test_database_document_deletion()
+            self.test_database_stats()
         
         # Summary
         print("\n" + "=" * 60)
