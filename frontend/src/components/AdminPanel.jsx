@@ -291,10 +291,24 @@ const AdminPanel = () => {
   };
 
   // Site Content Management Functions
-  const loadSiteContent = () => {
-    // Load site content from mock data - in production, this would be an API call
-    setSiteContent(mockData.siteContent || {});
-    setTempSiteContent(mockData.siteContent || {});
+  const loadSiteContent = async () => {
+    try {
+      // Try to load from backend first
+      const backendContent = await api.admin.getSiteContent();
+      if (backendContent.content && Object.keys(backendContent.content).length > 0) {
+        setSiteContent(backendContent.content);
+        setTempSiteContent(backendContent.content);
+      } else {
+        // Fallback to mock data if no backend content
+        setSiteContent(mockData.siteContent || {});
+        setTempSiteContent(mockData.siteContent || {});
+      }
+    } catch (error) {
+      console.error('Failed to load site content from backend, using mock data:', error);
+      // Fallback to mock data
+      setSiteContent(mockData.siteContent || {});
+      setTempSiteContent(mockData.siteContent || {});
+    }
   };
 
   useEffect(() => {
