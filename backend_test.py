@@ -60,6 +60,15 @@ TEST_SUCCESS_STORY = {
     "is_active": True
 }
 
+TEST_TEAM_MEMBER = {
+    "name": "Dr. Jennifer Williams",
+    "role": "Executive Director",
+    "image": "https://example.com/images/jennifer-williams.jpg",
+    "description": "Dr. Williams brings over 15 years of experience in nonprofit leadership and community development. She holds a PhD in Social Work and has dedicated her career to empowering underserved communities through education and skill development programs.",
+    "order": 1,
+    "is_active": True
+}
+
 class BackendTester:
     def __init__(self):
         self.session = requests.Session()
