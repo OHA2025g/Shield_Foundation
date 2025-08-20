@@ -83,22 +83,14 @@ const AdminPanel = () => {
     const adminToken = localStorage.getItem('adminToken');
     const adminUser = localStorage.getItem('adminUser');
     
-    // Temporarily disabled for demonstration - enable for production
-    /*
+    // Check authentication - redirect to login if not authenticated
     if (!adminToken || !adminUser) {
       navigate('/admin');
       return;
     }
-    */
     
-    // Use mock user for demonstration
-    const user = adminUser ? JSON.parse(adminUser) : {
-      id: "admin",
-      username: "admin",
-      name: "Shield Admin",
-      role: "super_admin"
-    };
-    
+    // Parse authenticated user data
+    const user = JSON.parse(adminUser);
     setCurrentUser(user);
     loadDashboardData();
   }, [navigate]);
