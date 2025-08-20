@@ -457,17 +457,68 @@ const AdminPanel = () => {
     setShowPageContentForm(true);
   };
 
-  const handleSavePageContent = () => {
-    // In a real app, this would save to the backend
-    setSiteContent(tempSiteContent);
-    setShowPageContentForm(false);
-    setEditingPageSection(null);
-    setEditingSubSection(null);
-    
-    toast({
-      title: "Success",
-      description: "Page content updated successfully!",
-    });
+  const handleSavePageContent = async () => {
+    setLoading(true);
+    try {
+      // Save to backend
+      await api.admin.updateSiteContent(tempSiteContent);
+      
+      // Update local state
+      setSiteContent(tempSiteContent);
+      setShowPageContentForm(false);
+      setEditingPageSection(null);
+      setEditingSubSection(null);
+      
+      toast({
+        title: "Success",
+        description: "Page content updated successfully!",
+      });
+    } catch (error) {
+      console.error('Failed to save page content:', error);
+      toast({
+        title: "Error",
+        description: "Failed to save page content. Please try again.",
+        variant: "destructive",
+      });
+    }
+    setLoading(false);
+  };
+
+  const handleSaveContactInfo = async () => {
+    setLoading(true);
+    try {
+      const contactData = {
+        email: tempContactInfo.email,
+        phone: tempContactInfo.phone,
+        address: tempContactInfo.address
+      };
+      
+      // Save to backend
+      await api.admin.updateContactInfo(contactData);
+      
+      // Update local state
+      setContactInfo(tempContactInfo);
+      setShowContactForm(false);
+      
+      // Also update in site content
+      const updatedSiteContent = { ...siteContent };
+      if (!updatedSiteContent.contact) updatedSiteContent.contact = {};
+      updatedSiteContent.contact.contactInfo = contactData;
+      setSiteContent(updatedSiteContent);
+      
+      toast({
+        title: "Success",
+        description: "Contact information updated successfully!",
+      });
+    } catch (error) {
+      console.error('Failed to save contact info:', error);
+      toast({
+        title: "Error", 
+        description: "Failed to save contact information. Please try again.",
+        variant: "destructive",
+      });
+    }
+    setLoading(false);
   };
 
   const handleCancelPageContentEdit = () => {
