@@ -304,9 +304,19 @@ const AdminPanel = () => {
     setBlogPosts(mockData.blogPosts || []);
   };
 
+  // Site Content Management Functions
+  const loadSiteContent = () => {
+    // Load site content from mock data - in production, this would be an API call
+    setSiteContent(mockData.siteContent || {});
+    setTempSiteContent(mockData.siteContent || {});
+  };
+
   useEffect(() => {
     if (activeTab === 'blog' && currentUser) {
       loadBlogPosts();
+    }
+    if (activeTab === 'content' && currentUser) {
+      loadSiteContent();
     }
   }, [activeTab, currentUser]);
 
