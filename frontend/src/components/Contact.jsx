@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -8,11 +8,19 @@ import { Checkbox } from './ui/checkbox';
 import { useToast } from '../hooks/use-toast';
 import { Mail, Phone, MapPin, Clock, Heart, Users, HandHeart, UserPlus } from 'lucide-react';
 import { api } from '../api';
+import { mockData } from '../mock';
 import Header from './Header';
 import Footer from './Footer';
 
 const Contact = () => {
   const { toast } = useToast();
+  // Site content state
+  const [siteContent, setSiteContent] = useState({});
+
+  // Load site content on component mount
+  useEffect(() => {
+    setSiteContent(mockData.siteContent || {});
+  }, []);
   const [contactForm, setContactForm] = useState({
     name: '',
     email: '',
