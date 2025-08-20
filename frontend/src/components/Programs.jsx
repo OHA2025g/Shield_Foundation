@@ -44,10 +44,17 @@ const Programs = () => {
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-50 to-yellow-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Our Programs</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            {siteContent.programs?.hero?.title || "Our Programs"}
+          </h1>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-            Comprehensive training and support services designed to empower youth and care for seniors
+            {siteContent.programs?.hero?.subtitle || "Comprehensive Programs for Community Impact"}
           </p>
+          {siteContent.programs?.hero?.description && (
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto mt-4">
+              {siteContent.programs?.hero?.description}
+            </p>
+          )}
         </div>
       </section>
 
