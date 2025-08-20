@@ -24,7 +24,8 @@ import {
   BookOpen,
   Tag,
   Award,
-  GraduationCap
+  GraduationCap,
+  Database
 } from 'lucide-react';
 import { mockData } from '../mock';
 import { api } from '../api';
