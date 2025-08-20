@@ -101,6 +101,21 @@ const AdminPanel = () => {
     is_active: true
   });
 
+  // Gallery Management state
+  const [galleryItems, setGalleryItems] = useState([]);
+  const [showGalleryForm, setShowGalleryForm] = useState(false);
+  const [editingGalleryItem, setEditingGalleryItem] = useState(null);
+  const [galleryForm, setGalleryForm] = useState({
+    title: '',
+    description: '',
+    image: '',
+    category: '',
+    date: '',
+    type: 'image',
+    order: 0,
+    is_active: true
+  });
+
   // Page Content Management state
   const [showPageContentForm, setShowPageContentForm] = useState(false);
   const [editingPageSection, setEditingPageSection] = useState(null);
