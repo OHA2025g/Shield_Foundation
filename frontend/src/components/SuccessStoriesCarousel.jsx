@@ -1,0 +1,182 @@
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent } from './ui/card';
+import { Button } from './ui/button';
+import { ChevronLeft, ChevronRight, MapPin, Award } from 'lucide-react';
+import { getSuccessStories } from '../api';
+
+const SuccessStoriesCarousel = () => {
+  const [stories, setStories] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  // Load success stories on component mount
+  useEffect(() => {
+    const loadStories = async () => {
+      try {
+        const data = await getSuccessStories();
+        setStories(data.stories || []);
+      } catch (error) {
+        console.error('Failed to load success stories:', error);
+        // Fallback to empty array if API fails
+        setStories([]);
+      }
+      setLoading(false);
+    };
+
+    loadStories();
+  }, []);
+
+  // Auto-advance carousel
+  useEffect(() => {
+    if (stories.length <= 1) return;
+    
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => 
+        prevIndex === stories.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 5000); // Change slide every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [stories.length]);
+
+  const goToPrevious = () => {
+    setCurrentIndex(currentIndex === 0 ? stories.length - 1 : currentIndex - 1);
+  };
+
+  const goToNext = () => {
+    setCurrentIndex(currentIndex === stories.length - 1 ? 0 : currentIndex + 1);
+  };
+
+  const goToSlide = (index) => {
+    setCurrentIndex(index);
+  };
+
+  if (loading) {
+    return (
+      <div className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="animate-pulse">
+              <div className="h-8 bg-gray-300 rounded w-1/3 mx-auto mb-4"></div>
+              <div className="h-4 bg-gray-300 rounded w-1/2 mx-auto mb-8"></div>
+              <div className="h-64 bg-gray-300 rounded"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (stories.length === 0) {
+    return null; // Don't render if no stories
+  }
+
+  return (
+    <section className="py-20 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-gray-900 mb-6">Success Stories</h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Real stories from the lives we've touched and transformed through our programs
+          </p>
+        </div>
+
+        <div className="relative">
+          {/* Main carousel */}
+          <div className="overflow-hidden rounded-lg">
+            <div 
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            >
+              {stories.map((story, index) => (
+                <div key={story.id || index} className="w-full flex-shrink-0">
+                  <Card className="mx-4 border-0 shadow-xl">
+                    <div className="grid md:grid-cols-2 gap-0">
+                      {/* Image */}
+                      <div className="relative">
+                        <img 
+                          src={story.image} 
+                          alt={story.name}
+                          className="w-full h-64 md:h-full object-cover rounded-l-lg"
+                        />
+                        <div className="absolute top-4 left-4">
+                          <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                            {story.program}
+                          </span>
+                        </div>
+                      </div>
+                      
+                      {/* Content */}
+                      <CardContent className="p-8 flex flex-col justify-center">
+                        <div className="mb-6">
+                          <h3 className="text-2xl font-bold text-gray-900 mb-2">{story.name}</h3>
+                          <div className="flex items-center text-gray-500 text-sm mb-4">
+                            <MapPin className="h-4 w-4 mr-1" />
+                            {story.location}
+                          </div>
+                        </div>
+                        
+                        <blockquote className="text-lg text-gray-600 italic mb-6 leading-relaxed">
+                          "{story.story}"
+                        </blockquote>
+                        
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center text-blue-600 font-semibold">
+                            <Award className="h-5 w-5 mr-2" />
+                            {story.achievement}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </div>
+                  </Card>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Navigation buttons */}
+          {stories.length > 1 && (
+            <>
+              <Button
+                variant="outline"
+                size="icon"
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 bg-white hover:bg-gray-50 shadow-lg"
+                onClick={goToPrevious}
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              
+              <Button
+                variant="outline"
+                size="icon"
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 bg-white hover:bg-gray-50 shadow-lg"
+                onClick={goToNext}
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </>
+          )}
+
+          {/* Dots indicator */}
+          {stories.length > 1 && (
+            <div className="flex justify-center mt-8 space-x-2">
+              {stories.map((_, index) => (
+                <button
+                  key={index}
+                  className={`w-3 h-3 rounded-full transition-colors duration-200 ${
+                    index === currentIndex 
+                      ? 'bg-blue-600' 
+                      : 'bg-gray-300 hover:bg-gray-400'
+                  }`}
+                  onClick={() => goToSlide(index)}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default SuccessStoriesCarousel;
