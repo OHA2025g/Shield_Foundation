@@ -34,9 +34,9 @@ const Homepage = () => {
         const stats = await api.getImpactStats();
         setImpactStats(stats);
         
-        // Load site content - try backend first, fallback to mock data
+        // Load site content - try public API first, fallback to mock data
         try {
-          const backendContent = await api.admin.getSiteContent();
+          const backendContent = await getPublicSiteContent();
           if (backendContent.content && Object.keys(backendContent.content).length > 0) {
             setSiteContent(backendContent.content);
           } else {
