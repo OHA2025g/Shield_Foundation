@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 import { GraduationCap, Heart, Users, Award, CheckCircle, Building, Calendar } from 'lucide-react';
+import { mockData } from '../mock';
 import Header from './Header';
 import Footer from './Footer';
 
 const Programs = () => {
+  // Site content state
+  const [siteContent, setSiteContent] = useState({});
+
+  // Load site content on component mount
+  useEffect(() => {
+    setSiteContent(mockData.siteContent || {});
+  }, []);
   const youthCourses = [
     {
       name: "Customer Relationship Associate (CRA)",
