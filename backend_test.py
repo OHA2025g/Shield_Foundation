@@ -11,7 +11,7 @@ from datetime import datetime
 import sys
 
 # Get backend URL from environment
-BACKEND_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://17b9b735-e91f-4f99-bccf-81d6f18e0384.preview.emergentagent.com')
+BACKEND_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://shield-blog.preview.emergentagent.com')
 API_BASE = f"{BACKEND_URL}/api"
 
 # Test data
