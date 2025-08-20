@@ -694,6 +694,84 @@ const AdminPanel = () => {
     resetGalleryForm();
   };
 
+  // Database Management Functions
+  const loadDatabaseCollections = async () => {
+    try {
+      setDatabaseLoading(true);
+      const data = await api.admin.getDatabaseCollections();
+      setDatabaseCollections(data.collections || []);
+    } catch (error) {
+      console.error('Failed to load database collections:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load database collections.",
+        variant: "destructive",
+      });
+    } finally {
+      setDatabaseLoading(false);
+    }
+  };
+
+  const loadDatabaseStats = async () => {
+    try {
+      const stats = await api.admin.getDatabaseStats();
+      setDatabaseStats(stats);
+    } catch (error) {
+      console.error('Failed to load database stats:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load database statistics.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const loadCollectionData = async (collectionName) => {
+    try {
+      setDatabaseLoading(true);
+      const data = await api.admin.getCollectionData(collectionName, 50, 0);
+      setCollectionData(data.documents || []);
+      setSelectedCollection(data);
+    } catch (error) {
+      console.error('Failed to load collection data:', error);
+      toast({
+        title: "Error",
+        description: `Failed to load data for collection: ${collectionName}`,
+        variant: "destructive",
+      });
+    } finally {
+      setDatabaseLoading(false);
+    }
+  };
+
+  const deleteDocumentFromCollection = async (collectionName, documentId) => {
+    if (!window.confirm(`Are you sure you want to delete this document from ${collectionName}? This action cannot be undone.`)) {
+      return;
+    }
+
+    try {
+      await api.admin.deleteDocument(collectionName, documentId);
+      toast({
+        title: "Success",
+        description: "Document deleted successfully!",
+      });
+      
+      // Reload the collection data
+      await loadCollectionData(collectionName);
+      
+      // Reload stats to update counts
+      await loadDatabaseStats();
+      await loadDatabaseCollections();
+    } catch (error) {
+      console.error('Failed to delete document:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete document.",
+        variant: "destructive",
+      });
+    }
+  };
+
   // Site Content Management Functions
   const loadSiteContent = async () => {
     try {
