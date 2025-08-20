@@ -155,6 +155,27 @@ export const api = {
     updateContactInfo: async (contactData) => {
       const response = await apiClient.put('/admin/contact-info', contactData);
       return response.data;
+    },
+
+    // Success Stories Management
+    getAllSuccessStories: async () => {
+      const response = await apiClient.get('/admin/success-stories');
+      return response.data;
+    },
+
+    addSuccessStory: async (storyData) => {
+      const response = await apiClient.post('/admin/success-stories', storyData);
+      return response.data;
+    },
+
+    updateSuccessStory: async (storyId, storyData) => {
+      const response = await apiClient.put(`/admin/success-stories/${storyId}`, storyData);
+      return response.data;
+    },
+
+    deleteSuccessStory: async (storyId) => {
+      const response = await apiClient.delete(`/admin/success-stories/${storyId}`);
+      return response.data;
     }
   }
 };
