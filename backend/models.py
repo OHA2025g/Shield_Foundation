@@ -197,3 +197,63 @@ class TeamMemberUpdate(BaseModel):
     description: Optional[str] = None
     order: Optional[int] = None
     is_active: Optional[bool] = None
+
+# Page Content Models for configurable sections
+class PageSection(BaseModel):
+    id: str
+    page: str  # 'about', 'programs', 'impact', 'gallery'
+    section: str  # 'journey', 'partners', 'overview', etc.
+    title: str
+    content: dict  # Flexible content structure
+    order: int = 0
+    is_active: bool = True
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+
+class PageSectionCreate(BaseModel):
+    page: str
+    section: str
+    title: str
+    content: dict
+    order: int = 0
+    is_active: bool = True
+
+class PageSectionUpdate(BaseModel):
+    title: Optional[str] = None
+    content: Optional[dict] = None
+    order: Optional[int] = None
+    is_active: Optional[bool] = None
+
+# Gallery Item Models
+class GalleryItem(BaseModel):
+    id: str
+    title: str
+    description: str
+    image: str
+    category: str
+    date: str
+    type: str = "image"  # image, video
+    order: int = 0
+    is_active: bool = True
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+
+class GalleryItemCreate(BaseModel):
+    title: str
+    description: str
+    image: str
+    category: str
+    date: str
+    type: str = "image"
+    order: int = 0
+    is_active: bool = True
+
+class GalleryItemUpdate(BaseModel):
+    title: Optional[str] = None
+    description: Optional[str] = None
+    image: Optional[str] = None
+    category: Optional[str] = None
+    date: Optional[str] = None
+    type: Optional[str] = None
+    order: Optional[int] = None
+    is_active: Optional[bool] = None
