@@ -176,6 +176,27 @@ export const api = {
     deleteSuccessStory: async (storyId) => {
       const response = await apiClient.delete(`/admin/success-stories/${storyId}`);
       return response.data;
+    },
+
+    // Leadership Team Management
+    getAllTeamMembers: async () => {
+      const response = await apiClient.get('/admin/leadership-team');
+      return response.data;
+    },
+
+    addTeamMember: async (memberData) => {
+      const response = await apiClient.post('/admin/leadership-team', memberData);
+      return response.data;
+    },
+
+    updateTeamMember: async (memberId, memberData) => {
+      const response = await apiClient.put(`/admin/leadership-team/${memberId}`, memberData);
+      return response.data;
+    },
+
+    deleteTeamMember: async (memberId) => {
+      const response = await apiClient.delete(`/admin/leadership-team/${memberId}`);
+      return response.data;
     }
   }
 };
