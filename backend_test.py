@@ -69,6 +69,30 @@ TEST_TEAM_MEMBER = {
     "is_active": True
 }
 
+TEST_PAGE_SECTION = {
+    "page": "about",
+    "section": "mission",
+    "title": "Our Mission Statement",
+    "content": {
+        "text": "To empower underserved communities through comprehensive education, skill development, and support services that create pathways to economic stability and personal growth.",
+        "highlights": ["Education", "Empowerment", "Community", "Growth"],
+        "image": "https://example.com/images/mission.jpg"
+    },
+    "order": 1,
+    "is_active": True
+}
+
+TEST_GALLERY_ITEM = {
+    "title": "Youth Training Program Graduation",
+    "description": "Celebrating the achievements of our latest cohort of youth training program graduates. These young leaders are now equipped with essential skills for their future careers.",
+    "image": "https://example.com/images/graduation-2024.jpg",
+    "category": "education",
+    "date": "2024-03-15",
+    "type": "image",
+    "order": 1,
+    "is_active": True
+}
+
 class BackendTester:
     def __init__(self):
         self.session = requests.Session()
