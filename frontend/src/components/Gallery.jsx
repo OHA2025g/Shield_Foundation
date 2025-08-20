@@ -130,16 +130,16 @@ const Gallery = () => {
   }, []);
 
   const categories = [
-    { id: 'all', name: 'All', count: galleryItems.length },
-    { id: 'youth', name: 'Youth Programs', count: galleryItems.filter(item => item.category === 'youth').length },
-    { id: 'seniors', name: 'Senior Care', count: galleryItems.filter(item => item.category === 'seniors').length },
-    { id: 'community', name: 'Community', count: galleryItems.filter(item => item.category === 'community').length },
-    { id: 'events', name: 'Events', count: galleryItems.filter(item => item.category === 'events').length }
+    { id: 'all', name: 'All', count: galleryItems?.length || 0 },
+    { id: 'youth', name: 'Youth Programs', count: galleryItems?.filter(item => item.category === 'youth').length || 0 },
+    { id: 'seniors', name: 'Senior Care', count: galleryItems?.filter(item => item.category === 'seniors').length || 0 },
+    { id: 'community', name: 'Community', count: galleryItems?.filter(item => item.category === 'community').length || 0 },
+    { id: 'events', name: 'Events', count: galleryItems?.filter(item => item.category === 'events').length || 0 }
   ];
 
   const filteredItems = selectedCategory === 'all' 
-    ? galleryItems 
-    : galleryItems.filter(item => item.category === selectedCategory);
+    ? (galleryItems || []) 
+    : (galleryItems || []).filter(item => item.category === selectedCategory);
 
   return (
     <div className="min-h-screen bg-white">
