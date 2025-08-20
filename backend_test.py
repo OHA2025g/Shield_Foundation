@@ -1509,6 +1509,12 @@ class BackendTester:
         # Test leadership team endpoints without authentication (should fail)
         self.test_leadership_team_auth_required()
         
+        # Test page sections endpoints without authentication (should fail)
+        self.test_page_sections_auth_required()
+        
+        # Test gallery items endpoints without authentication (should fail)
+        self.test_gallery_items_auth_required()
+        
         # Admin authentication and protected endpoints
         if self.test_admin_login():
             self.test_admin_endpoints()
