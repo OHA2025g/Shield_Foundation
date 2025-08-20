@@ -122,8 +122,9 @@ const AdminPanel = () => {
         setNews(newsData);
       }
       
-      // Always load blog posts for the blog management tab
+      // Always load blog posts and site content for the admin
       loadBlogPosts();
+      loadSiteContent();
     } catch (error) {
       console.error('Failed to load dashboard data:', error);
     }
