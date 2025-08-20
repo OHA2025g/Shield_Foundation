@@ -618,6 +618,191 @@ async def delete_team_member(member_id: str, current_user: dict = Depends(admin_
         logger.error(f"Failed to delete team member: {e}")
         raise HTTPException(status_code=500, detail="Failed to delete team member")
 
+# Page Sections Endpoints
+@api_router.get("/page-sections/{page}")
+async def get_page_sections(page: str):
+    """Get all active sections for a specific page (no authentication required)"""
+    try:
+        sections = await db.page_sections.find(
+            {"page": page, "is_active": True}, 
+            sort=[("order", 1), ("created_at", -1)]
+        ).to_list(length=None)
+        
+        # Convert ObjectId to string for JSON serialization
+        for section in sections:
+            section["_id"] = str(section["_id"])
+            
+        return {"sections": sections}
+    except Exception as e:
+        logger.error(f"Failed to fetch page sections for {page}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch page sections")
+
+@api_router.get("/admin/page-sections/{page}")
+async def get_admin_page_sections(page: str, current_user: dict = Depends(admin_required)):
+    """Get all sections for a specific page for admin management"""
+    try:
+        sections = await db.page_sections.find(
+            {"page": page}, 
+            sort=[("order", 1), ("created_at", -1)]
+        ).to_list(length=None)
+        
+        # Convert ObjectId to string for JSON serialization
+        for section in sections:
+            section["_id"] = str(section["_id"])
+            
+        return {"sections": sections}
+    except Exception as e:
+        logger.error(f"Failed to fetch admin page sections for {page}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch page sections")
+
+@api_router.post("/admin/page-sections", response_model=MessageResponse)
+async def create_page_section(section_data: PageSectionCreate, current_user: dict = Depends(admin_required)):
+    """Create a new page section"""
+    try:
+        section_dict = section_data.dict()
+        section_dict["id"] = str(uuid.uuid4())
+        section_dict["created_at"] = datetime.utcnow()
+        section_dict["updated_at"] = datetime.utcnow()
+        
+        result = await db.page_sections.insert_one(section_dict)
+        
+        logger.info(f"Page section created by {current_user['username']}: {section_dict['page']}/{section_dict['section']}")
+        return MessageResponse(message="Page section created successfully!")
+    except Exception as e:
+        logger.error(f"Failed to create page section: {e}")
+        raise HTTPException(status_code=500, detail="Failed to create page section")
+
+@api_router.put("/admin/page-sections/{section_id}", response_model=MessageResponse)
+async def update_page_section(section_id: str, section_data: PageSectionUpdate, current_user: dict = Depends(admin_required)):
+    """Update a page section"""
+    try:
+        update_data = {k: v for k, v in section_data.dict().items() if v is not None}
+        update_data["updated_at"] = datetime.utcnow()
+        
+        result = await db.page_sections.update_one(
+            {"id": section_id},
+            {"$set": update_data}
+        )
+        
+        if result.matched_count == 0:
+            raise HTTPException(status_code=404, detail="Page section not found")
+        
+        logger.info(f"Page section updated by {current_user['username']}: {section_id}")
+        return MessageResponse(message="Page section updated successfully!")
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to update page section: {e}")
+        raise HTTPException(status_code=500, detail="Failed to update page section")
+
+@api_router.delete("/admin/page-sections/{section_id}", response_model=MessageResponse)
+async def delete_page_section(section_id: str, current_user: dict = Depends(admin_required)):
+    """Delete a page section"""
+    try:
+        result = await db.page_sections.delete_one({"id": section_id})
+        
+        if result.deleted_count == 0:
+            raise HTTPException(status_code=404, detail="Page section not found")
+        
+        logger.info(f"Page section deleted by {current_user['username']}: {section_id}")
+        return MessageResponse(message="Page section deleted successfully!")
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to delete page section: {e}")
+        raise HTTPException(status_code=500, detail="Failed to delete page section")
+
+# Gallery Items Endpoints
+@api_router.get("/gallery-items")
+async def get_gallery_items():
+    """Get all active gallery items (no authentication required)"""
+    try:
+        items = await db.gallery_items.find(
+            {"is_active": True}, 
+            sort=[("order", 1), ("created_at", -1)]
+        ).to_list(length=None)
+        
+        # Convert ObjectId to string for JSON serialization
+        for item in items:
+            item["_id"] = str(item["_id"])
+            
+        return {"items": items}
+    except Exception as e:
+        logger.error(f"Failed to fetch gallery items: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch gallery items")
+
+@api_router.get("/admin/gallery-items")
+async def get_admin_gallery_items(current_user: dict = Depends(admin_required)):
+    """Get all gallery items for admin management"""
+    try:
+        items = await db.gallery_items.find({}, sort=[("order", 1), ("created_at", -1)]).to_list(length=None)
+        
+        # Convert ObjectId to string for JSON serialization
+        for item in items:
+            item["_id"] = str(item["_id"])
+            
+        return {"items": items}
+    except Exception as e:
+        logger.error(f"Failed to fetch admin gallery items: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch gallery items")
+
+@api_router.post("/admin/gallery-items", response_model=MessageResponse)
+async def create_gallery_item(item_data: GalleryItemCreate, current_user: dict = Depends(admin_required)):
+    """Create a new gallery item"""
+    try:
+        item_dict = item_data.dict()
+        item_dict["id"] = str(uuid.uuid4())
+        item_dict["created_at"] = datetime.utcnow()
+        item_dict["updated_at"] = datetime.utcnow()
+        
+        result = await db.gallery_items.insert_one(item_dict)
+        
+        logger.info(f"Gallery item created by {current_user['username']}: {item_dict['title']}")
+        return MessageResponse(message="Gallery item created successfully!")
+    except Exception as e:
+        logger.error(f"Failed to create gallery item: {e}")
+        raise HTTPException(status_code=500, detail="Failed to create gallery item")
+
+@api_router.put("/admin/gallery-items/{item_id}", response_model=MessageResponse)
+async def update_gallery_item(item_id: str, item_data: GalleryItemUpdate, current_user: dict = Depends(admin_required)):
+    """Update a gallery item"""
+    try:
+        update_data = {k: v for k, v in item_data.dict().items() if v is not None}
+        update_data["updated_at"] = datetime.utcnow()
+        
+        result = await db.gallery_items.update_one(
+            {"id": item_id},
+            {"$set": update_data}
+        )
+        
+        if result.matched_count == 0:
+            raise HTTPException(status_code=404, detail="Gallery item not found")
+        
+        logger.info(f"Gallery item updated by {current_user['username']}: {item_id}")
+        return MessageResponse(message="Gallery item updated successfully!")
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to update gallery item: {e}")
+        raise HTTPException(status_code=500, detail="Failed to update gallery item")
+
+@api_router.delete("/admin/gallery-items/{item_id}", response_model=MessageResponse)
+async def delete_gallery_item(item_id: str, current_user: dict = Depends(admin_required)):
+    """Delete a gallery item"""
+    try:
+        result = await db.gallery_items.delete_one({"id": item_id})
+        
+        if result.deleted_count == 0:
+            raise HTTPException(status_code=404, detail="Gallery item not found")
+        
+        logger.info(f"Gallery item deleted by {current_user['username']}: {item_id}")
+        return MessageResponse(message="Gallery item deleted successfully!")
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to delete gallery item: {e}")
+        raise HTTPException(status_code=500, detail="Failed to delete gallery item")
+
 # Include the router in the main app
 app.include_router(api_router)
 
