@@ -717,6 +717,9 @@ const AdminPanel = () => {
     if (activeTab === 'team' && currentUser) {
       loadTeamMembers();
     }
+    if (activeTab === 'gallery' && currentUser) {
+      loadGalleryItems();
+    }
     if (activeTab === 'pages' && currentUser) {
       loadGalleryItems();
     }
