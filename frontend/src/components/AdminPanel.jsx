@@ -742,6 +742,14 @@ const AdminPanel = () => {
                     Blog Management
                   </Button>
                   <Button
+                    variant={activeTab === 'stories' ? 'default' : 'ghost'}
+                    onClick={() => setActiveTab('stories')}
+                    className="w-full justify-start"
+                  >
+                    <Award className="h-4 w-4 mr-2" />
+                    Success Stories
+                  </Button>
+                  <Button
                     variant={activeTab === 'content' ? 'default' : 'ghost'}
                     onClick={() => setActiveTab('content')}
                     className="w-full justify-start"
