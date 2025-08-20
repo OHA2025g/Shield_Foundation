@@ -43,12 +43,6 @@ const Homepage = () => {
     
     loadData();
   }, []);
-      } catch (error) {
-        console.error('Failed to load impact stats:', error);
-      }
-    };
-    loadImpactStats();
-  }, []);
 
   const handleContactSubmit = async (e) => {
     e.preventDefault();
