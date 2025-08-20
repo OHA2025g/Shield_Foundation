@@ -135,3 +135,37 @@ class ContactInfoUpdate(BaseModel):
     email: Optional[str] = None
     phone: Optional[str] = None
     address: Optional[str] = None
+
+# Success Stories Models
+class SuccessStory(BaseModel):
+    id: str
+    name: str
+    story: str
+    image: str
+    achievement: str
+    location: str
+    program: str
+    order: int = 0
+    is_active: bool = True
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+
+class SuccessStoryCreate(BaseModel):
+    name: str
+    story: str
+    image: str
+    achievement: str
+    location: str
+    program: str
+    order: int = 0
+    is_active: bool = True
+
+class SuccessStoryUpdate(BaseModel):
+    name: Optional[str] = None
+    story: Optional[str] = None
+    image: Optional[str] = None
+    achievement: Optional[str] = None
+    location: Optional[str] = None
+    program: Optional[str] = None
+    order: Optional[int] = None
+    is_active: Optional[bool] = None
