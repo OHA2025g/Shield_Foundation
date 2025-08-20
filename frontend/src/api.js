@@ -169,3 +169,14 @@ export const getPublicSiteContent = async () => {
     throw error;
   }
 };
+
+// Success Stories API (public)
+export const getSuccessStories = async () => {
+  try {
+    const response = await apiClient.get('/success-stories');
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch success stories:', error);
+    throw error;
+  }
+};
