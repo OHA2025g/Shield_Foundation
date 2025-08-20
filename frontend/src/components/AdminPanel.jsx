@@ -305,6 +305,121 @@ const AdminPanel = () => {
     setBlogPosts(mockData.blogPosts || []);
   };
 
+  // Success Stories Management Functions
+  const loadSuccessStories = async () => {
+    try {
+      const data = await api.admin.getAllSuccessStories();
+      setSuccessStories(data.stories || []);
+    } catch (error) {
+      console.error('Failed to load success stories:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load success stories.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleSaveSuccessStory = async () => {
+    if (!successStoryForm.name.trim() || !successStoryForm.story.trim()) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      if (editingSuccessStory) {
+        await api.admin.updateSuccessStory(editingSuccessStory.id, successStoryForm);
+        toast({
+          title: "Success",
+          description: "Success story updated successfully!",
+        });
+      } else {
+        await api.admin.addSuccessStory(successStoryForm);
+        toast({
+          title: "Success",
+          description: "Success story created successfully!",
+        });
+      }
+      
+      setSuccessStoryForm({
+        name: '',
+        story: '',
+        image: '',
+        achievement: '',
+        location: '',
+        program: '',
+        order: 0,
+        is_active: true
+      });
+      setShowSuccessStoryForm(false);
+      setEditingSuccessStory(null);
+      loadSuccessStories();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to save success story. Please try again.",
+        variant: "destructive",
+      });
+    }
+    setLoading(false);
+  };
+
+  const handleEditSuccessStory = (story) => {
+    setSuccessStoryForm({
+      name: story.name,
+      story: story.story,
+      image: story.image,
+      achievement: story.achievement,
+      location: story.location,
+      program: story.program,
+      order: story.order || 0,
+      is_active: story.is_active !== false
+    });
+    setEditingSuccessStory(story);
+    setShowSuccessStoryForm(true);
+  };
+
+  const handleDeleteSuccessStory = async (storyId) => {
+    if (window.confirm('Are you sure you want to delete this success story?')) {
+      setLoading(true);
+      try {
+        await api.admin.deleteSuccessStory(storyId);
+        toast({
+          title: "Success",
+          description: "Success story deleted successfully!",
+        });
+        loadSuccessStories();
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Failed to delete success story.",
+          variant: "destructive",
+        });
+      }
+      setLoading(false);
+    }
+  };
+
+  const cancelSuccessStoryEdit = () => {
+    setEditingSuccessStory(null);
+    setSuccessStoryForm({
+      name: '',
+      story: '',
+      image: '',
+      achievement: '',
+      location: '',
+      program: '',
+      order: 0,
+      is_active: true
+    });
+    setShowSuccessStoryForm(false);
+  };
+
   // Site Content Management Functions
   const loadSiteContent = async () => {
     try {
