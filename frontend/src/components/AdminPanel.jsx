@@ -1027,6 +1027,14 @@ const AdminPanel = () => {
                     Leadership Team
                   </Button>
                   <Button
+                    variant={activeTab === 'gallery' ? 'default' : 'ghost'}
+                    onClick={() => setActiveTab('gallery')}
+                    className="w-full justify-start"
+                  >
+                    <Eye className="h-4 w-4 mr-2" />
+                    Gallery Management
+                  </Button>
+                  <Button
                     variant={activeTab === 'pages' ? 'default' : 'ghost'}
                     onClick={() => setActiveTab('pages')}
                     className="w-full justify-start"
