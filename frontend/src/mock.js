@@ -242,6 +242,305 @@ export const mockData = {
     }
   ],
 
+  // Comprehensive Site Content Management
+  siteContent: {
+    homepage: {
+      hero: {
+        title: "Shield Foundation",
+        subtitle: "Adding Life to Years",
+        description: "Empowering youth through skill development and caring for seniors with dignity in Mumbai's underserved communities.",
+        primaryButton: "Support Our Mission",
+        secondaryButton: "Become a Volunteer",
+        backgroundImage: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=1920&h=800&fit=crop"
+      },
+      programs: {
+        title: "Our Programs",
+        subtitle: "Transforming lives through comprehensive support",
+        youthProgram: {
+          title: "Youth Skilling & Livelihoods",
+          description: "In partnership with Tech Mahindra Foundation, we provide comprehensive training programs that transform young lives.",
+          buttonText: "Learn More",
+          icon: "GraduationCap"
+        },
+        seniorProgram: {
+          title: "Senior Citizens Care",
+          description: "Multi-service support centers providing healthcare, recreational activities, and social support for our elderly community.",
+          buttonText: "Get Involved",
+          icon: "Heart"
+        }
+      },
+      successStory: {
+        title: "Success Stories",
+        subtitle: "Real impact, real transformation",
+        featured: {
+          name: "Priya Sharma",
+          program: "ITES-BPO Graduate",
+          story: "From unemployment to a fulfilling career - Priya's journey showcases the transformative power of skill development.",
+          image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face"
+        }
+      },
+      newsletter: {
+        title: "Stay Connected",
+        description: "Join our newsletter to receive updates on our programs, success stories, and ways to get involved.",
+        buttonText: "Subscribe Now"
+      }
+    },
+    about: {
+      hero: {
+        title: "About Shield Foundation",
+        subtitle: "Our Story of Impact and Transformation",
+        description: "For over 6 years, we've been dedicated to adding life to years through youth empowerment and senior care."
+      },
+      story: {
+        title: "Our Story",
+        content: "Founded with the vision of creating meaningful change in Mumbai's underserved communities, Shield Foundation has grown from a small initiative to a comprehensive support system. Our journey began with recognizing the dual challenge of youth unemployment and inadequate senior care in urban slums.",
+        highlightBox: {
+          text: "6+ Years Serving Communities",
+          subtext: "Transforming lives daily"
+        }
+      },
+      mission: {
+        title: "Mission",
+        content: "To empower underprivileged youth through skill development and employment opportunities while ensuring dignified care and support for senior citizens.",
+        icon: "Target"
+      },
+      vision: {
+        title: "Vision", 
+        content: "A society where every young person has access to meaningful employment and every senior citizen lives with dignity, respect, and comprehensive care.",
+        icon: "Eye"
+      },
+      values: {
+        title: "Values",
+        content: "Integrity, Compassion, Excellence, Community Impact, Sustainable Development, and Inclusive Growth guide everything we do.",
+        icon: "Star"
+      },
+      team: [
+        {
+          name: "Swati Ingole",
+          role: "Founder & Director",
+          image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face",
+          description: "Visionary leader with over 8 years in social work"
+        }
+      ],
+      timeline: [
+        {
+          year: "2018",
+          title: "Foundation Established",
+          description: "Shield Foundation was founded with the mission to serve Mumbai's underserved communities."
+        },
+        {
+          year: "2019", 
+          title: "First Youth Batch",
+          description: "Successfully trained and placed our first batch of 35 youth in various sectors."
+        },
+        {
+          year: "2020",
+          title: "Senior Care Launch",
+          description: "Launched comprehensive senior citizen care services with daily activities and medical support."
+        },
+        {
+          year: "2021",
+          title: "Tech Mahindra Partnership",
+          description: "Partnered with Tech Mahindra Foundation to scale youth skilling programs."
+        },
+        {
+          year: "2022",
+          title: "ARCIL Collaboration",
+          description: "Started physiotherapy services in partnership with ARCIL, serving 150+ patients weekly."
+        },
+        {
+          year: "2024",
+          title: "Expansion Planning",
+          description: "Planning expansion to Mankhurd and Nagpur to serve more communities."
+        }
+      ]
+    },
+    programs: {
+      hero: {
+        title: "Our Programs",
+        subtitle: "Comprehensive Solutions for Community Empowerment",
+        description: "Comprehensive training and support services designed to empower youth and care for seniors"
+      },
+      youthSkilling: {
+        title: "Youth Skilling & Livelihoods",
+        subtitle: "In partnership with Tech Mahindra Foundation",
+        description: "Our comprehensive training programs transform young lives through skill development and employment opportunities.",
+        courses: [
+          {
+            name: "Customer Relationship Associate (CRA)",
+            duration: "45 days",
+            batchSize: "35-40 students", 
+            description: "Comprehensive customer service and communication skills training"
+          },
+          {
+            name: "ITES-BPO",
+            duration: "45 days",
+            batchSize: "35-40 students",
+            description: "Information Technology Enabled Services and Business Process Outsourcing"
+          },
+          {
+            name: "General Duty Assistant (Nursing)",
+            duration: "90 days",
+            batchSize: "25-30 students",
+            description: "Basic nursing and healthcare assistance training"
+          }
+        ],
+        statistics: {
+          youthTrained: "1300+",
+          youthPlaced: "1000+", 
+          employerPartners: "45+",
+          trainingBatches: "40+"
+        }
+      },
+      seniorCare: {
+        title: "Senior Citizens Services",
+        subtitle: "Multi-Service Support Centers for Comprehensive Elderly Care",
+        description: "Our senior care program addresses healthcare, recreational, legal, and welfare needs of elderly community members.",
+        services: [
+          {
+            category: "Healthcare Services",
+            items: ["Regular health checkups", "Medical consultations", "Free cataract surgeries", "Physiotherapy"]
+          },
+          {
+            category: "Recreational Activities", 
+            items: ["Daily exercise & yoga", "Indoor games", "Cultural programs", "Social gatherings"]
+          },
+          {
+            category: "Legal & Psychosocial",
+            items: ["Elder abuse support", "Legal counseling", "Psychological support", "Family mediation"]
+          },
+          {
+            category: "Welfare Services",
+            items: ["Government scheme enrollment", "Pension assistance", "Healthcare navigation", "Documentation support"]
+          }
+        ]
+      },
+      arcilPartnership: {
+        title: "ARCIL Collaboration - Physiotherapy Unit",
+        description: "Our partnership with ARCIL provides specialized physiotherapy services to the community.",
+        services: [
+          "Physiotherapy for mobility issues",
+          "Chronic pain management", 
+          "Stroke rehabilitation",
+          "Arthritis treatment",
+          "Balance and fall prevention"
+        ],
+        statistics: {
+          weeklyPatients: "150/week",
+          monthlyRevenue: "₹1.96L"
+        }
+      },
+      expansion: {
+        title: "Expansion Plans",
+        subtitle: "Scaling our impact to serve more communities",
+        phase2: {
+          title: "Phase 2: Mankhurd",
+          description: "Extending youth skilling programs",
+          target: "500+ youth annually",
+          status: "Launch planned for 2024"
+        },
+        phase3: {
+          title: "Phase 3: Nagpur", 
+          description: "Senior citizen services expansion",
+          focus: "Comprehensive elderly care",
+          status: "Planning phase underway"
+        }
+      }
+    },
+    impact: {
+      hero: {
+        title: "Our Impact",
+        subtitle: "Measuring Success Through Lives Transformed",
+        description: "Measuring our success through the lives we've touched and the communities we've empowered"
+      },
+      overallStats: {
+        title: "Overall Impact",
+        subtitle: "Key metrics that define our success"
+      },
+      youthImpact: {
+        title: "Youth Skilling Impact", 
+        subtitle: "Transforming lives through skill development",
+        placementRate: "77%",
+        salaryRanges: {
+          crs: "₹13,946/month",
+          ites: "₹12,132/month", 
+          nursing: "₹8,700/month"
+        }
+      },
+      seniorImpact: {
+        title: "Senior Citizens Impact",
+        subtitle: "Comprehensive care and support services"
+      },
+      geographic: {
+        title: "Geographic Reach",
+        subtitle: "Expanding our impact across communities",
+        current: {
+          location: "Mumbai (Dharavi)",
+          description: "Our flagship location with comprehensive youth training and senior care services."
+        },
+        expansion: {
+          title: "Expansion Plans", 
+          description: "Mankhurd and Nagpur expansion to serve more communities with our proven model.",
+          locations: "3"
+        }
+      }
+    },
+    gallery: {
+      hero: {
+        title: "Gallery",
+        subtitle: "Capturing Moments of Impact and Transformation", 
+        description: "Visual stories of our programs, events, and the lives we've touched"
+      },
+      categories: [
+        { id: "all", name: "All Media", icon: "Grid" },
+        { id: "photos", name: "Photos", icon: "Camera" },
+        { id: "videos", name: "Videos", icon: "Video" },
+        { id: "events", name: "Events", icon: "Calendar" },
+        { id: "stories", name: "Success Stories", icon: "Heart" }
+      ],
+      statistics: {
+        photos: "500+",
+        events: "50+",
+        videos: "25+", 
+        stories: "100+"
+      }
+    },
+    contact: {
+      hero: {
+        title: "Contact Us",
+        subtitle: "Get in Touch - We're Here to Help",
+        description: "Ready to make a difference? Reach out to learn more about our programs or get involved."
+      },
+      contactInfo: {
+        email: "shieldfoundation@gmail.com",
+        phone: "+91 98334 06288",
+        address: "Dharavi, Mumbai, Maharashtra, India"
+      },
+      officeHours: {
+        title: "Office Hours",
+        weekdays: "Monday - Friday: 9:00 AM - 6:00 PM",
+        weekends: "Saturday: 10:00 AM - 4:00 PM",
+        closed: "Sunday: Closed"
+      },
+      quickActions: {
+        title: "Quick Actions",
+        subtitle: "Take immediate action to support our cause",
+        donate: {
+          title: "Donate Now",
+          description: "Support our programs with a donation"
+        },
+        partner: {
+          title: "Partner With Us", 
+          description: "Explore partnership opportunities"
+        },
+        share: {
+          title: "Share Our Mission",
+          description: "Help us reach more people"
+        }
+      }
+    }
+  },
+
   // Contact Information
   contact: {
     founder: "Mrs. Swati Ingole",
