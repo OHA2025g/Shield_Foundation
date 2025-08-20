@@ -376,6 +376,151 @@ class BackendTester:
         except Exception as e:
             self.log_result("Admin Newsletters", False, "Request failed", str(e))
     
+    def test_site_content_management(self):
+        """Test site content management endpoints"""
+        if not self.admin_token:
+            self.log_result("Site Content Management", False, "No admin token available")
+            return
+        
+        headers = {"Authorization": f"Bearer {self.admin_token}"}
+        
+        # Test GET /api/admin/site-content (should return empty content initially)
+        try:
+            response = self.session.get(f"{API_BASE}/admin/site-content", headers=headers)
+            if response.status_code == 200:
+                data = response.json()
+                if "content" in data:
+                    self.log_result("Get Site Content", True, "Site content retrieved successfully")
+                else:
+                    self.log_result("Get Site Content", False, "Invalid response format", data)
+            else:
+                self.log_result("Get Site Content", False, f"HTTP {response.status_code}", response.text)
+        except Exception as e:
+            self.log_result("Get Site Content", False, "Request failed", str(e))
+        
+        # Test PUT /api/admin/site-content
+        test_content = {
+            "content": {
+                "homepage": {
+                    "hero": {
+                        "title": "Empowering Communities Through Education",
+                        "subtitle": "Building brighter futures for youth and families"
+                    },
+                    "mission": "To provide comprehensive education and support services"
+                },
+                "about": {
+                    "description": "Shield Foundation has been serving communities for over a decade",
+                    "values": ["Education", "Empowerment", "Community", "Excellence"]
+                }
+            }
+        }
+        
+        try:
+            response = self.session.put(f"{API_BASE}/admin/site-content", json=test_content, headers=headers)
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "updated successfully" in data.get("message", ""):
+                    self.log_result("Update Site Content", True, "Site content updated successfully")
+                else:
+                    self.log_result("Update Site Content", False, "Invalid response format", data)
+            else:
+                self.log_result("Update Site Content", False, f"HTTP {response.status_code}", response.text)
+        except Exception as e:
+            self.log_result("Update Site Content", False, "Request failed", str(e))
+        
+        # Verify content was saved by getting it again
+        try:
+            response = self.session.get(f"{API_BASE}/admin/site-content", headers=headers)
+            if response.status_code == 200:
+                data = response.json()
+                if (data.get("content", {}).get("homepage", {}).get("hero", {}).get("title") == 
+                    "Empowering Communities Through Education"):
+                    self.log_result("Verify Site Content Persistence", True, "Site content persisted correctly")
+                else:
+                    self.log_result("Verify Site Content Persistence", False, "Content not persisted correctly", data)
+            else:
+                self.log_result("Verify Site Content Persistence", False, f"HTTP {response.status_code}", response.text)
+        except Exception as e:
+            self.log_result("Verify Site Content Persistence", False, "Request failed", str(e))
+    
+    def test_contact_info_management(self):
+        """Test contact information management endpoint"""
+        if not self.admin_token:
+            self.log_result("Contact Info Management", False, "No admin token available")
+            return
+        
+        headers = {"Authorization": f"Bearer {self.admin_token}"}
+        
+        # Test PUT /api/admin/contact-info
+        test_contact_info = {
+            "email": "info@shieldfoundation.org",
+            "phone": "+1-555-123-4567",
+            "address": "123 Community Street, Education City, EC 12345"
+        }
+        
+        try:
+            response = self.session.put(f"{API_BASE}/admin/contact-info", json=test_contact_info, headers=headers)
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("success") and "updated successfully" in data.get("message", ""):
+                    self.log_result("Update Contact Info", True, "Contact information updated successfully")
+                else:
+                    self.log_result("Update Contact Info", False, "Invalid response format", data)
+            else:
+                self.log_result("Update Contact Info", False, f"HTTP {response.status_code}", response.text)
+        except Exception as e:
+            self.log_result("Update Contact Info", False, "Request failed", str(e))
+        
+        # Verify contact info was saved by getting site content
+        try:
+            response = self.session.get(f"{API_BASE}/admin/site-content", headers=headers)
+            if response.status_code == 200:
+                data = response.json()
+                contact_info = data.get("content", {}).get("contact", {}).get("contactInfo", {})
+                if (contact_info.get("email") == "info@shieldfoundation.org" and
+                    contact_info.get("phone") == "+1-555-123-4567"):
+                    self.log_result("Verify Contact Info Persistence", True, "Contact info persisted correctly")
+                else:
+                    self.log_result("Verify Contact Info Persistence", False, "Contact info not persisted correctly", contact_info)
+            else:
+                self.log_result("Verify Contact Info Persistence", False, f"HTTP {response.status_code}", response.text)
+        except Exception as e:
+            self.log_result("Verify Contact Info Persistence", False, "Request failed", str(e))
+    
+    def test_site_content_auth_required(self):
+        """Test that site content endpoints require authentication"""
+        # Test GET without token
+        try:
+            response = self.session.get(f"{API_BASE}/admin/site-content")
+            if response.status_code == 403:
+                self.log_result("Site Content Auth Required (GET)", True, "Authentication required for GET site content")
+            else:
+                self.log_result("Site Content Auth Required (GET)", False, f"Expected 403, got HTTP {response.status_code}", response.text)
+        except Exception as e:
+            self.log_result("Site Content Auth Required (GET)", False, "Request failed", str(e))
+        
+        # Test PUT without token
+        test_content = {"content": {"test": "data"}}
+        try:
+            response = self.session.put(f"{API_BASE}/admin/site-content", json=test_content)
+            if response.status_code == 403:
+                self.log_result("Site Content Auth Required (PUT)", True, "Authentication required for PUT site content")
+            else:
+                self.log_result("Site Content Auth Required (PUT)", False, f"Expected 403, got HTTP {response.status_code}", response.text)
+        except Exception as e:
+            self.log_result("Site Content Auth Required (PUT)", False, "Request failed", str(e))
+        
+        # Test contact info PUT without token
+        test_contact = {"email": "test@example.com"}
+        try:
+            response = self.session.put(f"{API_BASE}/admin/contact-info", json=test_contact)
+            if response.status_code == 403:
+                self.log_result("Contact Info Auth Required", True, "Authentication required for PUT contact info")
+            else:
+                self.log_result("Contact Info Auth Required", False, f"Expected 403, got HTTP {response.status_code}", response.text)
+        except Exception as e:
+            self.log_result("Contact Info Auth Required", False, "Request failed", str(e))
+    
     def run_all_tests(self):
         """Run all backend tests"""
         print(f"🚀 Starting Backend API Tests for Shield Foundation")
