@@ -1893,6 +1893,89 @@ const AdminPanel = () => {
               </div>
             )}
 
+            {activeTab === 'gallery' && (
+              <div className="space-y-6">
+                <div className="flex justify-between items-center">
+                  <h2 className="text-2xl font-bold text-gray-900">Gallery Management</h2>
+                  <Button
+                    onClick={() => setShowGalleryForm(true)}
+                    className="bg-purple-600 hover:bg-purple-700 text-white"
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add Gallery Item
+                  </Button>
+                </div>
+
+                <div className="space-y-4">
+                  {galleryItems.map((item) => (
+                    <Card key={item.id} className="hover:shadow-md transition-shadow">
+                      <CardContent className="p-6">
+                        <div className="flex items-start space-x-4">
+                          <img
+                            src={item.image || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop"}
+                            alt={item.title}
+                            className="w-24 h-24 rounded-lg object-cover flex-shrink-0"
+                            onError={(e) => {
+                              e.target.src = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop";
+                            }}
+                          />
+                          <div className="flex-1">
+                            <div className="flex items-center space-x-3 mb-2">
+                              <h3 className="text-lg font-semibold text-gray-900">{item.title}</h3>
+                              <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                item.is_active !== false 
+                                  ? 'bg-green-100 text-green-800' 
+                                  : 'bg-gray-100 text-gray-600'
+                              }`}>
+                                {item.is_active !== false ? 'Active' : 'Inactive'}
+                              </span>
+                              <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">
+                                {item.category}
+                              </span>
+                            </div>
+                            <p className="text-gray-600 line-clamp-2 mb-2">{item.description}</p>
+                            <div className="flex items-center space-x-4 text-sm text-gray-500">
+                              <span>Type: {item.type}</span>
+                              <span>Date: {item.date}</span>
+                              <span>Order: {item.order}</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleEditGalleryItem(item)}
+                            >
+                              <Edit className="h-4 w-4 mr-1" />
+                              Edit
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleDeleteGalleryItem(item.id)}
+                              className="text-red-600 hover:text-red-700 hover:border-red-300"
+                            >
+                              <Trash2 className="h-4 w-4 mr-1" />
+                              Delete
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                  
+                  {galleryItems.length === 0 && (
+                    <Card>
+                      <CardContent className="p-8 text-center">
+                        <Eye className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                        <p className="text-gray-500">No gallery items yet. Add your first gallery item!</p>
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
+              </div>
+            )}
+
             {activeTab === 'pages' && (
               <div className="space-y-6">
                 <div className="flex justify-between items-center">
