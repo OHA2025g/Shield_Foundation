@@ -1530,6 +1530,14 @@ class BackendTester:
             self.test_leadership_team_crud_operations()
             self.test_leadership_team_validation()
             self.test_leadership_team_not_found()
+            # Test page sections management endpoints
+            self.test_page_sections_crud_operations()
+            self.test_page_sections_validation()
+            self.test_page_sections_not_found()
+            # Test gallery items management endpoints
+            self.test_gallery_items_crud_operations()
+            self.test_gallery_items_validation()
+            self.test_gallery_items_not_found()
         
         # Summary
         print("\n" + "=" * 60)
