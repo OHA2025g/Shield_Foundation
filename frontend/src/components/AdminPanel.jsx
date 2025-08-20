@@ -77,24 +77,6 @@ const AdminPanel = () => {
   const [editingSubSection, setEditingSubSection] = useState(null);
   const [siteContent, setSiteContent] = useState({});
   const [tempSiteContent, setTempSiteContent] = useState({});
-  const [pageContent, setPageContent] = useState({
-    homepage: {
-      hero: {
-        title: 'Shield Foundation - Adding Life to Years',
-        subtitle: 'Empowering youth through skill development and caring for seniors with dignity',
-        primaryButton: 'Support Our Mission',
-        secondaryButton: 'Become a Volunteer'
-      }
-    },
-    about: {
-      story: 'Our foundation story and mission...',
-      mission: 'To empower underprivileged communities...',
-      vision: 'A world where every individual has access to opportunities...'
-    },
-    programs: {
-      description: 'Comprehensive training and support services...'
-    }
-  });
 
   // Check authentication and load data
   useEffect(() => {
