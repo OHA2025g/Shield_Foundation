@@ -201,3 +201,14 @@ export const getSuccessStories = async () => {
     throw error;
   }
 };
+
+// Leadership Team API (public)
+export const getLeadershipTeam = async () => {
+  try {
+    const response = await apiClient.get('/leadership-team');
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch leadership team:', error);
+    throw error;
+  }
+};
