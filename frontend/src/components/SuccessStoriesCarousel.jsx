@@ -90,14 +90,14 @@ const SuccessStoriesCarousel = () => {
             >
               {stories.map((story, index) => (
                 <div key={story.id || index} className="w-full flex-shrink-0">
-                  <Card className="mx-4 border-0 shadow-xl">
-                    <div className="grid md:grid-cols-2 gap-0">
+                  <Card className="mx-4 border-0 shadow-xl h-[250px]">
+                    <div className="grid md:grid-cols-2 gap-0 h-full">
                       {/* Image */}
-                      <div className="relative">
+                      <div className="relative h-full">
                         <img 
                           src={story.image} 
                           alt={story.name}
-                          className="w-full h-64 md:h-full object-cover rounded-l-lg"
+                          className="w-full h-full object-cover rounded-l-lg"
                         />
                         <div className="absolute top-4 left-4">
                           <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
@@ -107,23 +107,23 @@ const SuccessStoriesCarousel = () => {
                       </div>
                       
                       {/* Content */}
-                      <CardContent className="p-8 flex flex-col justify-center">
-                        <div className="mb-6">
-                          <h3 className="text-2xl font-bold text-gray-900 mb-2">{story.name}</h3>
-                          <div className="flex items-center text-gray-500 text-sm mb-4">
+                      <CardContent className="p-4 flex flex-col justify-center h-full">
+                        <div className="mb-3">
+                          <h3 className="text-xl font-bold text-gray-900 mb-2">{story.name}</h3>
+                          <div className="flex items-center text-gray-500 text-sm mb-2">
                             <MapPin className="h-4 w-4 mr-1" />
                             {story.location}
                           </div>
                         </div>
                         
-                        <blockquote className="text-lg text-gray-600 italic mb-6 leading-relaxed">
+                        <blockquote className="text-base text-gray-600 italic mb-3 leading-relaxed line-clamp-3">
                           "{story.story}"
                         </blockquote>
                         
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center text-blue-600 font-semibold">
-                            <Award className="h-5 w-5 mr-2" />
-                            {story.achievement}
+                          <div className="flex items-center text-blue-600 font-semibold text-sm">
+                            <Award className="h-4 w-4 mr-2" />
+                            <span className="line-clamp-2">{story.achievement}</span>
                           </div>
                         </div>
                       </CardContent>
