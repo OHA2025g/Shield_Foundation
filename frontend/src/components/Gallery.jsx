@@ -126,6 +126,7 @@ const Gallery = () => {
           }
         ]);
       }
+      setLoading(false);
     };
     
     loadData();
