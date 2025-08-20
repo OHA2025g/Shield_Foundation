@@ -1403,6 +1403,170 @@ const AdminPanel = () => {
                             </>
                           )}
 
+                          {editingPageSection === 'about' && editingSubSection === 'mission' && (
+                            <>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Mission Title</label>
+                                <Input
+                                  value={getSiteContentValue('about.mission.title')}
+                                  onChange={(e) => updateSiteContent('about.mission.title', e.target.value)}
+                                  placeholder="Mission"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Mission Content</label>
+                                <Textarea
+                                  value={getSiteContentValue('about.mission.content')}
+                                  onChange={(e) => updateSiteContent('about.mission.content', e.target.value)}
+                                  placeholder="Mission statement and description"
+                                  rows={4}
+                                />
+                              </div>
+                            </>
+                          )}
+
+                          {editingPageSection === 'about' && editingSubSection === 'vision' && (
+                            <>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Vision Title</label>
+                                <Input
+                                  value={getSiteContentValue('about.vision.title')}
+                                  onChange={(e) => updateSiteContent('about.vision.title', e.target.value)}
+                                  placeholder="Vision"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Vision Content</label>
+                                <Textarea
+                                  value={getSiteContentValue('about.vision.content')}
+                                  onChange={(e) => updateSiteContent('about.vision.content', e.target.value)}
+                                  placeholder="Vision statement and description"
+                                  rows={4}
+                                />
+                              </div>
+                            </>
+                          )}
+
+                          {editingPageSection === 'programs' && editingSubSection === 'hero' && (
+                            <>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Page Title</label>
+                                <Input
+                                  value={getSiteContentValue('programs.hero.title')}
+                                  onChange={(e) => updateSiteContent('programs.hero.title', e.target.value)}
+                                  placeholder="Our Programs"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Page Subtitle</label>
+                                <Input
+                                  value={getSiteContentValue('programs.hero.subtitle')}
+                                  onChange={(e) => updateSiteContent('programs.hero.subtitle', e.target.value)}
+                                  placeholder="Comprehensive Programs for Community Impact"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Page Description</label>
+                                <Textarea
+                                  value={getSiteContentValue('programs.hero.description')}
+                                  onChange={(e) => updateSiteContent('programs.hero.description', e.target.value)}
+                                  placeholder="Programs page description"
+                                  rows={3}
+                                />
+                              </div>
+                            </>
+                          )}
+
+                          {editingPageSection === 'impact' && editingSubSection === 'hero' && (
+                            <>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Page Title</label>
+                                <Input
+                                  value={getSiteContentValue('impact.hero.title')}
+                                  onChange={(e) => updateSiteContent('impact.hero.title', e.target.value)}
+                                  placeholder="Our Impact"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Page Subtitle</label>
+                                <Input
+                                  value={getSiteContentValue('impact.hero.subtitle')}
+                                  onChange={(e) => updateSiteContent('impact.hero.subtitle', e.target.value)}
+                                  placeholder="Measuring Success Through Lives Transformed"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Page Description</label>
+                                <Textarea
+                                  value={getSiteContentValue('impact.hero.description')}
+                                  onChange={(e) => updateSiteContent('impact.hero.description', e.target.value)}
+                                  placeholder="Impact page description"
+                                  rows={3}
+                                />
+                              </div>
+                            </>
+                          )}
+
+                          {editingPageSection === 'gallery' && editingSubSection === 'hero' && (
+                            <>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Page Title</label>
+                                <Input
+                                  value={getSiteContentValue('gallery.hero.title')}
+                                  onChange={(e) => updateSiteContent('gallery.hero.title', e.target.value)}
+                                  placeholder="Gallery"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Page Subtitle</label>
+                                <Input
+                                  value={getSiteContentValue('gallery.hero.subtitle')}
+                                  onChange={(e) => updateSiteContent('gallery.hero.subtitle', e.target.value)}
+                                  placeholder="Capturing Moments of Impact and Transformation"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Page Description</label>
+                                <Textarea
+                                  value={getSiteContentValue('gallery.hero.description')}
+                                  onChange={(e) => updateSiteContent('gallery.hero.description', e.target.value)}
+                                  placeholder="Gallery page description"
+                                  rows={3}
+                                />
+                              </div>
+                            </>
+                          )}
+
+                          {editingPageSection === 'contact' && editingSubSection === 'hero' && (
+                            <>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Page Title</label>
+                                <Input
+                                  value={getSiteContentValue('contact.hero.title')}
+                                  onChange={(e) => updateSiteContent('contact.hero.title', e.target.value)}
+                                  placeholder="Contact Us"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Page Subtitle</label>
+                                <Input
+                                  value={getSiteContentValue('contact.hero.subtitle')}
+                                  onChange={(e) => updateSiteContent('contact.hero.subtitle', e.target.value)}
+                                  placeholder="Get in Touch with Shield Foundation"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Page Description</label>
+                                <Textarea
+                                  value={getSiteContentValue('contact.hero.description')}
+                                  onChange={(e) => updateSiteContent('contact.hero.description', e.target.value)}
+                                  placeholder="Contact page description"
+                                  rows={3}
+                                />
+                              </div>
+                            </>
+                          )}
+
                           {/* Add more section editors as needed */}
                           
                           <div className="flex gap-3 pt-4">
