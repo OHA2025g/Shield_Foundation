@@ -527,6 +527,97 @@ async def delete_success_story(story_id: str, current_user: dict = Depends(admin
         logger.error(f"Failed to delete success story: {e}")
         raise HTTPException(status_code=500, detail="Failed to delete success story")
 
+# Leadership Team Endpoints
+@api_router.get("/leadership-team")
+async def get_leadership_team():
+    """Get all active leadership team members (no authentication required)"""
+    try:
+        members = await db.leadership_team.find(
+            {"is_active": True}, 
+            sort=[("order", 1), ("created_at", -1)]
+        ).to_list(length=None)
+        
+        # Convert ObjectId to string for JSON serialization
+        for member in members:
+            member["_id"] = str(member["_id"])
+            
+        return {"members": members}
+    except Exception as e:
+        logger.error(f"Failed to fetch leadership team: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch leadership team")
+
+@api_router.get("/admin/leadership-team")
+async def get_admin_leadership_team(current_user: dict = Depends(admin_required)):
+    """Get all leadership team members for admin management"""
+    try:
+        members = await db.leadership_team.find({}, sort=[("order", 1), ("created_at", -1)]).to_list(length=None)
+        
+        # Convert ObjectId to string for JSON serialization
+        for member in members:
+            member["_id"] = str(member["_id"])
+            
+        return {"members": members}
+    except Exception as e:
+        logger.error(f"Failed to fetch admin leadership team: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch leadership team")
+
+@api_router.post("/admin/leadership-team", response_model=MessageResponse)
+async def create_team_member(member_data: TeamMemberCreate, current_user: dict = Depends(admin_required)):
+    """Create a new team member"""
+    try:
+        member_dict = member_data.dict()
+        member_dict["id"] = str(uuid.uuid4())
+        member_dict["created_at"] = datetime.utcnow()
+        member_dict["updated_at"] = datetime.utcnow()
+        
+        result = await db.leadership_team.insert_one(member_dict)
+        
+        logger.info(f"Team member created by {current_user['username']}: {member_dict['name']}")
+        return MessageResponse(message="Team member created successfully!")
+    except Exception as e:
+        logger.error(f"Failed to create team member: {e}")
+        raise HTTPException(status_code=500, detail="Failed to create team member")
+
+@api_router.put("/admin/leadership-team/{member_id}", response_model=MessageResponse)
+async def update_team_member(member_id: str, member_data: TeamMemberUpdate, current_user: dict = Depends(admin_required)):
+    """Update a team member"""
+    try:
+        update_data = {k: v for k, v in member_data.dict().items() if v is not None}
+        update_data["updated_at"] = datetime.utcnow()
+        
+        result = await db.leadership_team.update_one(
+            {"id": member_id},
+            {"$set": update_data}
+        )
+        
+        if result.matched_count == 0:
+            raise HTTPException(status_code=404, detail="Team member not found")
+        
+        logger.info(f"Team member updated by {current_user['username']}: {member_id}")
+        return MessageResponse(message="Team member updated successfully!")
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to update team member: {e}")
+        raise HTTPException(status_code=500, detail="Failed to update team member")
+
+@api_router.delete("/admin/leadership-team/{member_id}", response_model=MessageResponse)
+async def delete_team_member(member_id: str, current_user: dict = Depends(admin_required)):
+    """Delete a team member"""
+    try:
+        result = await db.leadership_team.delete_one({"id": member_id})
+        
+        if result.deleted_count == 0:
+            raise HTTPException(status_code=404, detail="Team member not found")
+        
+        logger.info(f"Team member deleted by {current_user['username']}: {member_id}")
+        return MessageResponse(message="Team member deleted successfully!")
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to delete team member: {e}")
+        raise HTTPException(status_code=500, detail="Failed to delete team member")
+
 # Include the router in the main app
 app.include_router(api_router)
 
