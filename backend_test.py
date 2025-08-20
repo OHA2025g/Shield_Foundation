@@ -767,6 +767,7 @@ class BackendTester:
         self.test_newsletter_duplicate()
         self.test_impact_stats()
         self.test_public_news()
+        self.test_success_stories_public()
         
         # Authentication tests
         self.test_admin_login_invalid()
@@ -775,6 +776,9 @@ class BackendTester:
         # Test site content endpoints without authentication (should fail)
         self.test_site_content_auth_required()
         
+        # Test success stories endpoints without authentication (should fail)
+        self.test_success_stories_auth_required()
+        
         # Admin authentication and protected endpoints
         if self.test_admin_login():
             self.test_admin_endpoints()
@@ -782,6 +786,10 @@ class BackendTester:
             # Test new site content management endpoints
             self.test_site_content_management()
             self.test_contact_info_management()
+            # Test success stories management endpoints
+            self.test_success_stories_crud_operations()
+            self.test_success_stories_validation()
+            self.test_success_stories_not_found()
         
         # Summary
         print("\n" + "=" * 60)
