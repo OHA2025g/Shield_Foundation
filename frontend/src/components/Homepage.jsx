@@ -7,6 +7,7 @@ import { Textarea } from './ui/textarea';
 import { useToast } from '../hooks/use-toast';
 import { Heart, Users, GraduationCap, Award, Phone, Mail, MapPin, ArrowRight, CheckCircle } from 'lucide-react';
 import { api } from '../api';
+import { mockData } from '../mock';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -22,12 +23,26 @@ const Homepage = () => {
     womenEmpowered: 200
   });
 
-  // Load impact statistics on component mount
+  // Site content state
+  const [siteContent, setSiteContent] = useState({});
+
+  // Load site content and impact statistics on component mount
   useEffect(() => {
-    const loadImpactStats = async () => {
+    const loadData = async () => {
       try {
+        // Load impact statistics
         const stats = await api.getImpactStats();
         setImpactStats(stats);
+        
+        // Load site content (in production, this would be an API call)
+        setSiteContent(mockData.siteContent || {});
+      } catch (error) {
+        console.error('Failed to load homepage data:', error);
+      }
+    };
+    
+    loadData();
+  }, []);
       } catch (error) {
         console.error('Failed to load impact stats:', error);
       }
