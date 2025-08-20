@@ -72,11 +72,11 @@ const SuccessStoriesCarousel = () => {
   }
 
   return (
-    <section className="py-12 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Success Stories</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+    <section className="py-8 bg-gray-50">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold text-gray-900 mb-3">Success Stories</h2>
+          <p className="text-base text-gray-600 max-w-2xl mx-auto">
             Real stories from the lives we've touched and transformed through our programs
           </p>
         </div>
