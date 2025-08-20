@@ -1977,6 +1977,126 @@ const AdminPanel = () => {
                     </Card>
                   )}
                 </div>
+
+                {/* Gallery Form Modal */}
+                {showGalleryForm && (
+                  <Card className="border-2 border-purple-200">
+                    <CardHeader>
+                      <CardTitle className="flex items-center justify-between">
+                        <span>{editingGalleryItem ? 'Edit Gallery Item' : 'Add New Gallery Item'}</span>
+                        <Button variant="ghost" size="sm" onClick={cancelGalleryEdit}>
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Title *</label>
+                          <Input
+                            value={galleryForm.title}
+                            onChange={(e) => setGalleryForm({...galleryForm, title: e.target.value})}
+                            placeholder="Enter gallery item title"
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Category *</label>
+                          <Select value={galleryForm.category} onValueChange={(value) => setGalleryForm({...galleryForm, category: value})}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select category" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="youth">Youth Programs</SelectItem>
+                              <SelectItem value="seniors">Senior Care</SelectItem>
+                              <SelectItem value="community">Community</SelectItem>
+                              <SelectItem value="events">Events</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Image URL *</label>
+                        <Input
+                          value={galleryForm.image}
+                          onChange={(e) => setGalleryForm({...galleryForm, image: e.target.value})}
+                          placeholder="https://example.com/image.jpg"
+                          required
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                        <Textarea
+                          value={galleryForm.description}
+                          onChange={(e) => setGalleryForm({...galleryForm, description: e.target.value})}
+                          placeholder="Brief description of the gallery item..."
+                          rows={3}
+                        />
+                      </div>
+
+                      <div className="grid md:grid-cols-3 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                          <Select value={galleryForm.type} onValueChange={(value) => setGalleryForm({...galleryForm, type: value})}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="image">Image</SelectItem>
+                              <SelectItem value="video">Video</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                          <Input
+                            type="date"
+                            value={galleryForm.date}
+                            onChange={(e) => setGalleryForm({...galleryForm, date: e.target.value})}
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Display Order</label>
+                          <Input
+                            type="number"
+                            value={galleryForm.order}
+                            onChange={(e) => setGalleryForm({...galleryForm, order: parseInt(e.target.value) || 0})}
+                            placeholder="0"
+                          />
+                          <p className="text-xs text-gray-500 mt-1">Lower numbers appear first</p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center space-x-2">
+                        <input
+                          type="checkbox"
+                          id="gallery_is_active"
+                          checked={galleryForm.is_active}
+                          onChange={(e) => setGalleryForm({...galleryForm, is_active: e.target.checked})}
+                          className="rounded border-gray-300"
+                        />
+                        <label htmlFor="gallery_is_active" className="text-sm font-medium text-gray-700">
+                          Active (show on website)
+                        </label>
+                      </div>
+
+                      <div className="flex justify-end space-x-4 pt-4">
+                        <Button variant="outline" onClick={cancelGalleryEdit}>
+                          Cancel
+                        </Button>
+                        <Button 
+                          onClick={handleSaveGalleryItem}
+                          disabled={loading}
+                          className="bg-purple-600 hover:bg-purple-700"
+                        >
+                          {loading ? 'Saving...' : (editingGalleryItem ? 'Update Item' : 'Add Item')}
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
               </div>
             )}
 
