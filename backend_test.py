@@ -1019,6 +1019,10 @@ class BackendTester:
             self.test_success_stories_crud_operations()
             self.test_success_stories_validation()
             self.test_success_stories_not_found()
+            # Test leadership team management endpoints
+            self.test_leadership_team_crud_operations()
+            self.test_leadership_team_validation()
+            self.test_leadership_team_not_found()
         
         # Summary
         print("\n" + "=" * 60)
