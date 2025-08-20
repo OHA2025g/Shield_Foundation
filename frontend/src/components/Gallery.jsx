@@ -248,7 +248,7 @@ const Gallery = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {mockData.testimonials.map((testimonial, index) => (
+            {(mockData.testimonials || []).map((testimonial, index) => (
               <Card key={index} className="border-0 shadow-lg">
                 <CardContent className="p-6">
                   <div className="flex items-center mb-4">
