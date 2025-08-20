@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Heart, Users, Award, Target, Eye, Star, CheckCircle } from 'lucide-react';
 import { mockData } from '../mock';
-import { api } from '../api';
+import { getPublicSiteContent } from '../api';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -15,8 +15,8 @@ const About = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        // Try to load from backend first
-        const backendContent = await api.admin.getSiteContent();
+        // Try to load from public API first
+        const backendContent = await getPublicSiteContent();
         if (backendContent.content && Object.keys(backendContent.content).length > 0) {
           setSiteContent(backendContent.content);
         } else {
