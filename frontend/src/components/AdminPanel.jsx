@@ -434,16 +434,6 @@ const AdminPanel = () => {
     setShowContactForm(field);
   };
 
-  const handleSaveContactInfo = () => {
-    setContactInfo(tempContactInfo);
-    setShowContactForm(false);
-    
-    toast({
-      title: "Success",
-      description: "Contact information updated successfully!",
-    });
-  };
-
   const handleCancelContactEdit = () => {
     setTempContactInfo(contactInfo);
     setShowContactForm(false);
