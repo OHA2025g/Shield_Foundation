@@ -993,6 +993,7 @@ class BackendTester:
         self.test_impact_stats()
         self.test_public_news()
         self.test_success_stories_public()
+        self.test_leadership_team_public()
         
         # Authentication tests
         self.test_admin_login_invalid()
