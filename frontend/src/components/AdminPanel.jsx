@@ -1685,12 +1685,95 @@ const AdminPanel = () => {
                         </div>
                       </div>
 
+                      {/* Programs Page Sections */}
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">Programs Page</h3>
+                        <div className="grid md:grid-cols-2 gap-3">
+                          <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div>
+                              <span className="font-medium">Hero Section</span>
+                              <p className="text-sm text-gray-600">Programs page title and introduction</p>
+                            </div>
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              onClick={() => handleEditPageContent('programs', 'hero')}
+                            >
+                              <Edit className="h-4 w-4 mr-2" />
+                              Edit
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Impact Page Sections */}
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">Impact Page</h3>
+                        <div className="grid md:grid-cols-2 gap-3">
+                          <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div>
+                              <span className="font-medium">Hero Section</span>
+                              <p className="text-sm text-gray-600">Impact page title and introduction</p>
+                            </div>
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              onClick={() => handleEditPageContent('impact', 'hero')}
+                            >
+                              <Edit className="h-4 w-4 mr-2" />
+                              Edit
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Gallery Page Sections */}
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">Gallery Page</h3>
+                        <div className="grid md:grid-cols-2 gap-3">
+                          <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div>
+                              <span className="font-medium">Hero Section</span>
+                              <p className="text-sm text-gray-600">Gallery page title and introduction</p>
+                            </div>
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              onClick={() => handleEditPageContent('gallery', 'hero')}
+                            >
+                              <Edit className="h-4 w-4 mr-2" />
+                              Edit
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Contact Page Sections */}
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">Contact Page</h3>
+                        <div className="grid md:grid-cols-2 gap-3">
+                          <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div>
+                              <span className="font-medium">Hero Section</span>
+                              <p className="text-sm text-gray-600">Contact page title and introduction</p>
+                            </div>
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              onClick={() => handleEditPageContent('contact', 'hero')}
+                            >
+                              <Edit className="h-4 w-4 mr-2" />
+                              Edit
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+
                       {/* More sections can be added here */}
-                      <div className="bg-yellow-50 p-4 rounded-lg">
-                        <p className="text-yellow-800 text-sm">
-                          📝 <strong>Content Management System</strong> - All page sections are now configurable. 
-                          Additional sections for Programs, Impact, Gallery, and Contact pages can be easily added 
-                          using the same pattern shown above.
+                      <div className="bg-green-50 p-4 rounded-lg">
+                        <p className="text-green-800 text-sm">
+                          ✅ <strong>Content Management System Complete</strong> - All major page sections are now configurable through this admin panel. 
+                          You can edit content for Homepage, About, Programs, Impact, Gallery, and Contact pages. Additional sections can be easily added as needed.
                         </p>
                       </div>
                     </div>
