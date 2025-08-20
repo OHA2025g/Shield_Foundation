@@ -135,11 +135,10 @@ const Homepage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              Adding Life to Years
+              {siteContent?.homepage?.hero?.title || "Adding Life to Years"}
             </h1>
             <p className="text-xl md:text-2xl text-gray-700 mb-8 max-w-4xl mx-auto">
-              Empowering Youth & Caring for Seniors - Shield Foundation equips and empowers communities 
-              so that every individual can live with dignity till the end of life.
+              {siteContent?.homepage?.hero?.description || "Empowering Youth & Caring for Seniors - Shield Foundation equips and empowers communities so that every individual can live with dignity till the end of life."}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
@@ -148,7 +147,7 @@ const Homepage = () => {
                 className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg"
               >
                 <Link to="/contact">
-                  Support Our Mission
+                  {siteContent?.homepage?.hero?.primaryButton || "Support Our Mission"}
                 </Link>
               </Button>
               <Button 
@@ -158,7 +157,7 @@ const Homepage = () => {
                 className="border-yellow-400 text-yellow-600 hover:bg-yellow-400 hover:text-black px-8 py-3 text-lg"
               >
                 <Link to="/contact">
-                  Become a Volunteer
+                  {siteContent?.homepage?.hero?.secondaryButton || "Become a Volunteer"}
                 </Link>
               </Button>
             </div>
