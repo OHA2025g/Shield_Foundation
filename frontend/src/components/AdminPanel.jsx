@@ -559,6 +559,130 @@ const AdminPanel = () => {
     setShowTeamMemberForm(false);
   };
 
+  // Gallery Management Functions
+  const loadGalleryItems = async () => {
+    try {
+      const data = await api.admin.getAllGalleryItems();
+      setGalleryItems(data.items || []);
+    } catch (error) {
+      console.error('Failed to load gallery items:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load gallery items.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleSaveGalleryItem = async () => {
+    if (!galleryForm.title.trim() || !galleryForm.category.trim()) {
+      toast({
+        title: "Error",
+        description: "Please fill in title and category.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const formData = {
+        ...galleryForm,
+        date: galleryForm.date || new Date().toISOString().split('T')[0]
+      };
+
+      if (editingGalleryItem) {
+        await api.admin.updateGalleryItem(editingGalleryItem.id, formData);
+        toast({
+          title: "Success",
+          description: "Gallery item updated successfully!",
+        });
+      } else {
+        await api.admin.addGalleryItem(formData);
+        toast({
+          title: "Success",
+          description: "Gallery item created successfully!",
+        });
+      }
+      
+      setGalleryForm({
+        title: '',
+        description: '',
+        image: '',
+        category: '',
+        date: '',
+        type: 'image',
+        order: 0,
+        is_active: true
+      });
+      setEditingGalleryItem(null);
+      setShowGalleryForm(false);
+      loadGalleryItems();
+    } catch (error) {
+      console.error('Failed to save gallery item:', error);
+      toast({
+        title: "Error",
+        description: "Failed to save gallery item.",
+        variant: "destructive",
+      });
+    }
+    setLoading(false);
+  };
+
+  const handleEditGalleryItem = (item) => {
+    setEditingGalleryItem(item);
+    setGalleryForm({
+      title: item.title || '',
+      description: item.description || '',
+      image: item.image || '',
+      category: item.category || '',
+      date: item.date || '',
+      type: item.type || 'image',
+      order: item.order || 0,
+      is_active: item.is_active !== undefined ? item.is_active : true
+    });
+    setShowGalleryForm(true);
+  };
+
+  const handleDeleteGalleryItem = async (itemId) => {
+    if (!window.confirm('Are you sure you want to delete this gallery item?')) {
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await api.admin.deleteGalleryItem(itemId);
+      toast({
+        title: "Success",
+        description: "Gallery item deleted successfully!",
+      });
+      loadGalleryItems();
+    } catch (error) {
+      console.error('Failed to delete gallery item:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete gallery item.",
+        variant: "destructive",
+      });
+    }
+    setLoading(false);
+  };
+
+  const resetGalleryForm = () => {
+    setEditingGalleryItem(null);
+    setGalleryForm({
+      title: '',
+      description: '',
+      image: '',
+      category: '',
+      date: '',
+      type: 'image',
+      order: 0,
+      is_active: true
+    });
+    setShowGalleryForm(false);
+  };
+
   // Site Content Management Functions
   const loadSiteContent = async () => {
     try {
