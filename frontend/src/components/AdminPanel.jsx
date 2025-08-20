@@ -434,6 +434,115 @@ const AdminPanel = () => {
     setShowSuccessStoryForm(false);
   };
 
+  // Leadership Team Management Functions
+  const loadTeamMembers = async () => {
+    try {
+      const data = await api.admin.getAllTeamMembers();
+      setTeamMembers(data.members || []);
+    } catch (error) {
+      console.error('Failed to load team members:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load team members.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleSaveTeamMember = async () => {
+    if (!teamMemberForm.name.trim() || !teamMemberForm.role.trim()) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      if (editingTeamMember) {
+        await api.admin.updateTeamMember(editingTeamMember.id, teamMemberForm);
+        toast({
+          title: "Success",
+          description: "Team member updated successfully!",
+        });
+      } else {
+        await api.admin.addTeamMember(teamMemberForm);
+        toast({
+          title: "Success",
+          description: "Team member created successfully!",
+        });
+      }
+      
+      setTeamMemberForm({
+        name: '',
+        role: '',
+        image: '',
+        description: '',
+        order: 0,
+        is_active: true
+      });
+      setShowTeamMemberForm(false);
+      setEditingTeamMember(null);
+      loadTeamMembers();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to save team member. Please try again.",
+        variant: "destructive",
+      });
+    }
+    setLoading(false);
+  };
+
+  const handleEditTeamMember = (member) => {
+    setTeamMemberForm({
+      name: member.name,
+      role: member.role,
+      image: member.image,
+      description: member.description,
+      order: member.order || 0,
+      is_active: member.is_active !== false
+    });
+    setEditingTeamMember(member);
+    setShowTeamMemberForm(true);
+  };
+
+  const handleDeleteTeamMember = async (memberId) => {
+    if (window.confirm('Are you sure you want to delete this team member?')) {
+      setLoading(true);
+      try {
+        await api.admin.deleteTeamMember(memberId);
+        toast({
+          title: "Success",
+          description: "Team member deleted successfully!",
+        });
+        loadTeamMembers();
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Failed to delete team member.",
+          variant: "destructive",
+        });
+      }
+      setLoading(false);
+    }
+  };
+
+  const cancelTeamMemberEdit = () => {
+    setEditingTeamMember(null);
+    setTeamMemberForm({
+      name: '',
+      role: '',
+      image: '',
+      description: '',
+      order: 0,
+      is_active: true
+    });
+    setShowTeamMemberForm(false);
+  };
+
   // Site Content Management Functions
   const loadSiteContent = async () => {
     try {
