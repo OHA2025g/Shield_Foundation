@@ -940,19 +940,10 @@ async def get_database_stats(current_user: dict = Depends(admin_required)):
             count = await db[collection_name].count_documents({})
             total_documents += count
             
-            # Get the size estimate (MongoDB specific)
-            try:
-                # Use the database client to run the command
-                stats = await db.client.admin.command("collStats", collection_name, scale=1)
-                size = stats.get("size", 0)
-            except Exception as e:
-                logger.warning(f"Could not get collection stats for {collection_name}: {e}")
-                size = 0
-            
             collection_stats.append({
                 "collection": collection_name,
                 "count": count,
-                "size": size
+                "size": 0  # Size calculation disabled for compatibility
             })
         
         # Sort by document count descending
