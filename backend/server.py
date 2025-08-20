@@ -804,6 +804,38 @@ async def delete_gallery_item(item_id: str, current_user: dict = Depends(admin_r
         raise HTTPException(status_code=500, detail="Failed to delete gallery item")
 
 # DATABASE MANAGEMENT ENDPOINTS
+@api_router.get("/admin/database/stats")
+async def get_database_stats(current_user: dict = Depends(admin_required)):
+    """Get overall database statistics"""
+    try:
+        collections = await db.list_collection_names()
+        
+        total_documents = 0
+        collection_stats = []
+        
+        for collection_name in collections:
+            count = await db[collection_name].count_documents({})
+            total_documents += count
+            
+            collection_stats.append({
+                "collection": collection_name,
+                "count": count,
+                "size": 0  # Size calculation disabled for compatibility
+            })
+        
+        # Sort by document count descending
+        collection_stats.sort(key=lambda x: x["count"], reverse=True)
+        
+        logger.info(f"Database stats retrieved by {current_user['username']}")
+        return {
+            "total_collections": len(collections),
+            "total_documents": total_documents,
+            "collection_stats": collection_stats
+        }
+    except Exception as e:
+        logger.error(f"Failed to get database stats: {e}")
+        raise HTTPException(status_code=500, detail="Failed to retrieve database statistics")
+
 @api_router.get("/admin/database/collections")
 async def get_database_collections(current_user: dict = Depends(admin_required)):
     """Get all database collections and their document counts"""
