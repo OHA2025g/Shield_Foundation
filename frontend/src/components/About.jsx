@@ -122,21 +122,14 @@ const About = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Story</h2>
-              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                Shield Foundation was founded by Mrs. Swati Ingole with a clear mission: <em>"To add life to years – 
+              <h2 className="text-4xl font-bold text-gray-900 mb-6">
+                {siteContent.about?.story?.title || "Our Story"}
+              </h2>
+              <div className="text-lg text-gray-600 mb-6 leading-relaxed">
+                {siteContent.about?.story?.content || `Shield Foundation was founded by Mrs. Swati Ingole with a clear mission: "To add life to years – 
                 equipping and empowering communities so that every individual, especially the elderly and vulnerable, 
-                can live with dignity till the end of life irrespective of socio-economic status."</em>
-              </p>
-              <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                What started as a vision to serve the most vulnerable in our society has evolved into a comprehensive 
-                organization with two major focus areas: youth skilling programs that create pathways to employment, 
-                and senior citizen services that ensure dignified aging.
-              </p>
-              <p className="text-lg text-gray-600 leading-relaxed">
-                Over the years, we have built impactful partnerships and served thousands of individuals, 
-                always staying true to our core belief that every person deserves to live with dignity and purpose.
-              </p>
+                can live with dignity till the end of life irrespective of socio-economic status."`}
+              </div>
             </div>
             <div className="relative">
               <img 
@@ -145,8 +138,12 @@ const About = () => {
                 className="rounded-lg shadow-lg"
               />
               <div className="absolute -bottom-6 -left-6 bg-blue-600 text-white p-6 rounded-lg">
-                <div className="text-2xl font-bold">6+ Years</div>
-                <div className="text-sm">Serving Communities</div>
+                <div className="text-2xl font-bold">
+                  {siteContent.about?.story?.highlightBox?.text || "6+ Years"}
+                </div>
+                <div className="text-sm">
+                  {siteContent.about?.story?.highlightBox?.subtext || "Serving Communities"}
+                </div>
               </div>
             </div>
           </div>
