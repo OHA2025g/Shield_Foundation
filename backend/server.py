@@ -423,6 +423,19 @@ async def update_contact_info(contact_data: ContactInfoUpdate, current_user: dic
         logger.error(f"Failed to update contact info: {e}")
         raise HTTPException(status_code=500, detail="Failed to update contact information")
 
+@api_router.get("/site-content")
+async def get_public_site_content():
+    """Get current site content for public pages (no authentication required)"""
+    try:
+        content = await db.site_content.find_one({}, sort=[("updated_at", -1)])
+        if not content:
+            # Return empty content structure if none exists
+            return {"content": {}}
+        return {"content": content.get("content", {})}
+    except Exception as e:
+        logger.error(f"Failed to fetch public site content: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch site content")
+
 # Include the router in the main app
 app.include_router(api_router)
 
