@@ -716,6 +716,7 @@ class BackendTester:
                 self.log_result("Success Story Delete Not Found", False, f"Expected 404, got HTTP {response.status_code}", response.text)
         except Exception as e:
             self.log_result("Success Story Delete Not Found", False, "Request failed", str(e))
+    def test_site_content_auth_required(self):
         """Test that site content endpoints require authentication"""
         # Test GET without token
         try:
