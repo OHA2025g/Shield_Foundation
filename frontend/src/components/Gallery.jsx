@@ -195,8 +195,8 @@ const Gallery = () => {
               <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
                 <div className="relative group">
                   <img
-                    src={item.src}
-                    alt={item.alt}
+                    src={item.image}
+                    alt={item.title}
                     className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   {item.type === 'video' && (
@@ -227,7 +227,7 @@ const Gallery = () => {
                       })}
                     </div>
                     <Badge variant="outline">
-                      {item.type.charAt(0).toUpperCase() + item.type.slice(1)}
+                      {item.type?.charAt(0).toUpperCase() + item.type?.slice(1) || 'Image'}
                     </Badge>
                   </div>
                 </CardContent>
