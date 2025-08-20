@@ -158,3 +158,14 @@ export const api = {
     }
   }
 };
+
+// Public site content API (no authentication required)
+export const getPublicSiteContent = async () => {
+  try {
+    const response = await apiClient.get('/site-content');
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch public site content:', error);
+    throw error;
+  }
+};
