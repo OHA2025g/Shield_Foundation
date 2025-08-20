@@ -4,7 +4,7 @@ import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { Play, Users, Award, Heart, Calendar } from 'lucide-react';
 import { mockData } from '../mock';
-import { getPublicSiteContent } from '../api';
+import { getPublicSiteContent, getGalleryItems } from '../api';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -12,21 +12,117 @@ const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   // Site content state
   const [siteContent, setSiteContent] = useState({});
+  // Gallery items state
+  const [galleryItems, setGalleryItems] = useState([]);
 
-  // Load site content on component mount
+  // Load site content and gallery items on component mount
   useEffect(() => {
     const loadData = async () => {
       try {
-        // Try to load from public API first
+        // Load site content
         const backendContent = await getPublicSiteContent();
         if (backendContent.content && Object.keys(backendContent.content).length > 0) {
           setSiteContent(backendContent.content);
         } else {
           setSiteContent(mockData.siteContent || {});
         }
+
+        // Load gallery items
+        const galleryData = await getGalleryItems();
+        if (galleryData.items && galleryData.items.length > 0) {
+          setGalleryItems(galleryData.items);
+        } else {
+          // Fallback to hardcoded gallery items
+          setGalleryItems([
+            {
+              id: 1,
+              type: 'image',
+              image: 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=500&h=300&fit=crop',
+              title: 'Skills Development Workshop',
+              description: 'Young participants learning new technical skills in our training center.',
+              category: 'youth',
+              date: '2024-08-15'
+            },
+            {
+              id: 2,
+              type: 'image',
+              image: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=500&h=300&fit=crop',
+              title: 'Community Health Camp',
+              description: 'Regular health check-ups and social activities for our senior community members.',
+              category: 'seniors',
+              date: '2024-07-28'
+            },
+            {
+              id: 3,
+              type: 'image',
+              image: 'https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=500&h=300&fit=crop',
+              title: 'Annual Community Celebration',
+              description: 'Bringing together all our program participants for a day of celebration and recognition.',
+              category: 'events',
+              date: '2024-06-20'
+            },
+            {
+              id: 4,
+              type: 'image',
+              image: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=500&h=300&fit=crop',
+              title: 'Job Placement Success',
+              description: 'Celebrating successful job placements of our youth training program graduates.',
+              category: 'youth',
+              date: '2024-08-01'
+            },
+            {
+              id: 5,
+              type: 'image',
+              image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=500&h=300&fit=crop',
+              title: 'Volunteer Appreciation Day',
+              description: 'Recognizing the dedicated volunteers who make our programs possible.',
+              category: 'community',
+              date: '2024-07-10'
+            },
+            {
+              id: 6,
+              type: 'image',
+              image: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=500&h=300&fit=crop',
+              title: 'Mobile Health Clinic',
+              description: 'Bringing healthcare services directly to senior citizens in their communities.',
+              category: 'seniors',
+              date: '2024-08-05'
+            }
+          ]);
+        }
       } catch (error) {
-        console.log('Using mock data for site content');
+        console.log('Using fallback data for site content and gallery');
         setSiteContent(mockData.siteContent || {});
+        // Set fallback gallery items
+        setGalleryItems([
+          {
+            id: 1,
+            type: 'image',
+            image: 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=500&h=300&fit=crop',
+            title: 'Skills Development Workshop',
+            description: 'Young participants learning new technical skills in our training center.',
+            category: 'youth',
+            date: '2024-08-15'
+          },
+          {
+            id: 2,
+            type: 'image',
+            image: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=500&h=300&fit=crop',
+            title: 'Community Health Camp',
+            description: 'Regular health check-ups and social activities for our senior community members.',
+            category: 'seniors',
+            date: '2024-07-28'
+          },
+          {
+            id: 3,
+            type: 'image',
+            image: 'https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=500&h=300&fit=crop',
+            title: 'Annual Community Celebration',
+            description: 'Bringing together all our program participants for a day of celebration and recognition.',
+            category: 'events',
+            date: '2024-06-20'
+          }
+        ]);
       }
     };
     
