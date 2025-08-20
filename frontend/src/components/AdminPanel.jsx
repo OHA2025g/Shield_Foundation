@@ -450,15 +450,19 @@ const AdminPanel = () => {
   };
 
   // Page Content Management Functions
-  const handleEditPageContent = (section) => {
-    setEditingPageSection(section);
+  const handleEditPageContent = (page, section, subsection = null) => {
+    setEditingPageSection(page);
+    setEditingSubSection(subsection ? `${section}.${subsection}` : section);
+    setTempSiteContent({...siteContent});
     setShowPageContentForm(true);
   };
 
   const handleSavePageContent = () => {
     // In a real app, this would save to the backend
+    setSiteContent(tempSiteContent);
     setShowPageContentForm(false);
     setEditingPageSection(null);
+    setEditingSubSection(null);
     
     toast({
       title: "Success",
@@ -467,8 +471,35 @@ const AdminPanel = () => {
   };
 
   const handleCancelPageContentEdit = () => {
+    setTempSiteContent({...siteContent});
     setShowPageContentForm(false);
     setEditingPageSection(null);
+    setEditingSubSection(null);
+  };
+
+  const updateSiteContent = (path, value) => {
+    const pathArray = path.split('.');
+    const newContent = {...tempSiteContent};
+    
+    let current = newContent;
+    for (let i = 0; i < pathArray.length - 1; i++) {
+      if (!current[pathArray[i]]) current[pathArray[i]] = {};
+      current = current[pathArray[i]];
+    }
+    current[pathArray[pathArray.length - 1]] = value;
+    
+    setTempSiteContent(newContent);
+  };
+
+  const getSiteContentValue = (path) => {
+    const pathArray = path.split('.');
+    let current = tempSiteContent;
+    
+    for (const key of pathArray) {
+      if (!current || !current[key]) return '';
+      current = current[key];
+    }
+    return current;
   };
 
   if (!currentUser) {
