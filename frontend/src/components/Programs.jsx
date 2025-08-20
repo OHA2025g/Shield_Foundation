@@ -14,7 +14,22 @@ const Programs = () => {
 
   // Load site content on component mount
   useEffect(() => {
-    setSiteContent(mockData.siteContent || {});
+    const loadData = async () => {
+      try {
+        // Try to load from backend first
+        const backendContent = await api.admin.getSiteContent();
+        if (backendContent.content && Object.keys(backendContent.content).length > 0) {
+          setSiteContent(backendContent.content);
+        } else {
+          setSiteContent(mockData.siteContent || {});
+        }
+      } catch (error) {
+        console.log('Using mock data for site content');
+        setSiteContent(mockData.siteContent || {});
+      }
+    };
+    
+    loadData();
   }, []);
   const youthCourses = [
     {
