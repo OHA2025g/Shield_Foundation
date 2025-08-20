@@ -1220,6 +1220,208 @@ const AdminPanel = () => {
               </div>
             )}
 
+            {activeTab === 'stories' && (
+              <div className="space-y-6">
+                <div className="flex justify-between items-center">
+                  <h2 className="text-2xl font-bold text-gray-900">Success Stories Management</h2>
+                  <Button
+                    onClick={() => setShowSuccessStoryForm(true)}
+                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add Success Story
+                  </Button>
+                </div>
+
+                {/* Success Story Form Modal */}
+                {showSuccessStoryForm && (
+                  <Card className="border-2 border-blue-200">
+                    <CardHeader>
+                      <CardTitle className="flex items-center justify-between">
+                        <span>{editingSuccessStory ? 'Edit Success Story' : 'Create New Success Story'}</span>
+                        <Button variant="ghost" size="sm" onClick={cancelSuccessStoryEdit}>
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
+                          <Input
+                            value={successStoryForm.name}
+                            onChange={(e) => setSuccessStoryForm({...successStoryForm, name: e.target.value})}
+                            placeholder="Enter person's name"
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Program *</label>
+                          <select
+                            value={successStoryForm.program}
+                            onChange={(e) => setSuccessStoryForm({...successStoryForm, program: e.target.value})}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required
+                          >
+                            <option value="">Select a program</option>
+                            <option value="Youth Skilling">Youth Skilling</option>
+                            <option value="Senior Care">Senior Care</option>
+                            <option value="ITES-BPO">ITES-BPO</option>
+                            <option value="CRS">CRS</option>
+                            <option value="Nursing Assistant">Nursing Assistant</option>
+                            <option value="Women Empowerment">Women Empowerment</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Location *</label>
+                          <Input
+                            value={successStoryForm.location}
+                            onChange={(e) => setSuccessStoryForm({...successStoryForm, location: e.target.value})}
+                            placeholder="e.g., Mumbai, Maharashtra"
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Achievement *</label>
+                          <Input
+                            value={successStoryForm.achievement}
+                            onChange={(e) => setSuccessStoryForm({...successStoryForm, achievement: e.target.value})}
+                            placeholder="e.g., Placed at TCS with ₹25,000/month"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Image URL *</label>
+                        <Input
+                          value={successStoryForm.image}
+                          onChange={(e) => setSuccessStoryForm({...successStoryForm, image: e.target.value})}
+                          placeholder="https://example.com/image.jpg"
+                          required
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Success Story *</label>
+                        <Textarea
+                          value={successStoryForm.story}
+                          onChange={(e) => setSuccessStoryForm({...successStoryForm, story: e.target.value})}
+                          placeholder="Tell their inspiring story..."
+                          rows={4}
+                          required
+                        />
+                      </div>
+
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-1">Display Order</label>
+                          <Input
+                            type="number"
+                            value={successStoryForm.order}
+                            onChange={(e) => setSuccessStoryForm({...successStoryForm, order: parseInt(e.target.value) || 0})}
+                            placeholder="0"
+                            className="w-full"
+                          />
+                          <p className="text-xs text-gray-500 mt-1">Lower numbers appear first in the carousel</p>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <input
+                            type="checkbox"
+                            id="is_active"
+                            checked={successStoryForm.is_active}
+                            onChange={(e) => setSuccessStoryForm({...successStoryForm, is_active: e.target.checked})}
+                            className="rounded border-gray-300"
+                          />
+                          <label htmlFor="is_active" className="text-sm font-medium text-gray-700">
+                            Active (show in carousel)
+                          </label>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-end space-x-4 pt-4">
+                        <Button variant="outline" onClick={cancelSuccessStoryEdit}>
+                          Cancel
+                        </Button>
+                        <Button 
+                          onClick={handleSaveSuccessStory}
+                          disabled={loading}
+                          className="bg-blue-600 hover:bg-blue-700"
+                        >
+                          {loading ? 'Saving...' : (editingSuccessStory ? 'Update Story' : 'Create Story')}
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+
+                {/* Success Stories List */}
+                <div className="space-y-4">
+                  {successStories.map((story) => (
+                    <Card key={story.id}>
+                      <CardContent className="p-6">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <div className="flex items-center space-x-3 mb-2">
+                              <h3 className="text-lg font-semibold text-gray-900">{story.name}</h3>
+                              <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                story.is_active !== false 
+                                  ? 'bg-green-100 text-green-800' 
+                                  : 'bg-gray-100 text-gray-600'
+                              }`}>
+                                {story.is_active !== false ? 'Active' : 'Inactive'}
+                              </span>
+                              <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">
+                                {story.program}
+                              </span>
+                            </div>
+                            <p className="text-gray-600 mb-2">
+                              <strong>Achievement:</strong> {story.achievement}
+                            </p>
+                            <p className="text-gray-600 mb-2">
+                              <strong>Location:</strong> {story.location}
+                            </p>
+                            <p className="text-gray-600 line-clamp-2">{story.story}</p>
+                          </div>
+                          <div className="flex items-center space-x-2 ml-4">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleEditSuccessStory(story)}
+                            >
+                              <Edit className="h-4 w-4 mr-1" />
+                              Edit
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleDeleteSuccessStory(story.id)}
+                              className="text-red-600 hover:text-red-700 hover:border-red-300"
+                            >
+                              <Trash2 className="h-4 w-4 mr-1" />
+                              Delete
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                  
+                  {successStories.length === 0 && (
+                    <Card>
+                      <CardContent className="p-8 text-center">
+                        <Award className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                        <p className="text-gray-500">No success stories yet. Create your first success story!</p>
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
+              </div>
+            )}
+
             {activeTab === 'content' && (
               <div className="space-y-6">
                 <div>
