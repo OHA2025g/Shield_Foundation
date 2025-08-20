@@ -942,9 +942,11 @@ async def get_database_stats(current_user: dict = Depends(admin_required)):
             
             # Get the size estimate (MongoDB specific)
             try:
-                stats = await db.command("collStats", collection_name)
+                # Use the database client to run the command
+                stats = await db.client.admin.command("collStats", collection_name, scale=1)
                 size = stats.get("size", 0)
-            except:
+            except Exception as e:
+                logger.warning(f"Could not get collection stats for {collection_name}: {e}")
                 size = 0
             
             collection_stats.append({
