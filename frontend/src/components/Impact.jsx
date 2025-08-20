@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Progress } from './ui/progress';
 import { Heart, Users, GraduationCap, Award, TrendingUp, MapPin } from 'lucide-react';
@@ -7,6 +7,14 @@ import Header from './Header';
 import Footer from './Footer';
 
 const Impact = () => {
+  // Site content state
+  const [siteContent, setSiteContent] = useState({});
+
+  // Load site content on component mount
+  useEffect(() => {
+    setSiteContent(mockData.siteContent || {});
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -14,10 +22,17 @@ const Impact = () => {
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-50 to-yellow-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Our Impact</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            {siteContent.impact?.hero?.title || "Our Impact"}
+          </h1>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-            Measuring our success through the lives we've touched and the communities we've empowered
+            {siteContent.impact?.hero?.subtitle || "Measuring Success Through Lives Transformed"}
           </p>
+          {siteContent.impact?.hero?.description && (
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto mt-4">
+              {siteContent.impact?.hero?.description}
+            </p>
+          )}
         </div>
       </section>
 
