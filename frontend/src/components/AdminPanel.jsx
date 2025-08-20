@@ -116,6 +116,13 @@ const AdminPanel = () => {
     is_active: true
   });
 
+  // Database Management state
+  const [databaseCollections, setDatabaseCollections] = useState([]);
+  const [selectedCollection, setSelectedCollection] = useState(null);
+  const [collectionData, setCollectionData] = useState([]);
+  const [databaseStats, setDatabaseStats] = useState(null);
+  const [databaseLoading, setDatabaseLoading] = useState(false);
+
   // Page Content Management state
   const [showPageContentForm, setShowPageContentForm] = useState(false);
   const [editingPageSection, setEditingPageSection] = useState(null);
