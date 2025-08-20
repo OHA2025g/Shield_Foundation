@@ -2202,20 +2202,15 @@ const AdminPanel = () => {
                     </CardHeader>
                     <CardContent className="space-y-3">
                       <div className="text-sm text-gray-600 mb-3">
-                        Manage gallery items and categories
+                        Full gallery management available in Gallery Management tab
                       </div>
                       <Button 
                         size="sm" 
                         className="w-full bg-purple-600 hover:bg-purple-700"
-                        onClick={() => {
-                          toast({
-                            title: "Gallery Fixed!",
-                            description: "Gallery page is now working. Gallery management coming soon.",
-                          });
-                        }}
+                        onClick={() => setActiveTab('gallery')}
                       >
                         <Eye className="h-4 w-4 mr-2" />
-                        Configure Gallery
+                        Go to Gallery Management
                       </Button>
                     </CardContent>
                   </Card>
