@@ -2198,6 +2198,187 @@ const AdminPanel = () => {
               </div>
             )}
 
+            {activeTab === 'database' && (
+              <div className="space-y-6">
+                <div className="flex justify-between items-center">
+                  <h2 className="text-2xl font-bold text-gray-900">Database Management</h2>
+                  <p className="text-gray-600">View and manage all database collections</p>
+                </div>
+
+                {/* Database Statistics */}
+                {databaseStats && (
+                  <div className="grid md:grid-cols-3 gap-4 mb-6">
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="flex items-center space-x-2">
+                          <Database className="h-8 w-8 text-blue-600" />
+                          <div>
+                            <p className="text-2xl font-bold">{databaseStats.total_collections}</p>
+                            <p className="text-sm text-gray-600">Collections</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="flex items-center space-x-2">
+                          <FileText className="h-8 w-8 text-green-600" />
+                          <div>
+                            <p className="text-2xl font-bold">{databaseStats.total_documents}</p>
+                            <p className="text-sm text-gray-600">Total Documents</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-4">
+                        <div className="flex items-center space-x-2">
+                          <TrendingUp className="h-8 w-8 text-purple-600" />
+                          <div>
+                            <p className="text-2xl font-bold">
+                              {Math.round(databaseStats.total_documents / databaseStats.total_collections)}
+                            </p>
+                            <p className="text-sm text-gray-600">Avg per Collection</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                )}
+
+                {/* Collections Grid */}
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {databaseCollections.map((collection) => (
+                    <Card key={collection.collection} className="hover:shadow-lg transition-shadow cursor-pointer">
+                      <CardContent className="p-6">
+                        <div className="flex items-start justify-between mb-3">
+                          <div>
+                            <h3 className="text-lg font-semibold text-gray-900">{collection.name}</h3>
+                            <p className="text-sm text-gray-600 mt-1">{collection.description}</p>
+                          </div>
+                          <span className="bg-blue-100 text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded-full">
+                            {collection.count}
+                          </span>
+                        </div>
+                        <div className="flex space-x-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => loadCollectionData(collection.collection)}
+                            disabled={databaseLoading}
+                            className="flex-1"
+                          >
+                            <Eye className="h-4 w-4 mr-1" />
+                            View Data
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+
+                {/* Collection Data Viewer */}
+                {selectedCollection && (
+                  <Card className="mt-6">
+                    <CardHeader>
+                      <CardTitle className="flex items-center justify-between">
+                        <span>Collection: {selectedCollection.collection}</span>
+                        <div className="flex items-center space-x-2 text-sm text-gray-600">
+                          <span>{selectedCollection.total_count} total documents</span>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setSelectedCollection(null)}
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="overflow-x-auto">
+                        <table className="min-w-full divide-y divide-gray-200">
+                          <thead className="bg-gray-50">
+                            <tr>
+                              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                ID
+                              </th>
+                              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Data Preview
+                              </th>
+                              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Created/Updated
+                              </th>
+                              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Actions
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody className="bg-white divide-y divide-gray-200">
+                            {collectionData.map((doc, index) => (
+                              <tr key={doc._id || doc.id || index} className="hover:bg-gray-50">
+                                <td className="px-6 py-4 whitespace-nowrap text-sm font-mono">
+                                  {doc.id || doc._id || 'No ID'}
+                                </td>
+                                <td className="px-6 py-4">
+                                  <div className="text-sm text-gray-900 max-w-xs truncate">
+                                    {doc.title || doc.name || doc.email || doc.subject || doc.username || 
+                                     Object.keys(doc).filter(key => !['_id', 'id', 'created_at', 'updated_at', 'password'].includes(key))
+                                       .slice(0, 3).map(key => `${key}: ${doc[key]}`).join(', ') || 'No preview'}
+                                  </div>
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                  {doc.created_at ? new Date(doc.created_at).toLocaleDateString() : 
+                                   doc.updated_at ? new Date(doc.updated_at).toLocaleDateString() : 'Unknown'}
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => {
+                                      navigator.clipboard.writeText(JSON.stringify(doc, null, 2));
+                                      toast({ title: "Copied!", description: "Document data copied to clipboard" });
+                                    }}
+                                    className="text-blue-600 hover:text-blue-900"
+                                  >
+                                    Copy
+                                  </Button>
+                                  {selectedCollection.collection !== 'admin_users' && (
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      onClick={() => deleteDocumentFromCollection(selectedCollection.collection, doc.id || doc._id)}
+                                      className="text-red-600 hover:text-red-900"
+                                    >
+                                      <Trash2 className="h-4 w-4" />
+                                    </Button>
+                                  )}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      
+                      {collectionData.length === 0 && (
+                        <div className="text-center py-8">
+                          <Database className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                          <p className="text-gray-500">No documents found in this collection</p>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                )}
+
+                {databaseLoading && (
+                  <div className="text-center py-8">
+                    <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                    <p className="text-gray-500 mt-2">Loading database information...</p>
+                  </div>
+                )}
+              </div>
+            )}
+
             {activeTab === 'pages' && (
               <div className="space-y-6">
                 <div className="flex justify-between items-center">
